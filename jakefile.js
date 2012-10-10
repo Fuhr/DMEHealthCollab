@@ -25,7 +25,7 @@
 		var javascriptFiles = new jake.FileList();
 		javascriptFiles.include("**/*.js");
 		javascriptFiles.exclude("node_modules");
-		javascriptFiles.exclude("spikes");
+		javascriptFiles.exclude("Spikes");
 		
 		var options = nodeLintOptions();
 		var passed = lint.validateFileList(javascriptFiles.toArray(), options, {});
