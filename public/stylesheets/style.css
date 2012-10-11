@@ -5,3 +5,11 @@ body {
 a {
   color: #00b7ff;
 }
+h1 {
+  color: #dedede;
+  text-shadow: 1px 1px 1px #6f6f6f;
+}
+.derp {
+  font-size: 18px;
+  color: #a5c464;
+}
