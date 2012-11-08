@@ -1,0 +1,113 @@
+!!! 5
+html(lang='en')
+head
+    meta(charset='utf-8')
+    title Bootstrap, from Twitter
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    //Le styles 
+    link(href='../assets/css/bootstrap.css', rel='stylesheet')
+    style(type='text/css')
+      body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+      }
+    link(href='../assets/css/bootstrap-responsive.css', rel='stylesheet')
+    //HTML5 shim, for IE6-8 support of HTML5 elements 
+    //if lt IE 9
+      script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+    //Fav and touch icons 
+    link(rel='shortcut icon', href='../assets/ico/favicon.ico')
+    link(rel='apple-touch-icon-precomposed', sizes='144x144', href='../assets/ico/apple-touch-icon-144-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='114x114', href='../assets/ico/apple-touch-icon-114-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', sizes='72x72', href='../assets/ico/apple-touch-icon-72-precomposed.png')
+    link(rel='apple-touch-icon-precomposed', href='../assets/ico/apple-touch-icon-57-precomposed.png')
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#') Project name
+          .nav-collapse.collapse
+            ul.nav
+              li.active
+                a(href='#') Home
+              li
+                a(href='#about') About
+              li
+                a(href='#contact') Contact
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | Dropdown
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href='#') Action
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li.nav-header Nav header
+                  li
+                    a(href='#') Separated link
+                  li
+                    a(href='#') One more separated link
+            form.navbar-form.pull-right
+              input.span2(type='text', placeholder='Email')
+              input.span2(type='password', placeholder='Password')
+              button.btn(type='submit') Sign in
+          ///.nav-collapse 
+    .container
+      //Main hero unit for a primary marketing message or call to action 
+      .hero-unit
+        h1 Hello, world!
+        p
+          | This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+        p
+          a.btn.btn-primary.btn-large Learn more »
+      //Example row of columns 
+      .row
+        .span4
+          h2 Heading
+          p
+            | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+          p
+            a.btn(href='#') View details »
+        .span4
+          h2 Heading
+          p
+            | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+          p
+            a.btn(href='#') View details »
+        .span4
+          h2 Heading
+          p
+            | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          p
+            a.btn(href='#') View details »
+      hr
+      footer
+        p © Company 2012
+    ///container 
+    //
+       Le javascript
+          ================================================== 
+    //Placed at the end of the document so the pages load faster 
+    script(src='../assets/js/jquery.js')
+    script(src='../assets/js/bootstrap-transition.js')
+    script(src='../assets/js/bootstrap-alert.js')
+    script(src='../assets/js/bootstrap-modal.js')
+    script(src='../assets/js/bootstrap-dropdown.js')
+    script(src='../assets/js/bootstrap-scrollspy.js')
+    script(src='../assets/js/bootstrap-tab.js')
+    script(src='../assets/js/bootstrap-tooltip.js')
+    script(src='../assets/js/bootstrap-popover.js')
+    script(src='../assets/js/bootstrap-button.js')
+    script(src='../assets/js/bootstrap-collapse.js')
+    script(src='../assets/js/bootstrap-carousel.js')
+    script(src='../assets/js/bootstrap-typeahead.js')
