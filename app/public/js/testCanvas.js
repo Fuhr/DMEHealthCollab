@@ -3,8 +3,8 @@ $(document).ready(function() {
     var socket = io.connect('http://localhost/');
     var stage = new Kinetic.Stage({
         container: 'testContainer',
-        width: 578,
-        height: 200
+        width: 600,
+        height: 400
     });
         
     var layer = new Kinetic.Layer();
@@ -32,6 +32,9 @@ $(document).ready(function() {
         });  
     });
  });
+
+
+/* TODO: Move these functions to util and/or drawing modules/classes */
 
  function rndColor() {
      function c() {
