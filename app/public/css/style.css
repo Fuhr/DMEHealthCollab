@@ -5,7 +5,7 @@
 /*
   Custom CSS
 */
-#testCanvas {
-	border: 1px solid #8e8e8e;
+.kineticjs-content {
+	border: 1px solid #000;
 	background-color: #a1a1a1;
 }

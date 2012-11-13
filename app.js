@@ -4,12 +4,13 @@
  */
 
 var express = require('express')
-  , io = require('socket.io')
-  , http = require('http')
-  , path = require('path');
+  
 
 /* Initialize app and config */
-var app = express();
+var app = express()
+    , io = require('socket.io')
+    , http = require('http')
+    , path = require('path');
 
 app.root = __dirname;
 require('./app/config')(app, express);
@@ -23,16 +24,12 @@ server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-
-
-
 // TESTING PURPOSES ONLY - TO BE DELETED OR MOVED
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-   socket.on('rect', function (data) {
-     // console.log(data);
-     
-     socket.emit('rectSend', { hello: 'world' });
+    socket.on('rect', function (data) {
+        io.sockets.emit('rectSend', data);
    });
-   
 });
+
+
+
