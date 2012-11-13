@@ -8,9 +8,13 @@ $(document).ready(function() {
     });
         
     var layer = new Kinetic.Layer();
+    var circleLayer = new Kinetic.Layer();
     stage.add(layer);
+    stage.add(circleLayer);
     var canvas = stage.getContainer();     
     var color, x0, y0, x1, y1;
+    
+    
     
     canvas.addEventListener('mousedown' , function(evt) {
          // console.log("x: "+ evt.layerX + "\n" + "y: " + evt.layerY);
@@ -24,10 +28,11 @@ $(document).ready(function() {
          color = rndColor();
          socket.emit('rect', {x0: x0, y0: y0, x1: x1, y1: y1, color: color});
      });
-         
+     
      socket.on('connect', function () {
        socket.on('rectSend', function(data) {
            console.log("Received - x0: " + data.x0);
+           drawTestCircle(circleLayer);
            drawTestRect(layer, data);
         });  
     });
@@ -45,7 +50,6 @@ $(document).ready(function() {
 
  
 function drawTestRect(layer, data) {
-            
     layer.add(new Kinetic.Rect({
            x: data.x0,
            y: data.y0,
@@ -58,4 +62,32 @@ function drawTestRect(layer, data) {
         }));
     layer.draw();
 }
-
+        
+function drawTestCircle(circleLayer) {
+        var circle = new Kinetic.Circle({
+          x: 20,
+          y: 20,
+          radius: 20,
+          fill: "yellow",
+          stroke: "black",
+          strokeWidth: 2,
+          draggable: true
+        });
+        circleLayer.add(circle);
+        
+		circle.on("mouseover", function() {
+    		this.setFill("orange");
+        	circleLayer.draw();
+        });
+        circle.on("mouseout", function() {
+        	this.setFill("#ffff2b");
+            circleLayer.draw();
+            });
+        circle.on("click", function() {
+        circle.remove();
+        circleLayer.draw();
+            });
+            
+            
+		circleLayer.draw();
+}
