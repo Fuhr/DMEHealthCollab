@@ -18,7 +18,21 @@ require('./app/server/router')(app);
 
 /* Create server */
 var server = http.createServer(app);
-io.listen(server);
+io = io.listen(server);
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+
+
+
+// TESTING PURPOSES ONLY - TO BE DELETED OR MOVED
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+   socket.on('rect', function (data) {
+     // console.log(data);
+     
+     socket.emit('rectSend', { hello: 'world' });
+   });
+   
 });
