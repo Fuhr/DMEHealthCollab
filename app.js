@@ -10,7 +10,9 @@ var app = express()
     , io = require('socket.io').listen(server)
     , path = require('path');
 
+
 app.root = __dirname;
+
 require('./app/config')(app, express);
 require('./app/server/router')(app, io);
 
