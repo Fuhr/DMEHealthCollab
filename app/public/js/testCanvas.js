@@ -13,9 +13,7 @@ $(document).ready(function() {
     stage.add(circleLayer);
     var canvas = stage.getContainer();     
     var color, x0, y0, x1, y1;
-    
-    
-    
+   
     canvas.addEventListener('mousedown' , function(evt) {
          // console.log("x: "+ evt.layerX + "\n" + "y: " + evt.layerY);
          x0 = evt.layerX;
@@ -28,7 +26,10 @@ $(document).ready(function() {
          color = rndColor();
          socket.emit('rect', {x0: x0, y0: y0, x1: x1, y1: y1, color: color});
      });
-     
+     canvas.addEventListener('click', function() {
+     	nowDance(layer);
+     	nowDance(circleLayer);
+     	}, false);
      socket.on('connect', function () {
        socket.on('rectSend', function(data) {
            console.log("Received - x0: " + data.x0);
@@ -38,7 +39,6 @@ $(document).ready(function() {
     });
  });
 
-
 /* TODO: Move these functions to util and/or drawing modules/classes */
 
  function rndColor() {
@@ -47,7 +47,6 @@ $(document).ready(function() {
      }
      return '#' + c() + c() + c();
  }
-
  
 function drawTestRect(layer, data) {
     layer.add(new Kinetic.Rect({
@@ -62,7 +61,7 @@ function drawTestRect(layer, data) {
         }));
     layer.draw();
 }
-        
+
 function drawTestCircle(circleLayer) {
         var circle = new Kinetic.Circle({
           x: 20,
@@ -82,12 +81,25 @@ function drawTestCircle(circleLayer) {
         circle.on("mouseout", function() {
         	this.setFill("#ffff2b");
             circleLayer.draw();
-            });
+        });
         circle.on("click", function() {
         circle.remove();
         circleLayer.draw();
-            });
-            
-            
+        });            
 		circleLayer.draw();
+}
+function nowDance(layer) {
+        for(var n = 0; n < layer.getChildren().length; n++) {
+        	var shape = layer.getChildren()[n];
+          	var stage = shape.getStage();
+          	shape.transitionTo({
+            	rotation: Math.random() * Math.PI * 2,
+            	radius: Math.random() * 100 + 20,
+            	x: Math.random() * stage.getWidth(),
+            	y: Math.random() * stage.getHeight(),
+            	opacity: Math.random(),
+            	duration: 1,
+            	easing: 'ease-in-out'
+			});
+        }
 }
