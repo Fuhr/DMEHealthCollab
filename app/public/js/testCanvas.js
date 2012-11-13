@@ -10,28 +10,22 @@ $(document).ready(function() {
     var layer = new Kinetic.Layer();
     stage.add(layer);
     var canvas = stage.getContainer();     
-    var xo, yo, xe, ye;
+    var color, x0, y0, x1, y1;
     
     canvas.addEventListener('mousedown' , function(evt) {
          // console.log("x: "+ evt.layerX + "\n" + "y: " + evt.layerY);
-         xo = evt.layerX;
-         yo = evt.layerY;
+         x0 = evt.layerX;
+         y0 = evt.layerY;
      });
      canvas.addEventListener('mouseup', function(evt) {
          // console.log("x: "+ evt.layerX + "\n" + "y: " + evt.layerY);
-         xe = evt.layerX;
-         ye = evt.layerY;
-
-         socket.emit('rect', {x0: xo, y0: yo, x1: xe, y1: ye});
+         x1 = evt.layerX;
+         y1 = evt.layerY;
+         color = rndColor();
+         socket.emit('rect', {x0: x0, y0: y0, x1: x1, y1: y1, color: color});
      });
          
      socket.on('connect', function () {
-       socket.send('hi');
-       socket.on('news', function (hello) {
-         // my msg
-         console.log(hello);
-       });
-       
        socket.on('rectSend', function(data) {
            console.log("Received - x0: " + data.x0);
            drawTestRect(layer, data);
@@ -48,15 +42,13 @@ $(document).ready(function() {
 
  
 function drawTestRect(layer, data) {
-    
-    var color = rndColor();
-        
+            
     layer.add(new Kinetic.Rect({
            x: data.x0,
            y: data.y0,
            width: data.x1-data.x0,
            height: data.y1-data.y0,
-           fill: color,
+           fill: data.color,
            stroke: 'black',
            strokeWidth: 1,
            draggable: true
