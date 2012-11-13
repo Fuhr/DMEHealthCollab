@@ -12,7 +12,7 @@ module.exports = function(app, express) {
       app.use(express.cookieParser('your secret here'));
       app.use(express.session());
       app.use(app.router);
-      app.use(require('stylus').middleware(app.root + '/app/public'));
+      // app.use(require('stylus').middleware(app.root + '/app/public'));
       app.use(express.static(app.root + '/app/server'));
 	  app.use(express.static(app.root + '/app/public'));
     });
