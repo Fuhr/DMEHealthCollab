@@ -59,7 +59,6 @@ $(document).ready(function() {
     });
  });
 
-
 /* TODO: Move these functions to util and/or drawing modules/classes */
 
 function rndColor() {
