@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var HOST_URL = 'http://10.0.0.33' //'http://localhost/'
+    var HOST_URL = 'http://localhost/'
     var socket = io.connect(HOST_URL);
     var stage = new Kinetic.Stage({
         container: 'testContainer',
