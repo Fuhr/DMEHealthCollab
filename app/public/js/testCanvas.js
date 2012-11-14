@@ -20,15 +20,16 @@ $(document).ready(function() {
     
     /* Event handlers */ 
     canvas.addEventListener('mousedown' , function(evt) {
-         x0 = evt.offsetX;
-         y0 = evt.offsetY;
+         x0 = evt.layerX;
+         y0 = evt.layerY;
          
          coords.x0 = x0;
          coords.y0 = y0;
+         console.log(coords);
      });
      canvas.addEventListener('mouseup', function(evt) {
-         x1 = evt.offsetX;
-         y1 = evt.offsetY;
+         x1 = evt.layerX;
+         y1 = evt.layerY;
          
          coords.x1 = x1;
          coords.y1 = y1;
