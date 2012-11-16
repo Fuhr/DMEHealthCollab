@@ -6,8 +6,10 @@
   Custom CSS
 */
 .kineticjs-content {
-	background-color: #a1a1a1;
-/*    margin-left: -4%;*/
+	background-color: #E8E3E5;
+    display: block ! important;
+    margin: 0 auto;
+   
 }
 
 .span9{
@@ -23,7 +25,17 @@
     margin-top: 390px;
 }
 
-.container-fluid {
+/*.container-fluid {
     padding-left: 0px;
     padding-right: 0px;
+}*/
+
+@media (max-width: 768px) {
+    [class*="span"],
+      .uneditable-input[class*="span"],
+      .row-fluid [class*="span"] {
+        width: 98% ! important;
+        margin-left: 1% ! important;
+      }
+    
 }

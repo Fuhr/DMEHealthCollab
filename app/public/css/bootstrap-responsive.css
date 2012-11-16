@@ -61,7 +61,7 @@
   display: inherit !important;
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 769px) and (max-width: 979px) {
   .hidden-desktop {
     display: inherit !important;
   }
@@ -76,7 +76,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .hidden-desktop {
     display: inherit !important;
   }
@@ -441,7 +441,7 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 979px) {
+@media (min-width: 769px) and (max-width: 979px) {
   .row {
     margin-left: -20px;
     *zoom: 1;
@@ -782,7 +782,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   body {
     padding-right: 20px;
     padding-left: 20px;
