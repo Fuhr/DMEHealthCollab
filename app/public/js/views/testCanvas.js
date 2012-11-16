@@ -1,5 +1,10 @@
 $(document).ready(function() {
-
+    
+    //     document.addEventListener('touchmove', function(e) {
+    //  e.preventDefault();
+    // }, false);
+    
+    
     // var HOST_URL = 'http://localhost/'
     var HOST_URL = 'http://10.0.0.33:3000'
     
