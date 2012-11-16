@@ -1,10 +1,3 @@
-/*
-  Bootstrap CSS
-*/
-@import "bootstrap.css";
-/*
-  Custom CSS
-*/
 .kineticjs-content {
 	background-color: #E8E3E5;
     display: block ! important;
@@ -34,8 +27,8 @@
     [class*="span"],
       .uneditable-input[class*="span"],
       .row-fluid [class*="span"] {
-        width: 98% ! important;
-        margin-left: 1% ! important;
+        width: 96.2% ! important;
+        margin-left: 1.9% ! important;
       }
     
 }
