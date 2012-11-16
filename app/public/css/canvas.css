@@ -1,0 +1,29 @@
+/*
+  Bootstrap CSS
+*/
+@import "bootstrap.css";
+/*
+  Custom CSS
+*/
+.kineticjs-content {
+	background-color: #a1a1a1;
+/*    margin-left: -4%;*/
+}
+
+.span9{
+    background-color: red;
+}
+
+.right-column {
+    background-color: #a1a1a1;
+    height: 400px;
+}
+
+.test-input {
+    margin-top: 390px;
+}
+
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}

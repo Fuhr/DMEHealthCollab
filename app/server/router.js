@@ -1,8 +1,8 @@
 module.exports = function(app, io) {
 
     /* Page routing*/
-	app.get('/test', function(req, res){
-	    res.render('test', {});
+	app.get('/canvas', function(req, res){
+	    res.render('canvas', {});
 	});
 	
 	app.get('/', function(req, res){
