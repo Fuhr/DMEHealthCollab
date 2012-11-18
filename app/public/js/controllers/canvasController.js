@@ -94,9 +94,11 @@ function canvasController(parentDiv, socket) {
     
     getMousePositionOnCanvas = function(evt) {
         var result = {'x': '', 'y': ''};
-        result.x = evt.layerX;
-        result.y = evt.layerY;
-
+        var mousePosition = stage.getMousePosition();
+        
+        result.x = mousePosition.x;
+        result.y = mousePosition.y;
+        
         return result;
     }
 
@@ -111,11 +113,24 @@ function canvasController(parentDiv, socket) {
 	
 	setUpNodeHandlers = function(node, socket){
 		node.on('dragend.canvasDrag',function(event){
-			var sendObject = {
-				id: event.shape.attrs.id,
-				x: event.layerX,
-				y: event.layerY
-			};
+		    var sendObject
+		    try {
+		        var touchPosition = stage.getTouchPosition();		        
+                sendObject = {
+                    id: event.shape.attrs.id,
+                    x: touchPosition.x,
+                    y: touchPosition.y
+                };
+            } 
+            catch (err) {
+                var mousePosition = stage.getMousePosition();
+                sendObject = {
+                    id: event.shape.attrs.id,
+                    x: mousePosition.x,
+                    y: mousePosition.y
+                };
+            }
+
 			socket.emit('rectMove',sendObject);
 		});
 	}
