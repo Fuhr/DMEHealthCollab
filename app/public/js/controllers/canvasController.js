@@ -114,23 +114,30 @@ function canvasController(parentDiv, socket) {
 	setUpNodeHandlers = function(node, socket){
 		node.on('dragend.canvasDrag',function(event){
 		    var sendObject
-		    try {
-		        var touchPosition = stage.getTouchPosition();		        
-                sendObject = {
-                    id: event.shape.attrs.id,
-                    x: touchPosition.x,
-                    y: touchPosition.y
-                };
-            } 
-            catch (err) {
-                var mousePosition = stage.getMousePosition();
-                sendObject = {
-                    id: event.shape.attrs.id,
-                    x: mousePosition.x,
-                    y: mousePosition.y
-                };
-            }
+            // try {
+            //     var touchPosition = stage.getTouchPosition();                
+            //                 sendObject = {
+            //                     id: event.shape.attrs.id,
+            //                     x: touchPosition.x,
+            //                     y: touchPosition.y
+            //                 };
+            //             } 
+            //             catch (err) {
+            //                 var mousePosition = stage.getMousePosition();
+            //                 sendObject = {
+            //                     id: event.shape.attrs.id,
+            //                     x: mousePosition.x,
+            //                     y: mousePosition.y
+            //                 };
+            //             }
 
+            var pos = event.shape.getPosition()
+            sendObject = {
+                id: event.shape.attrs.id,
+                x: pos.x,
+                y: pos.y
+            };
+            
 			socket.emit('rectMove',sendObject);
 		});
 	}
