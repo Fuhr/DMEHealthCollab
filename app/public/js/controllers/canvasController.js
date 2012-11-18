@@ -6,9 +6,10 @@ function canvasController(parentDiv, socket) {
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
     var canvas = stage.getContainer();         
-
-
-
+    var _draggable = false;
+    
+    
+    
     /* Event handlers */ 
     canvas.addEventListener('mousedown' , function(evt) {
         var pos = getMousePositionOnCanvas(evt);         
@@ -21,7 +22,10 @@ function canvasController(parentDiv, socket) {
         coords.x1 = pos.x;
         coords.y1 = pos.y;
 
+        if (isDraggable()) return;
         sendRectToServer(socket, coords);
+        
+      
     });
 
     canvas.addEventListener('touchstart', function(evt) {
@@ -37,16 +41,30 @@ function canvasController(parentDiv, socket) {
 
         sendRectToServer(socket, coords);
     });
+    
+
 
 
     /* Socket handlers */
     socket.on('connect', function () {
         socket.on('rectSend', function(data) {
             cu.drawTestRect(layer, data);
+            // console.log('Layer: ' + JSON.stringify(layer.getChildren(), null, 4));
+            
         });  
     });
 
-     
+    setDraggable = function (state) {
+        _draggable = state;
+        cu.setShapesDraggable(layer.getChildren(), state);
+    }
+    
+    isDraggable = function () {
+        return _draggable;
+    }
+    
+    
+    
     getMousePositionOnCanvas = function(evt) {
         var result = {'x': '', 'y': ''};
         result.x = evt.layerX;

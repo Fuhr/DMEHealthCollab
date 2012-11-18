@@ -16,6 +16,7 @@ function canvasUtils() {
         
         return layer;
     }
+
     
     this.drawTestRect = function(layer, data) {
         layer.add(new Kinetic.Rect({
@@ -26,10 +27,18 @@ function canvasUtils() {
                fill: data.color,
                stroke: 'black',
                strokeWidth: 1,
-               draggable: true
+               draggable: false
             }));
         layer.draw();
     }
+    
+    this.setShapesDraggable = function (shapes, state) {
+        
+        for (var i = 0; i< shapes.length; i++) {
+            shapes[i].setDraggable(state);
+        }
+    }
+    
     
     // Test function. Should be deleted in the future
     this.rndColor = function() {
