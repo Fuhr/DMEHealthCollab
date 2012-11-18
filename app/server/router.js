@@ -15,6 +15,8 @@ module.exports = function(app, io) {
     * for module exports see: http://www.hacksparrow.com/node-js-exports-vs-module-exports.html
     */
     io.sockets.on('connection', function (socket) {
+        
+        socket.emit('clientId', socket.id);
         socket.on('rect', function (data) {
             io.sockets.emit('rectSend', data);
        });

@@ -54,6 +54,10 @@ function canvasController(parentDiv, socket) {
 
     /* Socket handlers */
     socket.on('connect', function () {
+        
+        socket.on('clientId', function(data) {
+            console.log(data);
+        })  
         socket.on('rectSend', function(data) {
             cu.drawTestRect(layer, data);
             // console.log('Layer: ' + JSON.stringify(layer.getChildren(), null, 4));
