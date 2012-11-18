@@ -23,7 +23,7 @@
     padding-right: 0px;
 }*/
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     [class*="span"],
       .uneditable-input[class*="span"],
       .row-fluid [class*="span"] {
