@@ -1,4 +1,6 @@
 function canvasUtils() {
+
+	var _nodes = {};
     
     this.createStage = function(parent, width, height) {
         var stage = new Kinetic.Stage({
@@ -19,17 +21,21 @@ function canvasUtils() {
 
     
     this.drawTestRect = function(layer, data) {
-        layer.add(new Kinetic.Rect({
-               x: data.coords.x0,
-               y: data.coords.y0,
-               width: data.dx,
-               height: data.dy,
-               fill: data.color,
-               stroke: 'black',
-               strokeWidth: 1,
-               draggable: false
-            }));
+		var node = new Kinetic.Rect({
+		   x: data.coords.x0,
+		   y: data.coords.y0,
+		   width: data.dx,
+		   height: data.dy,
+		   fill: data.color,
+		   stroke: 'black',
+		   strokeWidth: 1,
+		   draggable: false,
+		   id: data.coords.id
+		});
+		_nodes[data.coords.id] = node;
+        layer.add(node);
         layer.draw();        
+		return node;
     }
     
     this.setShapesDraggable = function (shapes, state) {
@@ -40,6 +46,12 @@ function canvasUtils() {
             
         }
     }
+	
+	this.moveNode = function(layer, moveObject){
+		var node = _nodes[moveObject.id];
+		node.setPosition(moveObject.x, moveObject.y);
+		layer.draw();
+	}
     
     
     // Test function. Should be deleted in the future

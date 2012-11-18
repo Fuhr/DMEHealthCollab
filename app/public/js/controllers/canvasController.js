@@ -1,7 +1,8 @@
 function canvasController(parentDiv, socket) {
     var cu = new canvasUtils();
-    var coords = {"x0":"","x1":"","y0":"","y1":""};
-
+    var coords = {"x0":"","x1":"","y0":"","y1":"","id":""};
+	var _clientId = "";
+	var rectNumber = 0;
 
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
@@ -56,13 +57,17 @@ function canvasController(parentDiv, socket) {
     socket.on('connect', function () {
         
         socket.on('clientId', function(data) {
-            console.log(data);
+            _clientId = data;
         })  
         socket.on('rectSend', function(data) {
-            cu.drawTestRect(layer, data);
+            var node = cu.drawTestRect(layer, data);
+			setUpNodeHandlers(node,socket);
             // console.log('Layer: ' + JSON.stringify(layer.getChildren(), null, 4));
             
-        });  
+        });
+		socket.on('rectMoved', function(data) {
+			cu.moveNode(layer, data);
+        });
     });
 
     setDraggable = function (state) {
@@ -103,22 +108,35 @@ function canvasController(parentDiv, socket) {
 
         return result;
     }
+	
+	setUpNodeHandlers = function(node, socket){
+		node.on('dragend.canvasDrag',function(event){
+			var sendObject = {
+				id: event.shape.attrs.id,
+				x: event.layerX,
+				y: event.layerY
+			};
+			socket.emit('rectMove',sendObject);
+		});
+	}
 
     sendRectToServer = function(socket, coords) {
         dx = coords.x1 - coords.x0;
         dy = coords.y1 - coords.y0;
         // TODO: This statement is bugged - doesn't take negative values into account
         /* Exits function if draw distance is too small */
-
+		
+		coords.id = _clientId + rectNumber;
+		rectNumber++;
         // if(dx <= 25 && dy <= 25 || dx = 25 || dy <= 25) {
         //         return
         // }
-
         /* Send shape information to server, thus pushing to other clients */ 
         socket.emit('rect', {
             coords: coords,
             dx: dx,
             dy: dy,
             color: cu.rndColor()});
+		
     }
 }

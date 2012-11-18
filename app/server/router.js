@@ -20,5 +20,8 @@ module.exports = function(app, io) {
         socket.on('rect', function (data) {
             io.sockets.emit('rectSend', data);
        });
+	   socket.on('rectMove', function (data) {
+            io.sockets.emit('rectMoved', data);
+       });
     });
 };
