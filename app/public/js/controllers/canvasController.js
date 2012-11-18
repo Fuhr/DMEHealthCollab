@@ -8,33 +8,42 @@ function canvasController(parentDiv, socket) {
     var canvas = stage.getContainer();         
     var _draggable = false;
     
-    
-    
     /* Event handlers */ 
-    canvas.addEventListener('mousedown' , function(evt) {
+    canvas.addEventListener('mousedown' , function(evt) { 
+        
+               
         var pos = getMousePositionOnCanvas(evt);         
         coords.x0 = pos.x;
         coords.y0 = pos.y;
     });
 
-    canvas.addEventListener('mouseup', function(evt) {
+    canvas.addEventListener('mouseup', function(evt) {  
+        
+        // The first time a shape is drawn 'draggable' will be set to true and this
+        // function will return immediately on all touch/mouseevents - for now)
+        if (isDraggable()) return;
+        
         var pos = getMousePositionOnCanvas(evt);
         coords.x1 = pos.x;
         coords.y1 = pos.y;
 
-        if (isDraggable()) return;
         sendRectToServer(socket, coords);
-        
-      
+
     });
 
-    canvas.addEventListener('touchstart', function(evt) {
+    canvas.addEventListener('touchstart', function(evt) {        
         var pos = getTouchPositionOnCanvas(evt);
         coords.x0 = pos.x;
         coords.y0 = pos.y;
     });
 
     canvas.addEventListener('touchend', function(evt) {
+       
+        // The first time a shape is drawn 'draggable' will be set to true and this
+        // function will return immediately on all touch/mouseevents - for now)
+        if (isDraggable()) return;
+
+
         var pos = getTouchPositionOnCanvas(evt);
         coords.x1 = pos.x;
         coords.y1 = pos.y;
@@ -42,8 +51,6 @@ function canvasController(parentDiv, socket) {
         sendRectToServer(socket, coords);
     });
     
-
-
 
     /* Socket handlers */
     socket.on('connect', function () {
@@ -59,11 +66,22 @@ function canvasController(parentDiv, socket) {
         cu.setShapesDraggable(layer.getChildren(), state);
     }
     
+    this.toggleDraggable = function () {
+        
+        if (!_draggable) {
+            _draggable = true;
+            setDraggable(_draggable);
+            
+        } else {
+            _draggable = false;
+            setDraggable(_draggable);
+            
+        }
+    }
+    
     isDraggable = function () {
         return _draggable;
     }
-    
-    
     
     getMousePositionOnCanvas = function(evt) {
         var result = {'x': '', 'y': ''};
@@ -85,9 +103,6 @@ function canvasController(parentDiv, socket) {
     sendRectToServer = function(socket, coords) {
         dx = coords.x1 - coords.x0;
         dy = coords.y1 - coords.y0;
-
-        console.log("dx: " + dx + " dy: " + dy);
-
         // TODO: This statement is bugged - doesn't take negative values into account
         /* Exits function if draw distance is too small */
 

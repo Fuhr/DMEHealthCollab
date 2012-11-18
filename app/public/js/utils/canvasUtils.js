@@ -29,13 +29,15 @@ function canvasUtils() {
                strokeWidth: 1,
                draggable: false
             }));
-        layer.draw();
+        layer.draw();        
     }
     
     this.setShapesDraggable = function (shapes, state) {
+        console.log("Shape: " +  shapes.length);
         
-        for (var i = 0; i< shapes.length; i++) {
+        for (var i = 0; i< shapes.length; i++) {            
             shapes[i].setDraggable(state);
+            
         }
     }
     

@@ -14,14 +14,16 @@
     height: 400px;
 }
 
-.test-input {
-    margin-top: 390px;
+#right-column-controls {
+    margin-top: 10px;
+    height: 115px;
+    background-color: #a1a1a1;
+    
+    
 }
-
-/*.container-fluid {
-    padding-left: 0px;
-    padding-right: 0px;
-}*/
+#toggle-button{
+    display: block;
+}
 
 @media (max-width: 800px) {
     [class*="span"],
@@ -29,6 +31,5 @@
       .row-fluid [class*="span"] {
         width: 96.2% ! important;
         margin-left: 1.9% ! important;
-      }
-    
+      }    
 }
