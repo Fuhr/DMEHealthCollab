@@ -117,17 +117,16 @@ function canvasController(parentDiv, socket) {
     sendRectToServer = function(socket, coords) {
         dx = coords.x1 - coords.x0;
         dy = coords.y1 - coords.y0;
-       
-		adx = Math.abs(dx);
-		ady = Math.abs(dy);
+
 		coords.id = _clientId + rectNumber;
 		rectNumber++;
 		
-		 // TODO: This statement is bugged - doesn't take negative values into account
-            /* Exits function if draw distance is too small */
+		adx = Math.abs(dx);
+		ady = Math.abs(dy);
         if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
-            return
+            return;
         }
+        
         /* Send shape information to server, thus pushing to other clients */ 
         socket.emit('rect', {
             coords: coords,
