@@ -6,7 +6,7 @@ $(document).ready(function() {
     // var HOST_URL = 'http://10.0.0.43:3000'
     var socket = io.connect(HOST_URL);
     
-	var cc = new canvasController('testContainer', socket);
+    var cc = new canvasController('testContainer', socket);
     var chat = new chatController('#chat-output', '#chat-input', socket);
 	
 	/* DOM specific code goes here */
