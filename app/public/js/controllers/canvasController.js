@@ -3,12 +3,13 @@ function canvasController(parentDiv, socket) {
     /* Init modules and variables */
     var cu = new canvasUtils();
     var shape = new Shape();
+    var indicatorData = new IndicatorData();
     var indicatorShape, mouseDown;
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
     var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
-	var _clientId = "";
+	var _clientId = '';
 	var shapeNumber = 0;
-	var indicCoords = {'x': "", 'y': ""};
+	var indicCoords = {'x': '', 'y': ''};
 
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
@@ -27,27 +28,51 @@ function canvasController(parentDiv, socket) {
         
         shape.x0 = pos.x;
         shape.y0 = pos.y;
-        indicCoords.x = pos.x;
-        indicCoords.y = pos.y;
+        indicatorData.x0 = pos.x;
+        indicatorData.y0 = pos.y;
+        indicatorData.x1 = pos.x;
+        indicatorData.y1 = pos.y;
+        
     });
     
     canvas.addEventListener('mousemove', function(evt){
         if (mouseDown === true) {
             
-            var pos = getMousePositionOnCanvas(evt);       
-            if (Math.abs(indicCoords.x-pos.x) > 10 || Math.abs(indicCoords.y-pos.y) > 10){
-                indicCoords.x = pos.x;
-                indicCoords.y = pos.y;
-
-                indicatorShape.attrs.width = indicCoords.x-indicatorShape.attrs.x;
-                indicatorShape.attrs.height = indicCoords.y-indicatorShape.attrs.y;
-                
-                layer.draw();
-                
-                
-                //indicatorShape.attrs.height =;
-            }    
             
+            var pos = getMousePositionOnCanvas(evt);       
+            if (Math.abs(indicatorData.x1-pos.x) > 10 || Math.abs(indicatorData.y1-pos.y) > 10) {
+                indicatorData.x1 = pos.x;
+                indicatorData.y1 = pos.y;
+                
+                indicatorData.calcDelta();
+                
+                if (shape.form === 'rect') {
+                    indicatorShape.attrs.width = indicatorData.dx;
+                    indicatorShape.attrs.height = indicatorData.dy;
+                    
+                } 
+                else if (shape.form === 'ellipse') {
+                    
+                    indicatorData.calcEllipseOrigo();
+                    indicatorShape.attrs.x = indicatorData.ellipseOrigo.x;
+                    indicatorShape.attrs.y = indicatorData.ellipseOrigo.y;
+                                        
+                    indicatorShape.attrs.radius.x = Math.abs(indicatorData.dx / 2);
+                    indicatorShape.attrs.radius.y = Math.abs(indicatorData.dy / 2);
+
+                }
+                else if (shape.form === 'circle') {
+                    
+                    indicatorData.calcEllipseOrigo();
+                    indicatorShape.attrs.x = indicatorData.ellipseOrigo.x;
+                    indicatorShape.attrs.y = indicatorData.ellipseOrigo.y;
+                                        
+                    indicatorShape.attrs.radius = Math.abs(indicatorData.dx / 2);
+                }
+                
+                layer.draw();      
+                                
+            }    
         }
         
          
@@ -55,7 +80,7 @@ function canvasController(parentDiv, socket) {
 
     canvas.addEventListener('mouseup', function(evt) {  
         if (isDraggable()) return;
-        
+                
         mouseDown = false;
         indicatorShape.remove();
         var pos = getMousePositionOnCanvas(evt);
@@ -92,10 +117,7 @@ function canvasController(parentDiv, socket) {
         })  
         socket.on('drawShape', function(data) {
             
-            
-            // var node = cu.drawTestRect(layer, data);
             var node = drawFunctions[data.form](layer, data);
-			
 			if (_draggable) {
 			    setDraggable(_draggable);
 			}
