@@ -1,0 +1,63 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'C:Developmentnode-mongodb-native' ]
+2 info using npm@1.1.62
+3 info using node@v0.8.11
+4 verbose read json C:\Development\DMEHealthCollab\package.json
+5 verbose read json C:\Development\DMEHealthCollab\node_modules\connect-flash\package.json
+6 verbose read json C:\Development\DMEHealthCollab\node_modules\express\package.json
+7 verbose read json C:\Development\DMEHealthCollab\node_modules\jade\package.json
+8 verbose read json C:\Development\DMEHealthCollab\node_modules\jake\package.json
+9 verbose read json C:\Development\DMEHealthCollab\node_modules\jshint\package.json
+10 verbose read json C:\Development\DMEHealthCollab\node_modules\mongodb\package.json
+11 verbose read json C:\Development\DMEHealthCollab\node_modules\nodeunit\package.json
+12 verbose read json C:\Development\DMEHealthCollab\node_modules\passport\package.json
+13 verbose read json C:\Development\DMEHealthCollab\node_modules\passport-local\package.json
+14 verbose read json C:\Development\DMEHealthCollab\node_modules\socket.io\package.json
+15 verbose read json C:\Development\DMEHealthCollab\node_modules\stylus\package.json
+16 verbose from cache C:\Development\DMEHealthCollab\package.json
+17 verbose readDependencies using package.json deps
+18 verbose cache add [ 'C:Developmentnode-mongodb-native', null ]
+19 silly cache add name=undefined spec="C:Developmentnode-mongodb-native" args=["C:Developmentnode-mongodb-native",null]
+20 verbose parsed url { protocol: 'c:',
+20 verbose parsed url   host: 'developmentnode-mongodb-native',
+20 verbose parsed url   hostname: 'developmentnode-mongodb-native',
+20 verbose parsed url   href: 'c:developmentnode-mongodb-native' }
+21 silly lockFile 925bd3e6-C-Developmentnode-mongodb-native C:Developmentnode-mongodb-native
+22 verbose lock C:Developmentnode-mongodb-native C:\Users\nicolai.g.jensen\AppData\Roaming\npm-cache\925bd3e6-C-Developmentnode-mongodb-native.lock
+23 silly lockFile 925bd3e6-C-Developmentnode-mongodb-native C:Developmentnode-mongodb-native
+24 verbose addNamed [ 'C:Developmentnode-mongodb-native', '' ]
+25 verbose addNamed [ null, '' ]
+26 silly lockFile a6f3e26b-C-Developmentnode-mongodb-native C:Developmentnode-mongodb-native@
+27 verbose lock C:Developmentnode-mongodb-native@ C:\Users\nicolai.g.jensen\AppData\Roaming\npm-cache\a6f3e26b-C-Developmentnode-mongodb-native.lock
+28 silly addNameRange { name: 'C:Developmentnode-mongodb-native',
+28 silly addNameRange   range: '',
+28 silly addNameRange   hasData: false }
+29 verbose url raw C:Developmentnode-mongodb-native
+30 verbose url resolving [ 'https://registry.npmjs.org/',
+30 verbose url resolving   './C%3ADevelopmentnode-mongodb-native' ]
+31 verbose url resolved https://registry.npmjs.org/C%3ADevelopmentnode-mongodb-native
+32 info trying registry request attempt 1 at 11:42:57
+33 http GET https://registry.npmjs.org/C%3ADevelopmentnode-mongodb-native
+34 http 404 https://registry.npmjs.org/C%3ADevelopmentnode-mongodb-native
+35 silly registry.get cb [ 404,
+35 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+35 silly registry.get     date: 'Wed, 21 Nov 2012 10:42:31 GMT',
+35 silly registry.get     'content-type': 'application/json',
+35 silly registry.get     'content-length': '52',
+35 silly registry.get     'cache-control': 'must-revalidate' } ]
+36 silly lockFile a6f3e26b-C-Developmentnode-mongodb-native C:Developmentnode-mongodb-native@
+37 error 404 'C%3ADevelopmentnode-mongodb-native' is not in the npm registry.
+37 error 404 You should bug the author to publish it
+37 error 404
+37 error 404 Note that you can also install from a
+37 error 404 tarball, folder, or http url, or git url.
+38 error System Windows_NT 6.1.7601
+39 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "C:Developmentnode-mongodb-native"
+40 error cwd C:\Development\DMEHealthCollab
+41 error node -v v0.8.11
+42 error npm -v 1.1.62
+43 error code E404
+44 verbose exit [ 1, true ]
