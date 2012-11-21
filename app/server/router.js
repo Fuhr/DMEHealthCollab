@@ -45,6 +45,11 @@ module.exports = function(app, io, passport) {
 	   socket.on('shapeMove', function (data) {
             io.sockets.emit('shapeMoved', data);
        });
+       
+       socket.on('chatToServer',function(data){
+            console.log(data);
+            io.sockets.emit('chatToClient', data);
+       });
     });
 	
 	function ensureAuthenticated(req, res, next) {
