@@ -20,6 +20,9 @@ $(document).ready(function() {
     $("#ellipse-button").click(function() {
         cc.setActiveShape('ellipse');
     });
+    $("#circle-button").click(function() {
+        cc.setActiveShape('circle');
+    });
 
  });
 

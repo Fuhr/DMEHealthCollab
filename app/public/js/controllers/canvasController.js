@@ -3,7 +3,7 @@ function canvasController(parentDiv, socket) {
     /* Init modules and variables */
     var cu = new canvasUtils();
     var shape = new Shape();
-    var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse};
+    var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
 	var _clientId = "";
 	var shapeNumber = 0;
 
@@ -137,7 +137,7 @@ function canvasController(parentDiv, socket) {
 		
 		shape.calcDelta();
 	    shape.color = cu.rndColor();
-		if (shape.form === 'ellipse') {
+		if (shape.form === 'ellipse' || shape.form === 'circle') {
 		    shape.calcEllipseOrigo();
 	    }
 		

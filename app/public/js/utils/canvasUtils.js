@@ -61,6 +61,28 @@ function canvasUtils() {
 		return node;
     }
     
+    this.drawCircle = function(layer, shapeData) {
+		var node = new Kinetic.Circle({
+		   x: shapeData.ellipseOrigo.x,
+		   y: shapeData.ellipseOrigo.y,
+		   width: shapeData.dx,
+		   height: shapeData.dy,
+		   fill: shapeData.color,
+		   stroke: 'black',
+		   strokeWidth: 1,
+		   draggable: false,
+		   id: shapeData.id
+		});
+		
+		node.attrs.radius = Math.abs(node.attrs.radius);
+		_nodes[shapeData.id] = node;
+        layer.add(node);
+        
+        console.log(node);
+        layer.draw();        
+		return node;
+    }
+    
     
     this.setShapesDraggable = function (shapes, state) {
         console.log("Shape: " +  shapes.length);
