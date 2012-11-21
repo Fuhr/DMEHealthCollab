@@ -1,3 +1,5 @@
+LH = require('./helpers/login-helper');
+
 module.exports = function(app, io, passport) {
 
     /* Page routing*/
@@ -11,6 +13,11 @@ module.exports = function(app, io, passport) {
 	
 	app.get('/logout', function(req, res){
 		req.logout();
+		res.redirect('/');
+	});
+	
+	app.get('/createDb', function(req, res){
+		LH.createDb();
 		res.redirect('/');
 	});
 	
