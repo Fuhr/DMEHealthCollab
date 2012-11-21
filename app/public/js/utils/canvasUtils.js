@@ -20,23 +20,47 @@ function canvasUtils() {
     }
 
     
-    this.drawTestRect = function(layer, data) {
+    this.drawRect = function(layer, shapeData) {
+        
+        console.log(layer);
+        console.log(shapeData);
 		var node = new Kinetic.Rect({
-		   x: data.coords.x0,
-		   y: data.coords.y0,
-		   width: data.dx,
-		   height: data.dy,
-		   fill: data.color,
+		   x: shapeData.x0,
+		   y: shapeData.y0,
+		   width: shapeData.dx,
+		   height: shapeData.dy,
+		   fill: shapeData.color,
 		   stroke: 'black',
 		   strokeWidth: 1,
 		   draggable: false,
-		   id: data.coords.id
+		   id: shapeData.id
 		});
-		_nodes[data.coords.id] = node;
+		_nodes[shapeData.id] = node;
         layer.add(node);
         layer.draw();        
 		return node;
     }
+    
+    this.drawEllipse = function(layer, shapeData) {
+		var node = new Kinetic.Ellipse({
+		   x: shapeData.ellipseOrigo.x,
+		   y: shapeData.ellipseOrigo.y,
+		   width: shapeData.dx,
+		   height: shapeData.dy,
+		   fill: shapeData.color,
+		   stroke: 'black',
+		   strokeWidth: 1,
+		   draggable: false,
+		   id: shapeData.id
+		});
+		node.attrs.radius.x = Math.abs(node.attrs.radius.x);
+		node.attrs.radius.y = Math.abs(node.attrs.radius.y);
+		_nodes[shapeData.id] = node;
+        layer.add(node);
+        layer.draw();        
+		return node;
+    }
+    
     
     this.setShapesDraggable = function (shapes, state) {
         console.log("Shape: " +  shapes.length);

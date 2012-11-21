@@ -17,11 +17,11 @@ module.exports = function(app, io) {
     io.sockets.on('connection', function (socket) {
         
         socket.emit('clientId', socket.id);
-        socket.on('rect', function (data) {
-            io.sockets.emit('rectSend', data);
+        socket.on('shapeDrawn', function (data) {
+            io.sockets.emit('drawShape', data);
        });
-	   socket.on('rectMove', function (data) {
-            io.sockets.emit('rectMoved', data);
+	   socket.on('shapeMove', function (data) {
+            io.sockets.emit('shapeMoved', data);
        });
     });
 };
