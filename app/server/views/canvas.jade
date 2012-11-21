@@ -1,12 +1,19 @@
 extends layout
 
 block content
-	.row
-		.span9#testContainer
-		.span3
-			include chat
-			#right-column-controls
-				#toggle-button.button.btn.btn-large.btn-inverse(type='button') Toggle Draggable
-				#rect-button.button.btn.btn-large.btn-inverse(type='button') Rect
-				#ellipse-button.button.btn.btn-large.btn-inverse(type='button') Ellipse
-				#circle-button.button.btn.btn-large.btn-inverse(type='button') Circle
+    .row
+        .span9#testContainer
+        .span3
+            include chat
+            #right-column-controls
+                #toggle-button.button.btn.btn-large.btn-inverse(type='button') Toggle Draggable
+                #rect-button.button.btn.btn-large.btn-inverse(type='button') Rect
+                #ellipse-button.button.btn.btn-large.btn-inverse(type='button') Ellipse
+                #circle-button.button.btn.btn-large.btn-inverse(type='button') Circle
+                
+block scripts
+    // TODO: DET HER ER IKKE SMART!
+    script(type='text/javascript', src='/js/model/ShapeObject.js')
+    script(type='text/javascript', src='/js/views/canvas.js') 
+    script(type='text/javascript', src='/js/controllers/canvasController.js')
+    script(type='text/javascript', src='/js/utils/canvasUtils.js')
