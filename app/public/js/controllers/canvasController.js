@@ -67,7 +67,7 @@ function canvasController(parentDiv, socket) {
                     indicatorShape.attrs.x = indicatorData.ellipseOrigo.x;
                     indicatorShape.attrs.y = indicatorData.ellipseOrigo.y;
                                         
-                    indicatorShape.attrs.radius = Math.abs(indicatorData.dx / 2);
+                    indicatorShape.attrs.radius = Math.abs(Math.sqrt(dx*dx + dy*dy)/2);
                 }
                 
                 layer.draw();      
@@ -77,6 +77,8 @@ function canvasController(parentDiv, socket) {
         
          
     });
+    
+
 
     canvas.addEventListener('mouseup', function(evt) {  
         if (isDraggable()) return;
@@ -93,14 +95,60 @@ function canvasController(parentDiv, socket) {
     canvas.addEventListener('touchstart', function(evt) {  
         if (isDraggable()) return;      
         
-        var pos = getTouchPositionOnCanvas(evt);
+        var pos = getTouchPositionOnCanvas(evt);       
+        //indicatorShape = cu.drawIndicatorRect(layer, pos);
+        indicatorShape = indicFunctions[shape.form](layer, pos);
+        
         shape.x0 = pos.x;
         shape.y0 = pos.y;
+        indicatorData.x0 = pos.x;
+        indicatorData.y0 = pos.y;
+        indicatorData.x1 = pos.x;
+        indicatorData.y1 = pos.y;
     });
+    
+    canvas.addEventListener('touchmove', function(evt){
 
+        var pos = getTouchPositionOnCanvas(evt);       
+        if (Math.abs(indicatorData.x1-pos.x) > 10 || Math.abs(indicatorData.y1-pos.y) > 10) {
+            indicatorData.x1 = pos.x;
+            indicatorData.y1 = pos.y;
+            
+            indicatorData.calcDelta();
+            
+            if (shape.form === 'rect') {
+                indicatorShape.attrs.width = indicatorData.dx;
+                indicatorShape.attrs.height = indicatorData.dy;
+                
+            } 
+            else if (shape.form === 'ellipse') {
+                
+                indicatorData.calcEllipseOrigo();
+                indicatorShape.attrs.x = indicatorData.ellipseOrigo.x;
+                indicatorShape.attrs.y = indicatorData.ellipseOrigo.y;
+                                    
+                indicatorShape.attrs.radius.x = Math.abs(indicatorData.dx / 2);
+                indicatorShape.attrs.radius.y = Math.abs(indicatorData.dy / 2);
+
+            }
+            else if (shape.form === 'circle') {
+                
+                indicatorData.calcEllipseOrigo();
+                indicatorShape.attrs.x = indicatorData.ellipseOrigo.x;
+                indicatorShape.attrs.y = indicatorData.ellipseOrigo.y;
+                                    
+                indicatorShape.attrs.radius = Math.abs(indicatorData.dx / 2);
+            }
+            
+            layer.draw();      
+                            
+        }        
+    });
+    
     canvas.addEventListener('touchend', function(evt) {
         if (isDraggable()) return;
 
+        indicatorShape.remove();
         var pos = getTouchPositionOnCanvas(evt);
         shape.x1 = pos.x;
         shape.y1 = pos.y;
@@ -118,6 +166,8 @@ function canvasController(parentDiv, socket) {
         socket.on('drawShape', function(data) {
             
             var node = drawFunctions[data.form](layer, data);
+            
+            // console.log(node);
 			if (_draggable) {
 			    setDraggable(_draggable);
 			}
@@ -195,6 +245,7 @@ function canvasController(parentDiv, socket) {
         shapeNumber++;
 		
 		shape.calcDelta();
+		console.log(shape);
 	    shape.color = cu.rndColor();
 		if (shape.form === 'ellipse' || shape.form === 'circle') {
 		    shape.calcEllipseOrigo();
