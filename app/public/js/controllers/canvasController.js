@@ -5,6 +5,7 @@ function canvasController(parentDiv, socket) {
     var shape = new Shape();
     var indicatorShape, mouseDown;
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
+    var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
 	var _clientId = "";
 	var shapeNumber = 0;
 	var indicCoords = {'x': "", 'y': ""};
@@ -21,7 +22,8 @@ function canvasController(parentDiv, socket) {
         mouseDown = true;
         
         var pos = getMousePositionOnCanvas(evt);       
-        indicatorShape = cu.drawIndicatorRect(layer, pos);
+        //indicatorShape = cu.drawIndicatorRect(layer, pos);
+        indicatorShape = indicFunctions[shape.form](layer, pos);
         
         shape.x0 = pos.x;
         shape.y0 = pos.y;
