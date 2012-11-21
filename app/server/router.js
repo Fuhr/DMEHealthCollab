@@ -1,3 +1,5 @@
+LH = require('./helpers/login-helper');
+
 module.exports = function(app, io, passport) {
 
     /* Page routing*/
@@ -6,11 +8,16 @@ module.exports = function(app, io, passport) {
 	});
 	
 	app.get('/', ensureAuthenticated, function(req, res){
-		res.render('index', { user: req.user });
+		res.render('index', { user: req.user, username: req.user.username });
 	});
 	
 	app.get('/logout', function(req, res){
 		req.logout();
+		res.redirect('/');
+	});
+	
+	app.get('/createDb', function(req, res){
+		LH.createDb();
 		res.redirect('/');
 	});
 	

@@ -20,7 +20,7 @@ var app = express()
 
 app.root = __dirname;
 
-require('./app/server/helpers/loginHelper')(Server, Db, passport, LocalStrategy, flash);
+require('./app/server/helpers/login-helper');
 require('./app/config')(app, express, flash, passport);
 require('./app/server/router')(app, io, passport);
 
