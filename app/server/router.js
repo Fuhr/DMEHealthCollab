@@ -8,7 +8,7 @@ module.exports = function(app, io, passport) {
 	});
 	
 	app.get('/', ensureAuthenticated, function(req, res){
-		res.render('index', { user: req.user });
+		res.render('index', { user: req.user, username: req.user.username });
 	});
 	
 	app.get('/logout', function(req, res){
