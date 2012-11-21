@@ -7,6 +7,7 @@ function canvasController(parentDiv, socket) {
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
 	var _clientId = "";
 	var shapeNumber = 0;
+	var indicCoords = {'x': "", 'y': ""};
 
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
@@ -18,18 +19,32 @@ function canvasController(parentDiv, socket) {
         if (isDraggable()) return;
         
         mouseDown = true;
+        
         var pos = getMousePositionOnCanvas(evt);       
-        // indicatorShape = cu.drawIndicatorRect(layer, pos);
+        indicatorShape = cu.drawIndicatorRect(layer, pos);
         
         shape.x0 = pos.x;
         shape.y0 = pos.y;
-        
+        indicCoords.x = pos.x;
+        indicCoords.y = pos.y;
     });
     
     canvas.addEventListener('mousemove', function(evt){
         if (mouseDown === true) {
+            
             var pos = getMousePositionOnCanvas(evt);       
-            console.log("pos 1");
+            if (Math.abs(indicCoords.x-pos.x) > 10 || Math.abs(indicCoords.y-pos.y) > 10){
+                indicCoords.x = pos.x;
+                indicCoords.y = pos.y;
+
+                indicatorShape.attrs.width = indicCoords.x-indicatorShape.attrs.x;
+                indicatorShape.attrs.height = indicCoords.y-indicatorShape.attrs.y;
+                
+                layer.draw();
+                
+                
+                //indicatorShape.attrs.height =;
+            }    
             
         }
         
@@ -40,7 +55,7 @@ function canvasController(parentDiv, socket) {
         if (isDraggable()) return;
         
         mouseDown = false;
-        
+        indicatorShape.remove();
         var pos = getMousePositionOnCanvas(evt);
         shape.x1 = pos.x;
         shape.y1 = pos.y;

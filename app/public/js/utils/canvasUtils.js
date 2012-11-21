@@ -31,7 +31,8 @@ function canvasUtils() {
 		   strokeWidth: 1,
 		   draggable: false		
 		});
-		
+		layer.add(node);
+		layer.draw();
 		return node;
     }
     
