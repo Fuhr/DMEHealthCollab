@@ -1,14 +1,36 @@
-module.exports = function(app, io) {
+LH = require('./helpers/login-helper');
+
+module.exports = function(app, io, passport) {
 
     /* Page routing*/
-	app.get('/canvas', function(req, res){
-	    res.render('canvas', {});
+	app.get('/canvas', ensureAuthenticated, function(req, res){
+	    res.render('canvas', {username: req.user.username});
 	});
 	
-	app.get('/', function(req, res){
-	    res.render('index', {});
-	});	
+	app.get('/', ensureAuthenticated, function(req, res){
+		res.render('index', { user: req.user, username: req.user.username });
+	});
+	
+	app.get('/logout', function(req, res){
+		req.logout();
+		res.redirect('/');
+	});
+	
+	app.get('/createDb', function(req, res){
+		LH.createDb();
+		res.redirect('/');
+	});
+	
+	app.get('/login', function(req, res){
+		res.render('login', { user: req.user, message: req.flash('error') });
+	});
 
+	app.post('/login', 
+		passport.authenticate('local', { failureRedirect: '/login', failureFlash: true })
+		, function(req, res) {
+			res.redirect('/');
+	});
+	
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!
     * See this example: http://erickrdch.com/2012/05/chat-application-with-node-js-and-socket-io.html
@@ -24,4 +46,9 @@ module.exports = function(app, io) {
             io.sockets.emit('shapeMoved', data);
        });
     });
+	
+	function ensureAuthenticated(req, res, next) {
+		if (req.isAuthenticated()) { return next(); }
+		res.redirect('/login');
+	};
 };
