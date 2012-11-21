@@ -19,11 +19,23 @@ function canvasUtils() {
         return layer;
     }
 
+    this.drawIndicatorRect = function(layer, shapeData) {
+        var node = new Kinetic.Rect({
+		   x: shapeData.x,
+		   y: shapeData.y,
+		   width: 0,
+		   height: 0,
+		   fill: '#111',
+		   opacity: 0.3,
+		   stroke: 'black',
+		   strokeWidth: 1,
+		   draggable: false		
+		});
+		
+		return node;
+    }
     
     this.drawRect = function(layer, shapeData) {
-        
-        console.log(layer);
-        console.log(shapeData);
 		var node = new Kinetic.Rect({
 		   x: shapeData.x0,
 		   y: shapeData.y0,
@@ -78,15 +90,12 @@ function canvasUtils() {
 		_nodes[shapeData.id] = node;
         layer.add(node);
         
-        console.log(node);
         layer.draw();        
 		return node;
     }
     
     
-    this.setShapesDraggable = function (shapes, state) {
-        console.log("Shape: " +  shapes.length);
-        
+    this.setShapesDraggable = function (shapes, state) {        
         for (var i = 0; i< shapes.length; i++) {            
             shapes[i].setDraggable(state);
             

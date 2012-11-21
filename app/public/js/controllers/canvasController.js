@@ -3,25 +3,43 @@ function canvasController(parentDiv, socket) {
     /* Init modules and variables */
     var cu = new canvasUtils();
     var shape = new Shape();
+    var indicatorShape, mouseDown;
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
 	var _clientId = "";
 	var shapeNumber = 0;
 
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
-    var canvas = stage.getContainer();         
+    var canvas = stage.getContainer();   
     var _draggable = false;
     
     /* Event handlers */ 
-    canvas.addEventListener('mousedown' , function(evt) {            
-        var pos = getMousePositionOnCanvas(evt);         
+    canvas.addEventListener('mousedown' , function(evt) {      
+        if (isDraggable()) return;
+        
+        mouseDown = true;
+        var pos = getMousePositionOnCanvas(evt);       
+        // indicatorShape = cu.drawIndicatorRect(layer, pos);
+        
         shape.x0 = pos.x;
         shape.y0 = pos.y;
         
     });
+    
+    canvas.addEventListener('mousemove', function(evt){
+        if (mouseDown === true) {
+            var pos = getMousePositionOnCanvas(evt);       
+            console.log("pos 1");
+            
+        }
+        
+         
+    });
 
     canvas.addEventListener('mouseup', function(evt) {  
         if (isDraggable()) return;
+        
+        mouseDown = false;
         
         var pos = getMousePositionOnCanvas(evt);
         shape.x1 = pos.x;
@@ -30,7 +48,9 @@ function canvasController(parentDiv, socket) {
         sendShapeToServer(socket, shape);
     });
 
-    canvas.addEventListener('touchstart', function(evt) {        
+    canvas.addEventListener('touchstart', function(evt) {  
+        if (isDraggable()) return;      
+        
         var pos = getTouchPositionOnCanvas(evt);
         shape.x0 = pos.x;
         shape.y0 = pos.y;
