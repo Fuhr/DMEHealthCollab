@@ -3,8 +3,8 @@ LH = require('./helpers/login-helper');
 module.exports = function(app, io, passport) {
 
     /* Page routing*/
-	app.get('/canvas', function(req, res){
-	    res.render('canvas', {});
+	app.get('/canvas', ensureAuthenticated, function(req, res){
+	    res.render('canvas', {username: req.user.username});
 	});
 	
 	app.get('/', ensureAuthenticated, function(req, res){
