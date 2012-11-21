@@ -1,11 +1,12 @@
 extends layout
 
 block content
-    .row
-        .span9#testContainer
-        include chat
-		#right-column-controls
-			#toggle-button.button.btn.btn-large.btn-inverse(type='button') Toggle Draggable
-			#rect-button.button.btn.btn-large.btn-inverse(type='button') Rect
-			#ellipse-button.button.btn.btn-large.btn-inverse(type='button') Ellipse
-			#circle-button.button.btn.btn-large.btn-inverse(type='button') Circle
+	.row
+		.span9#testContainer
+		.span3
+			include chat
+			#right-column-controls
+				#toggle-button.button.btn.btn-large.btn-inverse(type='button') Toggle Draggable
+				#rect-button.button.btn.btn-large.btn-inverse(type='button') Rect
+				#ellipse-button.button.btn.btn-large.btn-inverse(type='button') Ellipse
+				#circle-button.button.btn.btn-large.btn-inverse(type='button') Circle
