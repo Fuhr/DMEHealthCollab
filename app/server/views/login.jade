@@ -1,0 +1,21 @@
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		title DME Health
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='')
+		meta(name='author', content='')
+	body
+		if message
+			p message
+
+		form(action='/login', method='post')
+			div
+				label Username:
+				input(type='text', name='username')
+				br
+			div
+				label Password:
+				input(type='password', name='password')
+			div
+				input(type='submit', value='Submit')
