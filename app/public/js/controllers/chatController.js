@@ -8,7 +8,8 @@ function chatController(outputSelector, inputSelector, socket){
         });
         
         socket.on('chatToClient', function(data) {
-            $(outputSelector).append(data);
+            var temp = data + '<br>';
+            $(outputSelector).append(temp);
         });
     });
     
