@@ -56,9 +56,8 @@ function canvasUtils() {
             y: shapeData.y0,
             width: shapeData.dx,
             height: shapeData.dy,
-            fill: shapeData.color,
-            stroke: 'black',
-            strokeWidth: 1,
+            stroke: shapeData.color,
+            strokeWidth: 2,
             draggable: false,
             id: shapeData.id
 		});
@@ -74,9 +73,8 @@ function canvasUtils() {
             y: shapeData.ellipseOrigo.y,
             width: shapeData.dx,
             height: shapeData.dy,
-            fill: shapeData.color,
-            stroke: 'black',
-            strokeWidth: 1,
+            stroke: shapeData.color,
+            strokeWidth: 2,
             draggable: false,
             id: shapeData.id
 		});
@@ -95,9 +93,8 @@ function canvasUtils() {
             y: shapeData.ellipseOrigo.y,
             width: shapeData.dx,
             height: shapeData.dx,
-            fill: shapeData.color,
-            stroke: 'black',
-            strokeWidth: 1,
+            stroke: shapeData.color,
+            strokeWidth: 2,
             draggable: false,
             id: shapeData.id
 		});
@@ -124,10 +121,9 @@ function canvasUtils() {
             y: shapeData.y,
             width: 0,
             height: 0,
-            fill: '#111',
-            opacity: 0.3,
+            opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 1,
+            strokeWidth: 2,
             draggable: false		
 		});
 		layer.add(node);
@@ -141,10 +137,9 @@ function canvasUtils() {
             y: shapeData.y,
             width: 0,
             height: 0,
-            fill: '#111',
-            opacity: 0.3,
+            opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 1,
+            strokeWidth: 2,
             draggable: false
 		});
 		node.attrs.radius.x = Math.abs(node.attrs.radius.x);
@@ -160,10 +155,9 @@ function canvasUtils() {
             y: shapeData.y,
             width: 0,
             height: 0,
-            fill: '#111',
-            opacity: 0.3,
+            opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 1,
+            strokeWidth: 2,
             draggable: false
 		});
 		

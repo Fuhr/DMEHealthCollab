@@ -207,13 +207,14 @@ function canvasController(parentDiv, socket) {
 		
 		adx = Math.abs(shape.dx);
 		ady = Math.abs(shape.dy);
+		indicatorShape.remove();
+        layer.draw();
 		
 		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
         
-        indicatorShape.remove();
-        layer.draw();
+
         
         socket.emit('shapeDrawn', shape);  
 	};
