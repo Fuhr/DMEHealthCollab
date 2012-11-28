@@ -22,7 +22,7 @@ function chatController(outputSelector, inputSelector, socket){
         });
 
         socket.on('chatToClient', function (data) {
-            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
+            var temp = '<span style="color:' + data.color + ';">&nbsp;<b>' + data.username + '</b></span><b>:</b> <span>' + data.msg + '<br></span>';
             $(outputSelector).append(temp);
         });
     });

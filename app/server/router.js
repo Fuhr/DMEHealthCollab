@@ -70,6 +70,7 @@ module.exports = function (app, io, passport) {
             var user = LH.getUserBySocketID(socket.id);
             var sendData = {};
             sendData.username = user.username;
+            sendData.color = user.color;
             sendData.msg = data;
             io.sockets.emit('chatToClient', sendData);
         });
