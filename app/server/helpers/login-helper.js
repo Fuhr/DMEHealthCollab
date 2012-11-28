@@ -29,14 +29,15 @@ LH.addUserToSocketID = function (username, socketid) {
         color: rndColor()
     };
     if (!LH.socketsByName[username]) {
-        LH.socketsByName[username] = socketid;
-        LH.clientsByID[socketid] = username;
+        LH.socketsByName[username] = user;
+        LH.clientsByID[socketid] = user;
         LH.users.push(user);
     } else {
-        var oldID = LH.getSocketByName(username);
-        delete LH.socketsByName[oldID];
-        LH.socketsByName[username] = socketid;
-        LH.clientsByID[socketid] = username;
+        var oldUser = LH.getUserByName(username);
+        delete LH.socketsByName[oldUser.username];
+        delete LH.clientsByID[oldUser.socketid];
+        LH.socketsByName[username] = user;
+        LH.clientsByID[socketid] = user;
         for (var i = 0; i < LH.users.length; i++) {
             var tempUser = users[i];
             if (user.username == username) {
@@ -55,12 +56,12 @@ LH.getUserBySocketID = function (socketid) {
     }
 };
 
-LH.getSocketByName = function (username) {
-    var socketid = LH.socketsByName[username];
-    if (!socketid) {
+LH.getUserByName = function (username) {
+    var user = LH.socketsByName[username];
+    if (!user) {
         return "NOSOCKET";
     } else {
-        return socketid;
+        return user;
     }
 };
 

@@ -43,8 +43,6 @@ module.exports = function (app, io, passport) {
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
         res.send(sendData);
-        console.log('#########################################USERPOST####################################');
-        console.log(LH.users);
     });
 
     app.post('/login',
@@ -69,9 +67,9 @@ module.exports = function (app, io, passport) {
         });
 
         socket.on('chatToServer', function (data) {
-            var username = LH.getUserBySocketID(socket.id);
+            var user = LH.getUserBySocketID(socket.id);
             var sendData = {};
-            sendData.username = username;
+            sendData.username = user.username;
             sendData.msg = data;
             io.sockets.emit('chatToClient', sendData);
         });
