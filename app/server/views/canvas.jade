@@ -6,10 +6,18 @@ block content
         .span3
             include chat
             #right-column-controls
-                #toggle-button.button.btn.btn-large.btn-inverse(type='button') Toggle Draggable
-                #rect-button.button.btn.btn-large.btn-inverse(type='button') Rect
-                #ellipse-button.button.btn.btn-large.btn-inverse(type='button') Ellipse
-                #circle-button.button.btn.btn-large.btn-inverse(type='button') Circle
+                //- .btn-group(data-toggle='buttons-radio')
+                //-     #toggle-button.button.btn.btn-small.btn-inverse.btn.active(type='button', value='rect')
+                //-         i.icon-hand-up.icon-white
+                //-     #rect-button.button.btn.btn-small.btn-inverse(type='button', value='rect') Rectangle
+                //-     #ellipse-button.button.btn.btn-small.btn-inverse(type='button', value='ellipse') Ellipse
+                //-     #circle-button.button.btn.btn-small.btn-inverse(type='button', value='circle') Circle
+            
+            
+                #toggle-button.button.btn.btn-small.btn-inverse(type='button') Toggle Draggable
+                #rect-button.button.btn.btn-small.btn-inverse(type='button') Rect
+                #ellipse-button.button.btn.btn-small.btn-inverse(type='button') Ellipse
+                #circle-button.button.btn.btn-small.btn-inverse(type='button') Circle
                 #picker
                 
 block scripts

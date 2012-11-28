@@ -91,16 +91,11 @@ function canvasController(parentDiv, socket) {
         
         socket.on('getShapesOnConnect', function(data) {
             // try{
-                console.log(data);
-                
                 for( var i=0; i<data.length; i++){
                     
                     var node = Kinetic.Node.create(JSON.stringify(data[i]));
                     
                     if (node.shapeType === 'Circle' || 'Ellipse') {
-                        console.log(node.attrs.radius);
-                        console.log(data[i].attrs.radius);
-                        
                         node.attrs.radius = data[i].attrs.radius;
                     }
                     cu.addNode(node);
