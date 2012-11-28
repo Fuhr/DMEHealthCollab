@@ -14,7 +14,8 @@ function canvasController(parentDiv, socket) {
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
     var canvas = stage.getContainer();   
-    var _draggable = false;
+    var _draggable = true;
+    
     
     /* Event handlers */ 
     canvas.addEventListener('mousedown' , function(evt) {      
@@ -102,15 +103,15 @@ function canvasController(parentDiv, socket) {
                     layer.add(node);
                     layer.draw();
             
-                    if (_draggable) {
-                        setDraggable(_draggable);
-                    }
-            
                     setUpNodeHandlers(node,socket);
                 }
             // }catch(error) {
             //                console.log(error);
             //            }
+            if (_draggable) {
+                setDraggable(_draggable);
+            }
+        
         });
         
         socket.on('drawShape', function(data) {
@@ -135,6 +136,7 @@ function canvasController(parentDiv, socket) {
     
     this.setActiveShape = function (type) {
           shape.form = type;
+          setDraggable(false);
     };
     
     setDraggable = function (state) {

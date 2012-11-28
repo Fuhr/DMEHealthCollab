@@ -9,12 +9,13 @@ $(document).ready(function() {
     var chat = new chatController('#chat-output', '#chat-input', socket);
     
     /* DOM specific code goes here */
-       
+    
+    
     $('#toggle-button').click(function() {
       cc.toggleDraggable();
     });
     $('#rect-button').click(function() {
-        console.log("hi");
+        // cc.setDraggable(false);
         cc.setActiveShape('rect');
     });
     $('#ellipse-button').click(function() {
