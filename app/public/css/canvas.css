@@ -2,9 +2,7 @@
 	background-color: #E8E3E5;
     display: block ! important;
     margin: 0 auto;
-   
 }
-
 
 .right-column {
     background-color: #a1a1a1;
@@ -13,17 +11,21 @@
 
 #right-column-controls {
     margin-bottom: 20px;
-/*    height: 115px;*/
-/*    background-color: #a1a1a1;*/
-    
-    
+  
 }
+
+
 /*NOT THE BEST FIX.. Buttons are not responsive in width :(  */
 #toggle-button{
     padding-left: 13px;
     padding-right: 13px;
 }
 
+.btn {
+    padding: 10px 12px;
+}
+
+/* --- Custom Icons --- */
 .icon-custom {
 	background: url("../img/custom-icons-white.png");
 }
