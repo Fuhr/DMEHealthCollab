@@ -237,22 +237,20 @@ function canvasController(parentDiv, socket) {
     	shape.calcDelta();
 	    shape.color = cu.rndColor();
 		
+		console.log(shape);
+		
 		if (shape.form === 'ellipse' || shape.form === 'circle') {
 		    shape.calcEllipseOrigo();
 	    }
 		
-		console.log("---INDICATOR---");
-		console.log(indicatorShape);
+
 		
 		adx = Math.abs(shape.dx);
 		ady = Math.abs(shape.dy);
-		indicatorShape.remove();
-        layer.draw();
-		
+
 		var serverShape = indicatorShape;
 		indicatorShape.remove();
         layer.draw();
-		
 		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
