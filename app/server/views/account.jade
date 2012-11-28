@@ -5,7 +5,17 @@ block content
 		.span8.offset2.well
 			each val, key in user
 				if key != '_id' && key != 'password'
-					.row-fluid
-						.span3 <b>!{capitalize(key)}: </b>
-						.span6 !{val}
+					if key == 'email'
+						.row-fluid
+							.span3 <b>!{capitalize(key)}: </b>
+							.span6
+								a(href='mailto:#{val}') !{val}
+					else if key == 'user_since'
+						.row-fluid
+							.span3 <b>User since: </b>
+							.span6 !{val}
+					else
+						.row-fluid
+							.span3 <b>!{capitalize(key)}: </b>
+							.span6 !{val}
 		
