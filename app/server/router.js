@@ -1,6 +1,7 @@
 LH = require('./helpers/login-helper');
 
 module.exports = function (app, io, passport) {
+    var shapeList = [];
 
     /* Page routing*/
     app.get('/canvas', ensureAuthenticated, function (req, res) {
@@ -59,14 +60,28 @@ module.exports = function (app, io, passport) {
     io.sockets.on('connection', function (socket) {
 
         socket.emit('clientId', socket.id);
+		socket.emit('getShapesOnConnect', shapeList);
         socket.on('shapeDrawn', function (data) {
-            io.sockets.emit('drawShape', data);
-        });
-        socket.on('shapeMove', function (data) {
-            io.sockets.emit('shapeMoved', data);
-        });
+            var serverShape = JSON.parse(data.serverShape);
+			serverShape.attrs.id = data.clientShape.id;
+			shapeList.push(serverShape);
+            io.sockets.emit('drawShape', data.clientShape);
+       });
 
-        socket.on('chatToServer', function (data) {
+	   socket.on('shapeMove', function (data) {
+
+			for (var i=0;i<shapeList.length;i++){
+				if (shapeList[i].attrs.id == data.position.id) {
+					shapeList[i].attrs.x = data.position.x;
+					shapeList[i].attrs.y = data.position.y;
+				}
+			}
+			
+            io.sockets.emit('shapeMoved', data.position);
+       });
+			
+       
+       socket.on('chatToServer', function (data) {
             var user = LH.getUserBySocketID(socket.id);
             var sendData = {};
             sendData.username = user.username;
@@ -75,9 +90,9 @@ module.exports = function (app, io, passport) {
             io.sockets.emit('chatToClient', sendData);
         });
     });
-
-    function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) { return next(); }
-        res.redirect('/login');
-    };
+	
+	function ensureAuthenticated(req, res, next) {
+		if (req.isAuthenticated()) { return next(); }
+		res.redirect('/login');
+	};
 };
