@@ -62,7 +62,7 @@ module.exports = function (app, io, passport) {
         socket.emit('clientId', socket.id);
 		socket.emit('getShapesOnConnect', shapeList);
         socket.on('shapeDrawn', function (data) {
-            var serverShape = JSON.parse(data.serverShape);
+			var serverShape = JSON.parse(data.serverShape);
 			serverShape.attrs.id = data.clientShape.id;
 			shapeList.push(serverShape);
             io.sockets.emit('drawShape', data.clientShape);
