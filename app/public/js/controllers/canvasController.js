@@ -4,7 +4,7 @@ function canvasController(parentDiv, socket) {
     var cu = new canvasUtils();
     var shape = new Shape();
     var indicatorData = new IndicatorData();
-    var indicatorShape, mouseDown;
+    var indicatorShape, mouseDown, color;
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
     var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
 	var _clientId = '';
@@ -89,33 +89,28 @@ function canvasController(parentDiv, socket) {
         });
 		
 		socket.on('getShapesOnConnect', function(data) {
-			// try{
-			console.log(data);
-            for( var i=0; i<data.length; i++){
-				// var node = drawFunctions[data[i].form](layer, data[i]);
-				console.log(data[i]);
-				var node = Kinetic.Node.create(JSON.stringify(data[i]));
+            try{
+                for( var i=0; i<data.length; i++){
+    				var node = Kinetic.Node.create(JSON.stringify(data[i]));
 				
-				cu.addNode(node);
-				layer.add(node);
-				layer.draw();
+    				cu.addNode(node);
+    				layer.add(node);
+    				layer.draw();
             
-				if (_draggable) {
-					setDraggable(_draggable);
-				}
+    				if (_draggable) {
+    					setDraggable(_draggable);
+    				}
 			
-				setUpNodeHandlers(node,socket);
-			}
-			// }catch(error) {
-				// console.log(error);
-			// }
+    				setUpNodeHandlers(node,socket);
+    			}
+            }catch(error) {
+                console.log(error);
+            }
         });
 		
         socket.on('drawShape', function(data) {
             
-            var node = drawFunctions[data.form](layer, data);
-			console.log(node);
-            
+            var node = drawFunctions[data.form](layer, data);            
 			if (_draggable) {
 			    setDraggable(_draggable);
 			}
@@ -129,6 +124,10 @@ function canvasController(parentDiv, socket) {
 
 
     /*--------------------------------------*/
+    
+    this.updateColor = function (data) {
+      color = data;  
+    };
     
     this.setActiveShape = function (type) {
           shape.form = type;
@@ -235,30 +234,25 @@ function canvasController(parentDiv, socket) {
 	    shape.id = _clientId + shapeNumber;
         shapeNumber++;
     	shape.calcDelta();
-	    shape.color = cu.rndColor();
+	    shape.color = color;
 		
-		console.log(shape);
 		
 		if (shape.form === 'ellipse' || shape.form === 'circle') {
 		    shape.calcEllipseOrigo();
 	    }
-		
-
-		
 		adx = Math.abs(shape.dx);
 		ady = Math.abs(shape.dy);
 
 		var serverShape = indicatorShape;
+		serverShape.attrs.stroke = color;
+		serverShape.attrs.opacity = 1;
+		
 		indicatorShape.remove();
         layer.draw();
 		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
-		
 
-        
-
-        
         socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});  
 	};
 };
