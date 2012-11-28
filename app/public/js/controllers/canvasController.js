@@ -9,8 +9,7 @@ function canvasController(parentDiv, socket) {
     var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
 	var _clientId = '';
 	var shapeNumber = 0;
-	var indicCoords = {'x': '', 'y': ''};
-
+	
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
     var canvas = stage.getContainer();   
