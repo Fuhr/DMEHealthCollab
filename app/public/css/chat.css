@@ -1,6 +1,7 @@
 ﻿#chat-output
 {
-    overflow:auto
+    overflow-y:auto;
+    overflow-x:hidden;
 }
 
 /* Let's get this party started */
