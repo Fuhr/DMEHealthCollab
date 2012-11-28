@@ -1,6 +1,7 @@
 function canvasUtils() {
 
 	var _nodes = {};
+	var strokeWidth = 4;
     
     this.createStage = function(parent, width, height) {
         var stage = new Kinetic.Stage({
@@ -61,7 +62,7 @@ function canvasUtils() {
             width: shapeData.dx,
             height: shapeData.dy,
             stroke: shapeData.color,
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
 		});
@@ -78,7 +79,7 @@ function canvasUtils() {
             width: shapeData.dx,
             height: shapeData.dy,
             stroke: shapeData.color,
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
 		});
@@ -98,7 +99,7 @@ function canvasUtils() {
             width: shapeData.dx,
             height: shapeData.dx,
             stroke: shapeData.color,
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
 		});
@@ -127,7 +128,7 @@ function canvasUtils() {
             height: 0,
             opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false		
 		});
 		layer.add(node);
@@ -143,7 +144,7 @@ function canvasUtils() {
             height: 0,
             opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false
 		});
 		node.attrs.radius.x = Math.abs(node.attrs.radius.x);
@@ -161,7 +162,7 @@ function canvasUtils() {
             height: 0,
             opacity: 0.2,
             stroke: 'black',
-            strokeWidth: 2,
+            strokeWidth: strokeWidth,
             draggable: false
 		});
 		

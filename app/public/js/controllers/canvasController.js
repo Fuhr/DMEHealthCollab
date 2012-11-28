@@ -4,7 +4,8 @@ function canvasController(parentDiv, socket) {
     var cu = new canvasUtils();
     var shape = new Shape();
     var indicatorData = new IndicatorData();
-    var indicatorShape, mouseDown, color;
+    var indicatorShape, mouseDown;
+    var color = '#000'
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
     var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
 	var _clientId = '';
@@ -89,10 +90,19 @@ function canvasController(parentDiv, socket) {
         });
 		
 		socket.on('getShapesOnConnect', function(data) {
-            try{
+            // try{
+			    console.log(data);
+                
                 for( var i=0; i<data.length; i++){
+                    
     				var node = Kinetic.Node.create(JSON.stringify(data[i]));
-				
+				    
+				    if (node.shapeType === 'Circle' || 'Ellipse') {
+				        console.log(node.attrs.radius);
+    				    console.log(data[i].attrs.radius);
+    				    
+				        node.attrs.radius = data[i].attrs.radius;
+				    }
     				cu.addNode(node);
     				layer.add(node);
     				layer.draw();
@@ -103,9 +113,10 @@ function canvasController(parentDiv, socket) {
 			
     				setUpNodeHandlers(node,socket);
     			}
-            }catch(error) {
-                console.log(error);
-            }
+            // }catch(error) {
+            //                console.log(error);
+            //            }
+            
         });
 		
         socket.on('drawShape', function(data) {
@@ -114,7 +125,6 @@ function canvasController(parentDiv, socket) {
 			if (_draggable) {
 			    setDraggable(_draggable);
 			}
-			
 			setUpNodeHandlers(node,socket);
         });
 		socket.on('shapeMoved', function(data) {
@@ -185,10 +195,6 @@ function canvasController(parentDiv, socket) {
 				eventShape: event.shape
 				};
 				
-			console.log("---NODE---");
-			console.log(node);
-			console.log("---EVENT_SHAPE---");
-			console.log(event.shape);
 			socket.emit('shapeMove',sendObject);
 		});
 	};
@@ -247,12 +253,13 @@ function canvasController(parentDiv, socket) {
 		serverShape.attrs.stroke = color;
 		serverShape.attrs.opacity = 1;
 		
+		console.log
 		indicatorShape.remove();
         layer.draw();
 		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
-
+        
         socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});  
 	};
 };
