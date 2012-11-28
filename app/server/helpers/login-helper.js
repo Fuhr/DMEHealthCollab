@@ -39,7 +39,7 @@ LH.addUserToSocketID = function (username, socketid) {
         LH.socketsByName[username] = user;
         LH.clientsByID[socketid] = user;
         for (var i = 0; i < LH.users.length; i++) {
-            var tempUser = users[i];
+            var tempUser = LH.users[i];
             if (user.username == username) {
                 user.socketid = socketid;
             }
