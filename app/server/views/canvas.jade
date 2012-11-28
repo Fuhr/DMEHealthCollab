@@ -4,21 +4,32 @@ block content
     .row
         .span9#testContainer
         .span3
-            include chat
+
             #right-column-controls
                 .btn-group(data-toggle='buttons-radio')
-                    #toggle-button.button.btn.btn-small.btn-inverse.btn.active(type='button', value='rect')
-                        i.icon-hand-up.icon-white
-                    #rect-button.button.btn.btn-small.btn-inverse(type='button', value='rect') Rectangle
-                    #ellipse-button.button.btn.btn-small.btn-inverse(type='button', value='ellipse') Ellipse
-                    #circle-button.button.btn.btn-small.btn-inverse(type='button', value='circle') Circle
-            
+                    #toggle-button.button.btn.btn-inverse.btn.active(type='button')
+                        i.icon-hand-up.icon-white 
+                    #rect-button.button.btn.btn-inverse(type='button', value='rect')
+                        i.icon-rect.icon-custom
+                    #circle-button.button.btn.btn-inverse(type='button', value='circle') 
+                        i.icon-circle.icon-custom
+                    #ellipse-button.button.btn.btn-inverse(type='button', value='ellipse') 
+                        i.icon-ellipse.icon-custom
+                    button.btn.btn-inverse.dropdown-toggle(data-toggle='dropdown') Color&#160;
+                        span.caret
+                    ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
+                        li
+                            #picker
+            include chat
+                    
+                        
+                    
             
                 //- #toggle-button.button.btn.btn-small.btn-inverse(type='button') Toggle Draggable
                 //- #rect-button.button.btn.btn-small.btn-inverse(type='button') Rect
                 //- #ellipse-button.button.btn.btn-small.btn-inverse(type='button') Ellipse
                 //- #circle-button.button.btn.btn-small.btn-inverse(type='button') Circle
-                #picker
+                
                 
 block scripts
     script(type='text/javascript', src='/js/model/ShapeObject.js')
