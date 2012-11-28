@@ -7,6 +7,13 @@ var flash = require('connect-flash')
 	, Db = mongo.Db;
 var LH = {};
 
+function rndColor() {
+    function c() {
+        return ('0' + Math.floor(Math.random() * 256).toString(16)).substr(-2);
+    }
+    return '#' + c() + c() + c();
+};
+
 module.exports = LH;
 
 LH.server = new Server('localhost', 27017, {auto_reconnect: true});
@@ -19,7 +26,7 @@ LH.addUserToSocketID = function (username, socketid) {
     var user = {
         username: username,
         socketid: socketid,
-        color: '#FFF'
+        color: rndColor()
     };
     if (!LH.socketsByName[username]) {
         LH.socketsByName[username] = socketid;
