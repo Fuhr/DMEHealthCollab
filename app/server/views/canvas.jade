@@ -1,5 +1,9 @@
 extends layout
 
+block styles
+    link(href='/css/canvas.css', rel='stylesheet')
+    link(href='/css/farbtastic.css', rel='stylesheet')
+
 block content
     .row
         .span9#testContainer
@@ -21,17 +25,11 @@ block content
                         li
                             #picker
             include chat
-                    
-                        
-                    
-            
-                //- #toggle-button.button.btn.btn-small.btn-inverse(type='button') Toggle Draggable
-                //- #rect-button.button.btn.btn-small.btn-inverse(type='button') Rect
-                //- #ellipse-button.button.btn.btn-small.btn-inverse(type='button') Ellipse
-                //- #circle-button.button.btn.btn-small.btn-inverse(type='button') Circle
-                
+
                 
 block scripts
+    script(type='text/javascript', src='/vendor/kinetic-v4.0.5.min.js')
+    script(type='text/javascript', src='/vendor/farbtastic.js')
     script(type='text/javascript', src='/js/model/ShapeObject.js')
     script(type='text/javascript', src='/js/model/shapeIndicatorObject.js')
     script(type='text/javascript', src='/js/controllers/canvasController.js')
