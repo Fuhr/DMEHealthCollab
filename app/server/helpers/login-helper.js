@@ -11,6 +11,31 @@ module.exports = LH;
 
 LH.server = new Server('localhost', 27017, {auto_reconnect: true});
 LH.db = new Db('userDb', LH.server);
+LH.socketsByName = {};
+LH.clientsByID = {};
+
+LH.addUserToSocketID = function (username, socketid) {
+    LH.socketsByName[username] = socketid;
+    LH.clientsByID[socketid] = username;
+};
+
+LH.getUserBySocketID = function (socketid) {
+    var user = LH.clientsByID[socketid];
+    if (!user) {
+        return "NOUSER";
+    } else {
+        return user;
+    }
+};
+
+LH.getSocketByName = function (username) {
+    var socketid = LH.socketsByName[username];
+    if (!socketid) {
+        return "NOSOCKET";
+    } else {
+        return socketid;
+    }
+};
 
 LH.createDb = function(){
 	var users = [

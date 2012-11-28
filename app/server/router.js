@@ -1,59 +1,70 @@
 LH = require('./helpers/login-helper');
 
-module.exports = function(app, io, passport) {
+module.exports = function (app, io, passport) {
 
     /* Page routing*/
-	app.get('/canvas', ensureAuthenticated, function(req, res){
-	    res.render('canvas', {username: req.user.username});
-	});
-	
-	app.get('/', ensureAuthenticated, function(req, res){
-		res.render('index', { user: req.user, username: req.user.username });
-	});
-	
-	app.get('/logout', function(req, res){
-		req.logout();
-		res.redirect('/');
-	});
-	
-	app.get('/createDb', function(req, res){
-		LH.createDb();
-		res.redirect('/');
-	});
-	
-	app.get('/login', function(req, res){
-		res.render('login', { user: req.user, message: req.flash('error') });
-	});
+    app.get('/canvas', ensureAuthenticated, function (req, res) {
+        res.render('canvas', { username: req.user.username });
+    });
 
-	app.post('/login', 
+    app.get('/', ensureAuthenticated, function (req, res) {
+        res.render('index', { user: req.user, username: req.user.username });
+    });
+
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+    app.get('/createDb', function (req, res) {
+        LH.createDb();
+        res.redirect('/');
+    });
+
+    app.get('/login', function (req, res) {
+        res.render('login', { user: req.user, message: req.flash('error') });
+    });
+
+    app.post('/userpost', function (req, res) {
+        var socketid = req.body.userid;
+        var username = req.user.username;
+        LH.addUserToSocketID(username, socketid);
+        var sendData = { username: username };
+        res.send(sendData);
+    });
+
+    app.post('/login',
 		passport.authenticate('local', { failureRedirect: '/login', failureFlash: true })
-		, function(req, res) {
-			res.redirect('/');
-	});
-	
+		, function (req, res) {
+		    res.redirect('/');
+		});
+
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!
     * See this example: http://erickrdch.com/2012/05/chat-application-with-node-js-and-socket-io.html
     * for module exports see: http://www.hacksparrow.com/node-js-exports-vs-module-exports.html
     */
     io.sockets.on('connection', function (socket) {
-        
+
         socket.emit('clientId', socket.id);
         socket.on('shapeDrawn', function (data) {
             io.sockets.emit('drawShape', data);
-       });
-	   socket.on('shapeMove', function (data) {
+        });
+        socket.on('shapeMove', function (data) {
             io.sockets.emit('shapeMoved', data);
-       });
-       
-       socket.on('chatToServer',function(data){
-            console.log(data);
-            io.sockets.emit('chatToClient', data);
-       });
+        });
+
+        socket.on('chatToServer', function (data) {
+            var username = LH.getUserBySocketID(socket.id);
+            var sendData = {};
+            sendData.username = username;
+            sendData.msg = data;
+            io.sockets.emit('chatToClient', sendData);
+        });
     });
-	
-	function ensureAuthenticated(req, res, next) {
-		if (req.isAuthenticated()) { return next(); }
-		res.redirect('/login');
-	};
+
+    function ensureAuthenticated(req, res, next) {
+        if (req.isAuthenticated()) { return next(); }
+        res.redirect('/login');
+    };
 };

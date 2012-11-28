@@ -1,14 +1,28 @@
 function chatController(outputSelector, inputSelector, socket){
     var _clientId = "";
+    var _username = "";
     /* Socket handlers */
     socket.on('connect', function () {
-        
-        socket.on('clientId', function(data) {
+
+        socket.on('clientId', function (data) {
             _clientId = data;
+            var postData = { userid: _clientId };
+            $.ajax({
+                url: '/userpost',
+                type: 'POST',
+                data: postData,
+                success: function (response) {
+                    _username = response.username;
+                    console.log(JSON.stringify(response));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('Problem fetching username');
+                }
+            });
         });
-        
-        socket.on('chatToClient', function(data) {
-            var temp = data + '<br>';
+
+        socket.on('chatToClient', function (data) {
+            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
             $(outputSelector).append(temp);
         });
     });
