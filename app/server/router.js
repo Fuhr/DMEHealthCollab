@@ -7,6 +7,14 @@ module.exports = function (app, io, passport) {
         res.render('canvas', { username: req.user.username });
     });
 
+    app.get('/account', ensureAuthenticated, function (req, res) {
+        res.render('account', { username: req.user.username, user: req.user,
+            capitalize: function(string){
+		        return string.charAt(0).toUpperCase() + string.slice(1);
+	        }
+        });
+    });
+
     app.get('/onlineusers', ensureAuthenticated, function (req, res) {
         res.render('onlineusers', { username: req.user.username, onlineusers: LH.users });
     });
