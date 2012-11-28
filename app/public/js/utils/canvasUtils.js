@@ -1,7 +1,7 @@
 function canvasUtils() {
 
-	var _nodes = {};
-	var strokeWidth = 4;
+    var _nodes = {};
+    var strokeWidth = 4;
     
     this.createStage = function(parent, width, height) {
         var stage = new Kinetic.Stage({
@@ -26,12 +26,12 @@ function canvasUtils() {
             
         }
     };
-	
-	this.moveNode = function(layer, moveObject){
-		var node = _nodes[moveObject.id];
-		node.setPosition(moveObject.x, moveObject.y);
-		layer.draw();
-	};
+    
+    this.moveNode = function(layer, moveObject){
+        var node = _nodes[moveObject.id];
+        node.setPosition(moveObject.x, moveObject.y);
+        layer.draw();
+    };
     
     
     // Test function. Should be deleted in the future
@@ -41,10 +41,10 @@ function canvasUtils() {
          }
          return '#' + c() + c() + c();
     };
-	
-	this.addNode = function(node) {
-		_nodes[node.attrs.id] = node;
-	}
+    
+    this.addNode = function(node) {
+        _nodes[node.attrs.id] = node;
+    }
     
 
     
@@ -56,7 +56,7 @@ function canvasUtils() {
     
     
     this.drawRect = function(layer, shapeData) {
-		var node = new Kinetic.Rect({
+        var node = new Kinetic.Rect({
             x: shapeData.x0,
             y: shapeData.y0,
             width: shapeData.dx,
@@ -65,15 +65,15 @@ function canvasUtils() {
             strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
-		});
-		_nodes[shapeData.id] = node;
+        });
+        _nodes[shapeData.id] = node;
         layer.add(node);
         layer.draw();        
-		return node;
+        return node;
     };
     
     this.drawEllipse = function(layer, shapeData) {
-		var node = new Kinetic.Ellipse({
+        var node = new Kinetic.Ellipse({
             x: shapeData.ellipseOrigo.x,
             y: shapeData.ellipseOrigo.y,
             width: shapeData.dx,
@@ -82,18 +82,18 @@ function canvasUtils() {
             strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
-		});
-		
-		node.attrs.radius.x = Math.abs(node.attrs.radius.x);
-		node.attrs.radius.y = Math.abs(node.attrs.radius.y);
-		_nodes[shapeData.id] = node;
+        });
+        
+        node.attrs.radius.x = Math.abs(node.attrs.radius.x);
+        node.attrs.radius.y = Math.abs(node.attrs.radius.y);
+        _nodes[shapeData.id] = node;
         layer.add(node);
         layer.draw();        
-		return node;
+        return node;
     };
     
     this.drawCircle = function(layer, shapeData) {
-		var node = new Kinetic.Circle({
+        var node = new Kinetic.Circle({
             x: shapeData.ellipseOrigo.x,
             y: shapeData.ellipseOrigo.y,
             width: shapeData.dx,
@@ -102,14 +102,14 @@ function canvasUtils() {
             strokeWidth: strokeWidth,
             draggable: false,
             id: shapeData.id
-		});
-		
-		node.attrs.radius = Math.abs(node.attrs.radius);
-		_nodes[shapeData.id] = node;
+        });
+        
+        node.attrs.radius = Math.abs(node.attrs.radius);
+        _nodes[shapeData.id] = node;
         layer.add(node);
         
         layer.draw();        
-		return node;
+        return node;
     };
     
     
@@ -130,14 +130,14 @@ function canvasUtils() {
             stroke: 'black',
             strokeWidth: strokeWidth,
             draggable: false		
-		});
-		layer.add(node);
-		layer.draw();
-		return node;
+        });
+        layer.add(node);
+        layer.draw();
+        return node;
     };
     
     this.drawIndicatorEllipse = function(layer, shapeData) {
-		var node = new Kinetic.Ellipse({
+        var node = new Kinetic.Ellipse({
             x: shapeData.x,
             y: shapeData.y,
             width: 0,
@@ -146,16 +146,16 @@ function canvasUtils() {
             stroke: 'black',
             strokeWidth: strokeWidth,
             draggable: false
-		});
-		node.attrs.radius.x = Math.abs(node.attrs.radius.x);
-		node.attrs.radius.y = Math.abs(node.attrs.radius.y);
+        });
+        node.attrs.radius.x = Math.abs(node.attrs.radius.x);
+        node.attrs.radius.y = Math.abs(node.attrs.radius.y);
         layer.add(node);
         layer.draw();        
-		return node;
+        return node;
     };
     
     this.drawIndicatorCircle = function(layer, shapeData) {
-		var node = new Kinetic.Circle({
+        var node = new Kinetic.Circle({
             x: shapeData.x,
             y: shapeData.y,
             width: 0,
@@ -164,14 +164,14 @@ function canvasUtils() {
             stroke: 'black',
             strokeWidth: strokeWidth,
             draggable: false
-		});
-		
-		node.attrs.radius = Math.abs(node.attrs.radius);
-		_nodes[shapeData.id] = node;
+        });
+        
+        node.attrs.radius = Math.abs(node.attrs.radius);
+        _nodes[shapeData.id] = node;
         layer.add(node);
         
         layer.draw();        
-		return node;
+        return node;
     };
     
     

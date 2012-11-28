@@ -5,17 +5,21 @@ html(lang='en')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		meta(name='description', content='')
 		meta(name='author', content='')
+		link(href='/css/bootstrap.css', rel='stylesheet')
+		link(href='/css/bootstrap-responsive.css', rel='stylesheet')
+		link(href='/css/login.css', rel='stylesheet')
 	body
 		if message
 			p !{message}
 
-		form(action='/login', method='post')
-			div
-				label Username:
-				input(type='text', name='username')
-				br
-			div
-				label Password:
-				input(type='password', name='password')
-			div
-				input(type='submit', value='Submit')
+		#login-container
+			form(action='/login', method="post")#login-form.well.span4
+				h1 DME Health
+				p.subheading Please Login To Your Account
+				label Username 
+				input(type="text", name="username", id='user-tf').span4.required
+				label Password
+				input(type="password", name="password", id='pass-tf').span4.required
+				button(type="submit")#btn-login.btn.btn-primary
+					i.icon-lock.icon-white
+					| Sign in

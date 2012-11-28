@@ -1,0 +1,19 @@
+﻿extends layout
+
+block content
+	.row-fluid
+		.span8.offset2.well
+			table.table
+				thead
+					tr
+						th Name
+						th Email
+						th Sex
+						th Age
+				tbody
+					each user in onlineusers
+						tr
+							td !{user.username}
+							td !{user.email}
+							td !{user.sex}
+							td !{user.age}

@@ -8,9 +8,9 @@ function canvasController(parentDiv, socket) {
     var color = '#000'
     var drawFunctions = {'rect': cu.drawRect, 'ellipse': cu.drawEllipse, 'circle': cu.drawCircle};
     var indicFunctions = {'rect': cu.drawIndicatorRect, 'ellipse': cu.drawIndicatorEllipse, 'circle': cu.drawIndicatorCircle};
-	var _clientId = '';
-	var shapeNumber = 0;
-	
+    var _clientId = '';
+    var shapeNumber = 0;
+    
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
     var canvas = stage.getContainer();   
@@ -88,47 +88,46 @@ function canvasController(parentDiv, socket) {
         socket.on('clientId', function(data) {
             _clientId = data;
         });
-		
-		socket.on('getShapesOnConnect', function(data) {
+        
+        socket.on('getShapesOnConnect', function(data) {
             // try{
-			    console.log(data);
+                console.log(data);
                 
                 for( var i=0; i<data.length; i++){
                     
-    				var node = Kinetic.Node.create(JSON.stringify(data[i]));
-				    
-				    if (node.shapeType === 'Circle' || 'Ellipse') {
-				        console.log(node.attrs.radius);
-    				    console.log(data[i].attrs.radius);
-    				    
-				        node.attrs.radius = data[i].attrs.radius;
-				    }
-    				cu.addNode(node);
-    				layer.add(node);
-    				layer.draw();
+                    var node = Kinetic.Node.create(JSON.stringify(data[i]));
+                    
+                    if (node.shapeType === 'Circle' || 'Ellipse') {
+                        console.log(node.attrs.radius);
+                        console.log(data[i].attrs.radius);
+                        
+                        node.attrs.radius = data[i].attrs.radius;
+                    }
+                    cu.addNode(node);
+                    layer.add(node);
+                    layer.draw();
             
-    				if (_draggable) {
-    					setDraggable(_draggable);
-    				}
-			
-    				setUpNodeHandlers(node,socket);
-    			}
+                    if (_draggable) {
+                        setDraggable(_draggable);
+                    }
+            
+                    setUpNodeHandlers(node,socket);
+                }
             // }catch(error) {
             //                console.log(error);
             //            }
-            
         });
-		
+        
         socket.on('drawShape', function(data) {
             
             var node = drawFunctions[data.form](layer, data);            
-			if (_draggable) {
-			    setDraggable(_draggable);
-			}
-			setUpNodeHandlers(node,socket);
+            if (_draggable) {
+                setDraggable(_draggable);
+            }
+            setUpNodeHandlers(node,socket);
         });
-		socket.on('shapeMoved', function(data) {
-			cu.moveNode(layer, data);
+        socket.on('shapeMoved', function(data) {
+            cu.moveNode(layer, data);
         });
     });
 
@@ -181,26 +180,25 @@ function canvasController(parentDiv, socket) {
 
         return pos;
     };
-	
-	setUpNodeHandlers = function(node, socket){
-		node.on('dragend.canvasDrag',function(event){
-			var pos = event.shape.getPosition()
+    
+    setUpNodeHandlers = function(node, socket){
+        node.on('dragend.canvasDrag',function(event){
+            var pos = event.shape.getPosition()
             var positionChange = {
                 id: event.shape.attrs.id,
                 x: pos.x,
                 y: pos.y
-			};
-			var sendObject = {
-				position: positionChange,
-				eventShape: event.shape
-				};
-				
-			socket.emit('shapeMove',sendObject);
-		});
-	};
-	
-	updateIndicatorShape = function(pos) {
-	    if (Math.abs(indicatorData.x1-pos.x) > 10 || Math.abs(indicatorData.y1-pos.y) > 10) {
+            };
+            var sendObject = {
+                position: positionChange,
+                eventShape: event.shape
+                };
+            socket.emit('shapeMove',sendObject);
+        });
+    };
+    
+    updateIndicatorShape = function(pos) {
+        if (Math.abs(indicatorData.x1-pos.x) > 10 || Math.abs(indicatorData.y1-pos.y) > 10) {
             indicatorData.x1 = pos.x;
             indicatorData.y1 = pos.y;
             
@@ -231,35 +229,35 @@ function canvasController(parentDiv, socket) {
             }
             layer.draw();                      
         }
-	};
-	
-	
-	sendShapeToServer = function(socket, shape) {
-		
-	
-	    shape.id = _clientId + shapeNumber;
+    };
+    
+    
+    sendShapeToServer = function(socket, shape) {
+        
+    
+        shape.id = _clientId + shapeNumber;
         shapeNumber++;
-    	shape.calcDelta();
-	    shape.color = color;
-		
-		
-		if (shape.form === 'ellipse' || shape.form === 'circle') {
-		    shape.calcEllipseOrigo();
-	    }
-		adx = Math.abs(shape.dx);
-		ady = Math.abs(shape.dy);
+        shape.calcDelta();
+        shape.color = color;
+        
+        
+        if (shape.form === 'ellipse' || shape.form === 'circle') {
+            shape.calcEllipseOrigo();
+        }
+        adx = Math.abs(shape.dx);
+        ady = Math.abs(shape.dy);
 
-		var serverShape = indicatorShape;
-		serverShape.attrs.stroke = color;
-		serverShape.attrs.opacity = 1;
-		
-		console.log
-		indicatorShape.remove();
+        var serverShape = indicatorShape;
+        serverShape.attrs.stroke = color;
+        serverShape.attrs.opacity = 1;
+        
+        indicatorShape.remove();
         layer.draw();
-		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
+
+        if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
-        
+
         socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});  
-	};
+    };
 };

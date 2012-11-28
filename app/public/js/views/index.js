@@ -1,7 +1,9 @@
-function chatController(outputSelector, inputSelector, socket){
+﻿$(document).ready(function () {
+    var HOST_URL = 'http://192.168.0.14:3000'
+
+    var socket = io.connect(HOST_URL);
     var _clientId = "";
     var _username = "";
-    /* Socket handlers */
     socket.on('connect', function () {
 
         socket.on('clientId', function (data) {
@@ -22,15 +24,8 @@ function chatController(outputSelector, inputSelector, socket){
         });
 
         socket.on('chatToClient', function (data) {
-            var temp = '<span style="color:' + data.color + ';">&nbsp;<b>' + data.username + '</b></span><b>:</b> <span>' + data.msg + '<br></span>';
+            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
             $(outputSelector).append(temp);
         });
     });
-    
-    $(inputSelector).on('change',function(event){
-        var value = $(this).val();
-        console.log(value);
-        socket.emit('chatToServer', value);
-        $(this).val("");
-    });
-};
+});
