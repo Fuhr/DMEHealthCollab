@@ -13,10 +13,30 @@ LH.server = new Server('localhost', 27017, {auto_reconnect: true});
 LH.db = new Db('userDb', LH.server);
 LH.socketsByName = {};
 LH.clientsByID = {};
+LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
-    LH.socketsByName[username] = socketid;
-    LH.clientsByID[socketid] = username;
+    var user = {
+        username: username,
+        socketid: socketid,
+        color: '#FFF'
+    };
+    if (!LH.socketsByName[username]) {
+        LH.socketsByName[username] = socketid;
+        LH.clientsByID[socketid] = username;
+        LH.users.push(user);
+    } else {
+        var oldID = LH.getSocketByName(username);
+        delete LH.socketsByName[oldID];
+        LH.socketsByName[username] = socketid;
+        LH.clientsByID[socketid] = username;
+        for (var i = 0; i < LH.users.length; i++) {
+            var tempUser = users[i];
+            if (user.username == username) {
+                user.socketid = socketid;
+            }
+        }
+    }
 };
 
 LH.getUserBySocketID = function (socketid) {

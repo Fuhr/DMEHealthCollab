@@ -51,21 +51,16 @@ html(lang='en')
                                 a(href='#contact') Contact
                             li.dropdown
                                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                                    | Dropdown
+                                    | User
                                     b.caret
                                 ul.dropdown-menu
                                     li
-                                        a(href='#') Action
+                                        a(href='/onlineusers') Online Users
                                     li
-                                        a(href='#') Another action
-                                    li
-                                        a(href='#') Something else here
+                                        a(href='/account') Account
                                     li.divider
-                                    li.nav-header Nav header
                                     li
-                                        a(href='#') Separated link
-                                    li
-                                        a(href='#') One more separated link
+                                        a(href='/logout') Log out
                         p.navbar-text.pull-right
                             | Logged in as 
                             a.navbar-link(href='/account') !{username}

@@ -7,6 +7,10 @@ module.exports = function (app, io, passport) {
         res.render('canvas', { username: req.user.username });
     });
 
+    app.get('/onlineusers', ensureAuthenticated, function (req, res) {
+        res.render('onlineusers', { username: req.user.username, onlineusers: LH.users });
+    });
+
     app.get('/', ensureAuthenticated, function (req, res) {
         res.render('index', { user: req.user, username: req.user.username });
     });
@@ -31,6 +35,8 @@ module.exports = function (app, io, passport) {
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
         res.send(sendData);
+        console.log('#########################################USERPOST####################################');
+        console.log(LH.users);
     });
 
     app.post('/login',
