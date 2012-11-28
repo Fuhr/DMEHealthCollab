@@ -87,9 +87,34 @@ function canvasController(parentDiv, socket) {
         socket.on('clientId', function(data) {
             _clientId = data;
         });
+		
+		socket.on('getShapesOnConnect', function(data) {
+			// try{
+			console.log(data);
+            for( var i=0; i<data.length; i++){
+				// var node = drawFunctions[data[i].form](layer, data[i]);
+				console.log(data[i]);
+				var node = Kinetic.Node.create(JSON.stringify(data[i]));
+				
+				cu.addNode(node);
+				layer.add(node);
+				layer.draw();
+            
+				if (_draggable) {
+					setDraggable(_draggable);
+				}
+			
+				setUpNodeHandlers(node,socket);
+			}
+			// }catch(error) {
+				// console.log(error);
+			// }
+        });
+		
         socket.on('drawShape', function(data) {
             
             var node = drawFunctions[data.form](layer, data);
+			console.log(node);
             
 			if (_draggable) {
 			    setDraggable(_draggable);
@@ -150,12 +175,21 @@ function canvasController(parentDiv, socket) {
 	
 	setUpNodeHandlers = function(node, socket){
 		node.on('dragend.canvasDrag',function(event){
-            var pos = event.shape.getPosition()
-            var sendObject = {
+			var pos = event.shape.getPosition()
+            var positionChange = {
                 id: event.shape.attrs.id,
                 x: pos.x,
                 y: pos.y
-            };
+			};
+			var sendObject = {
+				position: positionChange,
+				eventShape: event.shape
+				};
+				
+			console.log("---NODE---");
+			console.log(node);
+			console.log("---EVENT_SHAPE---");
+			console.log(event.shape);
 			socket.emit('shapeMove',sendObject);
 		});
 	};
@@ -194,7 +228,10 @@ function canvasController(parentDiv, socket) {
         }
 	};
 	
+	
 	sendShapeToServer = function(socket, shape) {
+		
+	
 	    shape.id = _clientId + shapeNumber;
         shapeNumber++;
     	shape.calcDelta();
@@ -204,17 +241,26 @@ function canvasController(parentDiv, socket) {
 		    shape.calcEllipseOrigo();
 	    }
 		
+		console.log("---INDICATOR---");
+		console.log(indicatorShape);
+		
 		adx = Math.abs(shape.dx);
 		ady = Math.abs(shape.dy);
+		indicatorShape.remove();
+        layer.draw();
+		
+		var serverShape = indicatorShape;
 		indicatorShape.remove();
         layer.draw();
 		
 		if(adx <= 25 && ady <= 25 || adx <= 25 || ady <= 25) {
             return;
         }
+		
+
         
 
         
-        socket.emit('shapeDrawn', shape);  
+        socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});  
 	};
 };

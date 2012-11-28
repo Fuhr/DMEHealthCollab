@@ -40,6 +40,10 @@ function canvasUtils() {
          }
          return '#' + c() + c() + c();
     };
+	
+	this.addNode = function(node) {
+		_nodes[node.attrs.id] = node;
+	}
     
 
     

@@ -1,5 +1,7 @@
 LH = require('./helpers/login-helper');
 
+var shapeList = [];
+
 module.exports = function(app, io, passport) {
 
     /* Page routing*/
@@ -39,11 +41,23 @@ module.exports = function(app, io, passport) {
     io.sockets.on('connection', function (socket) {
         
         socket.emit('clientId', socket.id);
+		socket.emit('getShapesOnConnect', shapeList);
         socket.on('shapeDrawn', function (data) {
-            io.sockets.emit('drawShape', data);
+			var serverShape = JSON.parse(data.serverShape);
+			serverShape.attrs.id = data.clientShape.id;
+			shapeList.push(serverShape);
+            io.sockets.emit('drawShape', data.clientShape);
        });
 	   socket.on('shapeMove', function (data) {
-            io.sockets.emit('shapeMoved', data);
+
+			for (var i=0;i<shapeList.length;i++){
+				if (shapeList[i].attrs.id == data.position.id) {
+					shapeList[i].attrs.x = data.position.x;
+					shapeList[i].attrs.y = data.position.y;
+				}
+			}
+			
+            io.sockets.emit('shapeMoved', data.position);
        });
        
        socket.on('chatToServer',function(data){
