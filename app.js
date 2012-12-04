@@ -15,13 +15,14 @@ var app = express()
 	, LocalStrategy = require('passport-local').Strategy
 	, mongo = require('mongodb')
 	, Server = mongo.Server
-	, Db = mongo.Db;
+	, Db = mongo.Db
+	, upload = require('jquery-file-upload-middleware');
 
 
 app.root = __dirname;
 
 require('./app/server/helpers/login-helper');
-require('./app/config')(app, express, flash, passport);
+require('./app/config')(app, express, flash, passport, upload);
 require('./app/server/router')(app, io, passport);
 io.set('log level', 1);
 server.listen(app.get('port'), function(){
