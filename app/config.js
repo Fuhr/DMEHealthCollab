@@ -22,7 +22,7 @@ module.exports = function(app, express, flash, passport, upload) {
 		app.use('/upload', upload.fileHandler({
 			uploadDir: __dirname + 'public/uploads',
 			uploadUrl: '/uploads'
-		});
+		}));
     });
 	
 	app.configure('development', function(){
