@@ -43,6 +43,7 @@ module.exports = function (app, io, passport, uploadhandler) {
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
+        uploadhandler.setUserName(username);
         res.send(sendData);
     });
 
@@ -50,11 +51,10 @@ module.exports = function (app, io, passport, uploadhandler) {
         passport.authenticate('local', { failureRedirect: '/login', failureFlash: true })
         , function (req, res) {
             res.redirect('/');
-        });
-		
-	app.post('/upload', function(req, res, next) {
-		uploadhandler.fileHandler(req, res, next)
-	});
+    });
+	
+	
+
 		
 
     /* Socket handlers

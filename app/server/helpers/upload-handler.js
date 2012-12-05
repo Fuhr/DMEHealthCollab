@@ -2,6 +2,8 @@ var upload = require('jquery-file-upload-middleware');
 
 var UH = { };
 
+var username;
+
 //Upload events here
 
 	// fileInfo structure is the same as returned to browser
@@ -17,38 +19,41 @@ var UH = { };
 	// }
 
 upload.on('begin', function(fileInfo) {
-	console.log(fileInfo);
+    console.log("UPLOAD BEGIN");
+	// console.log(fileInfo);
 });
 
 upload.on('abort', function (fileInfo) { 
-	console.log(fileInfo);
+    console.log("UPLOAD ABORT");
+	// console.log(fileInfo);
 });
 
 upload.on('end', function (fileInfo) {
-	console.log(fileInfo);
+    console.log("UPLOAD END");
+	// console.log(fileInfo);
 });
 
 upload.on('error', function (e) {
-	console.log(e.message);
+    console.log("UPLOAD ERROR");
+	// console.log(e.message);
 });
 
 //Functions which use the upload module, or are related to handling of uploads
-UH.fileHandler = function(req, res, next){
+UH.fileHandler = function(root){
+    root = root + "/app"
+    console.log("Saving to: " + root);
 	return upload.fileHandler({
-		uploadDir: function() { 
-			return __dirname + 'public/uploads/' + req.user.username;
-		},
-		uploadUrl: function() {
-			return '/uploads/' + req.user.username;
-		},
-		imageVersions: {
-			thumbnail: {
-				width: 80,
-				height: 80
-			}
-		}
-	})(req, res, next);
+		uploadDir: root + '/public/uploads',
+		uploadUrl: '/uploads'
+	});
 };
+
+UH.setUserName = function(usernameParam){
+    username = usernameParam;
+    console.log(username);
+}
+
+
 
 UH.helloWorld = function(){console.log("Hi world");}
 

@@ -7,6 +7,8 @@ module.exports = function(app, express, flash, passport, uploadhandler) {
 		app.set('view engine', 'jade');
 		app.use(express.favicon());
 		app.use(express.logger('dev'));
+        //Configuration for upload handling
+        app.use('/upload', uploadhandler.fileHandler(app.root));
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		app.use(express.cookieParser('your secret here'));
@@ -18,8 +20,6 @@ module.exports = function(app, express, flash, passport, uploadhandler) {
 		app.use(passport.initialize());
 		app.use(passport.session());
 		app.use(app.router);
-		//Configuration for upload handling
-		
     });
 	
 	app.configure('development', function(){

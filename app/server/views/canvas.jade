@@ -33,9 +33,9 @@ block content
 block scripts
     script(type='text/javascript', src='/vendor/kinetic-v4.0.5.min.js')
     script(type='text/javascript', src='/vendor/farbtastic.js')
-    script(type='text/javascript', src='/vendor/jquery.fileupload.js')
-    script(type='text/javascript', src='/vendor/jquery.iframe-transport.js')
     script(type='text/javascript', src='/vendor/jquery.ui.widget.js')
+    script(type='text/javascript', src='/vendor/jquery.iframe-transport.js')
+    script(type='text/javascript', src='/vendor/jquery.fileupload.js')
     script(type='text/javascript', src='/js/model/ShapeObject.js')
     script(type='text/javascript', src='/js/model/shapeIndicatorObject.js')
     script(type='text/javascript', src='/js/controllers/canvasController.js')
@@ -46,10 +46,22 @@ block scripts
         $(function () {
             $('#fileupload').fileupload({
                 dataType: 'json',
+                add: function (e, data) {
+                    console.log(data);
+                    console.log("test");
+                    data.submit();
+                },
                 done: function (e, data) {
-                    $.each(data.result, function (index, file) {
-                        $('<p/>').text(file.name).appendTo(document.body);
-                    });
+                    console.log("DONE");
+                    data.context.text('Upload finished.')
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    console.log(progress);
+                    $('#progress .bar').css(
+                        'width',
+                        progress + '%'
+                    );
                 }
             });
         });
