@@ -20,22 +20,22 @@ var username;
 
 upload.on('begin', function(fileInfo) {
     console.log("UPLOAD BEGIN");
-	// console.log(fileInfo);
+	console.log(fileInfo);
 });
 
 upload.on('abort', function (fileInfo) { 
     console.log("UPLOAD ABORT");
-	// console.log(fileInfo);
+	console.log(fileInfo);
 });
 
 upload.on('end', function (fileInfo) {
     console.log("UPLOAD END");
-	// console.log(fileInfo);
+	console.log(fileInfo);
 });
 
 upload.on('error', function (e) {
     console.log("UPLOAD ERROR");
-	// console.log(e.message);
+	console.log(e.message);
 });
 
 //Functions which use the upload module, or are related to handling of uploads

@@ -52,7 +52,14 @@ module.exports = function (app, io, passport, uploadhandler) {
         , function (req, res) {
             res.redirect('/');
     });
-	
+    
+    // app.get('/upload',function(req, res) {
+        // console.log("SUCCESS"); 
+        // res.send("HI");
+        // res.redirect('/');
+    // });
+    
+
 	
 
 		
