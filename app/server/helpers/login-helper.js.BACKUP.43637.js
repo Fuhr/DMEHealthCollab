@@ -77,13 +77,24 @@ LH.deleteUserByUserName = function (username){
 	if (!oldUser) {
         return "NOUSER";
     } else {
+<<<<<<< HEAD
     	delete LH.socketsByName[oldUser.username];
     	delete LH.clientsByID[oldUser.socketid];
     	for (var i = 0; i < LH.users.length; i++) {
             var tempUser = LH.users[i];
             if (oldUser.username == tempUser.username) {
             	LH.users.splice(i,1);
-
+=======
+        var oldUser = LH.getUserByName(username);
+        delete LH.socketsByName[oldUser.username];
+        delete LH.clientsByID[oldUser.socketid];
+        LH.socketsByName[username] = user;
+        LH.clientsByID[socketid] = user;
+        for (var i = 0; i < LH.users.length; i++) {
+            var tempUser = LH.users[i];
+            if (user.username == username) {
+                user.socketid = socketid;
+>>>>>>> Developer
             }
         }
         return oldUser;

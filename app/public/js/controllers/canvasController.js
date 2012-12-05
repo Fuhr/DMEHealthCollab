@@ -14,7 +14,8 @@ function canvasController(parentDiv, socket) {
     var stage = cu.createStage(parentDiv, '700', '525');
     var layer = cu.createLayer(stage);
     var canvas = stage.getContainer();   
-    var _draggable = false;
+    var _draggable = true;
+    
     
     /* Event handlers */ 
     canvas.addEventListener('mousedown' , function(evt) {      
@@ -91,31 +92,26 @@ function canvasController(parentDiv, socket) {
         
         socket.on('getShapesOnConnect', function(data) {
             // try{
-                console.log(data);
-                
                 for( var i=0; i<data.length; i++){
                     
                     var node = Kinetic.Node.create(JSON.stringify(data[i]));
                     
                     if (node.shapeType === 'Circle' || 'Ellipse') {
-                        console.log(node.attrs.radius);
-                        console.log(data[i].attrs.radius);
-                        
                         node.attrs.radius = data[i].attrs.radius;
                     }
                     cu.addNode(node);
                     layer.add(node);
                     layer.draw();
             
-                    if (_draggable) {
-                        setDraggable(_draggable);
-                    }
-            
                     setUpNodeHandlers(node,socket);
                 }
             // }catch(error) {
             //                console.log(error);
             //            }
+            if (_draggable) {
+                setDraggable(_draggable);
+            }
+        
         });
         
         socket.on('drawShape', function(data) {
@@ -140,6 +136,7 @@ function canvasController(parentDiv, socket) {
     
     this.setActiveShape = function (type) {
           shape.form = type;
+          setDraggable(false);
     };
     
     setDraggable = function (state) {
@@ -150,7 +147,7 @@ function canvasController(parentDiv, socket) {
     this.toggleDraggable = function () {
         if (!_draggable) {
             _draggable = true;
-            setDraggable(_draggable); 
+            setDraggable(_draggable);
         } 
         else {
             _draggable = false;

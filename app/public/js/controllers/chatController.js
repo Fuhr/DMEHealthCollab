@@ -13,7 +13,6 @@ function chatController(outputSelector, inputSelector, socket){
                 data: postData,
                 success: function (response) {
                     _username = response.username;
-                    console.log(JSON.stringify(response));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('Problem fetching username');
@@ -27,10 +26,27 @@ function chatController(outputSelector, inputSelector, socket){
         });
     });
     
-    $(inputSelector).on('change',function(event){
-        var value = $(this).val();
-        console.log(value);
-        socket.emit('chatToServer', value);
-        $(this).val("");
+    $(inputSelector).on('keypress',function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13){
+            sendToChat(this);
+        } else {
+            return true;
+        }
     });
+    
+    $('#chat-input-button').on('click', function(event){
+        sendToChat(inputSelector)
+    });
+    
+    
+    sendToChat = function (selector) {
+        var value = $(selector).val();        
+        socket.emit('chatToServer', value);
+        $(selector).val("");
+        
+        var height = $('#chat-output')[0].scrollHeight;
+        $('#chat-output').scrollTop(height);
+
+    }
 };

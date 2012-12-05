@@ -1,28 +1,50 @@
 .kineticjs-content {
-	background-color: #E8E3E5;
+/*	background-color: #E8E3E5;*/
+	background-color: white;
     display: block ! important;
     margin: 0 auto;
-   
-}
-
-.span9{
+    border: 1px solid #e5e5e5;
     
 }
 
 .right-column {
-    background-color: #a1a1a1;
-    height: 400px;
+    height: 430px;
+    width: 220px;
+    background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
 }
 
 #right-column-controls {
-    margin-top: 10px;
-    height: 115px;
-    background-color: #a1a1a1;
-    
-    
+    margin-bottom: 20px;
+  
 }
+
+
+/*NOT THE BEST FIX.. Buttons are not responsive in width :(  */
 #toggle-button{
-    display: block;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+
+.btn {
+    padding: 10px 12px;
+}
+
+/* --- Custom Icons --- */
+.icon-custom {
+	background: url("../img/custom-icons-white.png");
+}
+
+.icon-rect{
+    background-position: 0px -14px;
+}
+
+.icon-circle{
+    background-position: 28px -14px;
+}
+
+.icon-ellipse{
+    background-position: 14px -14px;
 }
 
 @media (max-width: 800px) {

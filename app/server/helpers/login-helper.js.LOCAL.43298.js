@@ -83,7 +83,6 @@ LH.deleteUserByUserName = function (username){
             var tempUser = LH.users[i];
             if (oldUser.username == tempUser.username) {
             	LH.users.splice(i,1);
-
             }
         }
         return oldUser;

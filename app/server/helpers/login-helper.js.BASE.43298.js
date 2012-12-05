@@ -23,70 +23,27 @@ LH.clientsByID = {};
 LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
-	done = function(user){
-	    if (!LH.socketsByName[username]) {
-	        LH.socketsByName[username] = user;
-	        LH.clientsByID[socketid] = user;
-	        LH.users.push(user);
-	    } else {
-	        var oldUser = LH.getUserByName(username);
-	        delete LH.socketsByName[oldUser.username];
-	        delete LH.clientsByID[oldUser.socketid];
-	        LH.socketsByName[username] = user;
-	        LH.clientsByID[socketid] = user;
-	        for (var i = 0; i < LH.users.length; i++) {
-	            var tempUser = LH.users[i];
-	            if (tempUser.username == username) {
-	                tempUser.socketid = socketid;
-	            }
-	        }
-	    }
-	}
-	var user = LH.findByUsername(username, function(err,foundUser){
-		if (err) {
-			return 'Error';
-		} else if (!foundUser) {
-			return 'Invalid username';
-		}else{
-			var tempUser = foundUser;
-			tempUser['color'] = rndColor();
-			done(tempUser);
-		}
-	});
-};
-
-LH.deleteUserBySocketID = function (socketid){
-	var oldUser = LH.clientsByID[socketid];
-	if (!oldUser) {
-        return "NOUSER";
+    var user = {
+        username: username,
+        socketid: socketid,
+        color: rndColor()
+    };
+    if (!LH.socketsByName[username]) {
+        LH.socketsByName[username] = user;
+        LH.clientsByID[socketid] = user;
+        LH.users.push(user);
     } else {
-    	delete LH.socketsByName[oldUser.username];
-    	delete LH.clientsByID[oldUser.socketid];
-    	for (var i = 0; i < LH.users.length; i++) {
-            var tempUser = LH.users[i];
-            if (oldUser.username == tempUser.username) {
-            	LH.users.splice(i,1);
+        var oldUser = LH.getUserByName(username);
+        delete LH.socketsByName[oldUser.username];
+        delete LH.clientsByID[oldUser.socketid];
+        LH.socketsByName[username] = user;
+        LH.clientsByID[socketid] = user;
+        for (var i = 0; i < LH.users.length; i++) {
+            var tempUser = users[i];
+            if (user.username == username) {
+                user.socketid = socketid;
             }
         }
-        return oldUser;
-    }
-};
-
-LH.deleteUserByUserName = function (username){
-	var oldUser = LH.socketsByName[username];
-	if (!oldUser) {
-        return "NOUSER";
-    } else {
-    	delete LH.socketsByName[oldUser.username];
-    	delete LH.clientsByID[oldUser.socketid];
-    	for (var i = 0; i < LH.users.length; i++) {
-            var tempUser = LH.users[i];
-            if (oldUser.username == tempUser.username) {
-            	LH.users.splice(i,1);
-
-            }
-        }
-        return oldUser;
     }
 };
 
@@ -126,6 +83,7 @@ LH.createDb = function(){
 	
 	LH.db.open(function(err, db) {
 		if(!err) {
+			console.log("We are connected");
 			db.collection('users', function(err, collection) {
 				// var users = [{mykey:1}, {mykey:2}, {mykey:3}];
 
@@ -158,6 +116,7 @@ LH.findByUsername = function(username, fn){
 			db.collection('users', function(err, collection) {
 				collection.findOne({username:username},function(userErr,item){
 					db.close();
+					console.log(item);
 					if(!userErr){
 						return fn(null,item);
 					}
@@ -177,6 +136,7 @@ LH.findById = function(id, fn) {
 			db.collection('users', function(err, collection) {
 				collection.findOne({_id:id},function(userErr,item){
 					db.close();
+					console.log(item);
 					if(!userErr){
 						return fn(null,item);
 					}
