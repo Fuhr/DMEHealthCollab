@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>dropup.net</title>    
+    <link rel="stylesheet" href="/screen.css" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+
+  </head>
+
+  <body>
+
+    <div id="indexwrapper">
+
+      <header class="clearfix">
+        <h1><a href="/">drop<span>up</span></a></h1>
+      </header>
+      
+      <p>
+        The simplest way to share images, just drag and drop your images 
+        onto this page.
+      </p>
+      
+      <div id="dropzone">
+        <ul id="target" class="clearfix"></ul>
+      </div>
+      
+      <footer>
+
+        <!-- <span id="warnings">* Images will be deleted after 24 hours</span> -->
+        
+        <div id="links">
+          <a href="http://daleharvey.org">Developed by Dale Harvey</a> | 
+          <a href="http://github.com/daleharvey/dropup">Code on Github</a> | 
+          <a href="http://arandomurl.com">Blog</a>
+        </div>
+
+      </footer>
+
+    </div>
+    
+    <script src="/jquery-1.4.2.min.js"></script>
+    <script src="/modernizr-1.5.min.js"></script>
+    <script src="/client.dropup.js"></script>
+    
+    <script>
+
+      Modernizr.addTest('filereader', function() {
+         return typeof window.FileReader === "function";
+      });
+      
+      if (Modernizr.localstorage && JSON && 
+          Modernizr.filereader && Modernizr.draganddrop) { 
+         DropUp.init();
+      } else { 
+         var msg = "<p>Sorry, dropup uses new web technologies that are <br />" + 
+           "only currently supported by firefox 3.6+. :(</p>";
+         $("#dropzone").html(msg).addClass("inactive");
+      }
+    </script>
+
+    <script type="text/javascript">
+      
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-59760-17']);
+      _gaq.push(['_trackPageview']);
+      
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </body>
+</html>
