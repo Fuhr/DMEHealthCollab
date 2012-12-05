@@ -1,7 +1,21 @@
 ﻿#chat-output
 {
-    overflow-y:auto;
+	height: 380px;
+    overflow-y:scroll;
     overflow-x:hidden;
+    
+}
+
+#chat-input
+{
+	width: 206px;
+}
+
+#chat-container
+{
+	background-color: #a1a1a1;
+	overflow-y:auto;
+	overflow-x:hidden;
 }
 
 /* Let's get this party started */

@@ -28,4 +28,4 @@ $(document).ready(function() {
            cc.updateColor(data);
        });
 
- });
+});

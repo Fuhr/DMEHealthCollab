@@ -1,5 +1,7 @@
-block styles
-	link(href='/css/chat.css', rel='stylesheet')
+block append styles
+    link(href='/css/chat.css', rel='stylesheet')
 
-.right-column#chat-output
-input#chat-input(type='text', placeholder='Enter message...')
+.right-column
+    #chat-container
+        #chat-output
+    input#chat-input(type='text', placeholder='Enter message...')
