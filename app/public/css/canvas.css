@@ -1,7 +1,10 @@
 .kineticjs-content {
-	background-color: #E8E3E5;
+/*	background-color: #E8E3E5;*/
+	background-color: white;
     display: block ! important;
     margin: 0 auto;
+    border: 1px solid #e5e5e5;
+    
 }
 
 .right-column {
