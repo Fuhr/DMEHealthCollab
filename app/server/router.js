@@ -9,7 +9,15 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/account', ensureAuthenticated, function (req, res) {
-        res.render('account', { username: req.user.username, user: req.user,
+        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
+            capitalize: function(string){
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+        });
+    });
+    
+    app.get('/', ensureAuthenticated, function (req, res) {
+        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
             capitalize: function(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -17,14 +25,14 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/onlineusers', ensureAuthenticated, function (req, res) {
+    	console.log('###################USERS##################');
+    	console.log(LH.users);
         res.render('onlineusers', { username: req.user.username, onlineusers: LH.users });
     });
 
-    app.get('/', ensureAuthenticated, function (req, res) {
-        res.render('index', { user: req.user, username: req.user.username });
-    });
-
     app.get('/logout', function (req, res) {
+    	var deletedUser = LH.deleteUserByUserName(req.user.username);
+		io.sockets.emit('userDisconnect', deletedUser.username);
         req.logout();
         res.redirect('/');
     });
@@ -89,6 +97,11 @@ module.exports = function (app, io, passport) {
             sendData.msg = data;
             io.sockets.emit('chatToClient', sendData);
         });
+        
+        socket.on('disconnect', function () {
+			var deletedUser = LH.deleteUserBySocketID(socket.id);
+			io.sockets.emit('userDisconnect', deletedUser.username);
+		});
     });
     
     function ensureAuthenticated(req, res, next) {

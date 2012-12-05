@@ -1,3 +1,4 @@
+
 ﻿$(document).ready(function () {
     var HOST_URL = location.hostname;
 
@@ -21,11 +22,6 @@
                     console.log('Problem fetching username');
                 }
             });
-        });
-
-        socket.on('chatToClient', function (data) {
-            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
-            $(outputSelector).append(temp);
         });
     });
 });
