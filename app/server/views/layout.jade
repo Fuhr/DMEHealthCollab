@@ -51,18 +51,8 @@ html(lang='en')
                                 a(href='#about') About
                             li
                                 a(href='#contact') Contact
-                            li.dropdown
-                                a.dropdown-toggle(href='#', data-toggle='dropdown')
-                                    | User
-                                    b.caret
-                                ul.dropdown-menu
-                                    li
-                                        a(href='/onlineusers') Online Users
-                                    li
-                                        a(href='/account') Account
-                                    li.divider
-                                    li
-                                        a(href='/logout') Log out
+                            li
+                                a(href='/logout') Log out
                         p.navbar-text.pull-right
                             | Logged in as 
                             a.navbar-link(href='/account') !{username}

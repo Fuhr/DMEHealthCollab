@@ -23,34 +23,45 @@ LH.clientsByID = {};
 LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
-    var user = {
-        username: username,
-        socketid: socketid,
-        color: rndColor()
-    };
-    console.log(user);
-    console.log(LH.socketsByName);
-    if (!LH.socketsByName[username]) {
-    	console.log("Add new user");
-        LH.socketsByName[username] = user;
-        LH.clientsByID[socketid] = user;
-        LH.users.push(user);
-        console.log(LH.socketsByName);
-        console.log(LH.users);
-    } else {
-    	console.log("Change user");
-        var oldUser = LH.getUserByName(username);
-        delete LH.socketsByName[oldUser.username];
-        delete LH.clientsByID[oldUser.socketid];
-        LH.socketsByName[username] = user;
-        LH.clientsByID[socketid] = user;
-        for (var i = 0; i < LH.users.length; i++) {
-            var tempUser = LH.users[i];
-            if (tempUser.username == username) {
-                tempUser.socketid = socketid;
-            }
-        }
-    }
+	done = function(user){
+		console.log('user');
+	    console.log(user);
+	    console.log(LH.socketsByName);
+	    if (!LH.socketsByName[username]) {
+	    	console.log("Add new user");
+	        LH.socketsByName[username] = user;
+	        LH.clientsByID[socketid] = user;
+	        LH.users.push(user);
+	        console.log(LH.socketsByName);
+	        console.log(LH.users);
+	    } else {
+	    	console.log("Change user");
+	        var oldUser = LH.getUserByName(username);
+	        delete LH.socketsByName[oldUser.username];
+	        delete LH.clientsByID[oldUser.socketid];
+	        LH.socketsByName[username] = user;
+	        LH.clientsByID[socketid] = user;
+	        for (var i = 0; i < LH.users.length; i++) {
+	            var tempUser = LH.users[i];
+	            if (tempUser.username == username) {
+	                tempUser.socketid = socketid;
+	            }
+	        }
+	    }
+	}
+	var user = LH.findByUsername(username, function(err,foundUser){
+		console.log('foundUser');
+		console.log(foundUser);
+		if (err) {
+			return 'Error';
+		} else if (!foundUser) {
+			return 'Invalid username';
+		}else{
+			var tempUser = foundUser;
+			tempUser['color'] = rndColor();
+			done(tempUser);
+		}
+	});
 };
 
 LH.deleteUserBySocketID = function (socketid){

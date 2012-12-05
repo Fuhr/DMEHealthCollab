@@ -9,7 +9,7 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/account', ensureAuthenticated, function (req, res) {
-        res.render('account', { username: req.user.username, user: req.user,
+        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
             capitalize: function(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -17,7 +17,7 @@ module.exports = function (app, io, passport) {
     });
     
     app.get('/', ensureAuthenticated, function (req, res) {
-        res.render('account', { username: req.user.username, user: req.user,
+        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
             capitalize: function(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }

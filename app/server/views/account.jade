@@ -2,6 +2,7 @@
 
 block content
 	.row-fluid
+		h4.offset2 Account
 		.span8.offset2.well
 			each val, key in user
 				if key != '_id' && key != 'password'
@@ -18,6 +19,27 @@ block content
 						.row-fluid
 							.span3 <b>!{capitalize(key)}: </b>
 							.span6 !{val}
+	.row-fluid
+		h4.offset2 Online Users
+		.span8.offset2.well
+			table.table
+				thead
+					tr
+						th Name
+						th Email
+						th Nickname
+						th Sex
+						th Age
+				tbody
+					each user in onlineusers
+						tr
+							td 
+								span(style='color: #{user.color};')!{user.username}
+							td
+								a(href='mailto:#{user.email}') !{user.email}
+							td !{user.nickname}
+							td !{user.sex}
+							td !{user.age}
 
 block scripts
 	script(type='text/javascript', src='/js/views/index.js')
