@@ -120,14 +120,14 @@ function canvasUtils() {
     *
     */
 
-    this.drawIndicatorRect = function(layer, shapeData) {
+    this.drawIndicatorRect = function(layer, shapeData, color) {
         var node = new Kinetic.Rect({
             x: shapeData.x,
             y: shapeData.y,
             width: 0,
             height: 0,
             opacity: 0.2,
-            stroke: 'black',
+            stroke: color,
             strokeWidth: strokeWidth,
             draggable: false		
         });
@@ -136,14 +136,14 @@ function canvasUtils() {
         return node;
     };
     
-    this.drawIndicatorEllipse = function(layer, shapeData) {
+    this.drawIndicatorEllipse = function(layer, shapeData, color) {
         var node = new Kinetic.Ellipse({
             x: shapeData.x,
             y: shapeData.y,
             width: 0,
             height: 0,
             opacity: 0.2,
-            stroke: 'black',
+            stroke: color,
             strokeWidth: strokeWidth,
             draggable: false
         });
@@ -154,14 +154,14 @@ function canvasUtils() {
         return node;
     };
     
-    this.drawIndicatorCircle = function(layer, shapeData) {
+    this.drawIndicatorCircle = function(layer, shapeData, color) {
         var node = new Kinetic.Circle({
             x: shapeData.x,
             y: shapeData.y,
             width: 0,
             height: 0,
             opacity: 0.2,
-            stroke: 'black',
+            stroke: color,
             strokeWidth: strokeWidth,
             draggable: false
         });

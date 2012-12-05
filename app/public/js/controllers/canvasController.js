@@ -24,7 +24,7 @@ function canvasController(parentDiv, socket) {
         mouseDown = true;
         
         var pos = getMousePositionOnCanvas(evt);       
-        indicatorShape = indicFunctions[shape.form](layer, pos);
+        indicatorShape = indicFunctions[shape.form](layer, pos, color);
         
         shape.x0 = pos.x;
         shape.y0 = pos.y;
@@ -131,7 +131,7 @@ function canvasController(parentDiv, socket) {
     /*--------------------------------------*/
     
     this.updateColor = function (data) {
-      color = data;  
+      color = data;
     };
     
     this.setActiveShape = function (type) {
