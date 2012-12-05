@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var HOST_URL = 'http://192.168.0.14:3000'
+    var HOST_URL = location.hostname;
 
     var socket = io.connect(HOST_URL);
     var _clientId = "";
