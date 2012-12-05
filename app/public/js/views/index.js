@@ -22,10 +22,5 @@
                 }
             });
         });
-
-        socket.on('chatToClient', function (data) {
-            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
-            $(outputSelector).append(temp);
-        });
     });
 });
