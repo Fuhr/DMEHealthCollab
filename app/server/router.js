@@ -1,4 +1,6 @@
 LH = require('./helpers/login-helper');
+var CT = require('./helpers/country-list');
+var AGE = require('./helpers/age-list');
 
 module.exports = function (app, io, passport) {
     var shapeList = [];
@@ -60,6 +62,31 @@ module.exports = function (app, io, passport) {
             res.redirect('/');
         });
 
+	// creating new accounts
+	app.get('/signup', function(req, res) {
+		res.render('signup', { title: 'Signup', ages : AGE, countries : CT });
+	});
+	
+	app.post('/signup', function(req, res){
+		if (req.body.c == 'c') {
+			return res.redirect('/');
+			}
+		console.log('############# CREATE USER ################');
+		console.log(req.body.country);
+		LH.addNewUser({
+			username	: req.body.user,
+			password	: req.body.pass,
+			nickname	: req.body.name,
+			sex			: req.body.sex,
+			age			: req.body.age,
+			email		: req.body.email,		
+			phone		: req.body.phone,
+			country		: req.body.country,
+			user_since	: 'nov-10 2012'  
+			}	
+		);
+		res.redirect('/');
+	});
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!
     * See this example: http://erickrdch.com/2012/05/chat-application-with-node-js-and-socket-io.html

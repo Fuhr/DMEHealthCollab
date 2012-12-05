@@ -1,0 +1,67 @@
+html(lang='en')
+	head
+		meta(charset='utf-8')
+		title DME Health
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='')
+		meta(name='author', content='')
+		link(href='/css/bootstrap.css', rel='stylesheet')
+		link(href='/css/bootstrap-responsive.css', rel='stylesheet')
+		link(href='/css/signup.css', rel='stylesheet')
+		
+		// preset form values if we receive a userdata object //
+		- user = typeof(udata) != 'undefined' ? udata : {}
+	body
+		#account-form-container
+			form(action="/signup", method="post")#account-form.form-horizontal.well.span6
+				h1 !{title}
+				p#sub1.subheading Please tell us a little about yourself
+				hr
+				fieldset
+					#name-cg.control-group
+						label.control-label(for='name-tf') Name
+						.controls
+							input#name-tf.input-xlarge(type='text', name='name', value= user.name)
+					#email-cg.control-group
+						label.control-label(for='email-tf') Email
+						.controls
+							input#email-tf.input-xlarge(type='text', name='email', value= user.email)
+					#email-cg.control-group
+						label.control-label(for='email-tf') Phone
+						.controls
+							input#email-tf.input-xlarge(type='text', name='phone', value= user.phone)
+					#clist-cg.control-group
+						label.control-label(for='age-list') Age
+						.controls
+							select#age-list(name='age')
+								each item in ages
+									option(selected=item.name == user.age)= item.name
+					#clist-cg.control-group
+						label.control-label Sex
+						.controls
+							label
+							label Male
+							input(type='radio', name = "sex", checked=true)
+							label Female
+							input(type='radio', name = "sex", checked=false)
+					#clist-cg.control-group
+						label.control-label(for='country-list') Location
+						.controls
+							select#country-list(name='country')
+								each item in countries
+									option(selected=item.name == user.country)= item.name
+					hr
+					p#sub2.subheading Choose your username and password
+					#user-cg.control-group
+						label.control-label(for='user-tf') Username
+						.controls
+							input#user-tf.input-xlarge.disabled(type='text', name='user', value= user.user)
+					#pass-cg.control-group
+						label.control-label(for='pass-tf') Password
+						.controls
+							input#pass-tf.input-xlarge(type='password', name='pass', value='')
+					.form-actions
+						button(type='submit', name='c', value='c')#account-form-btn1.btn
+							| Cancel
+						button(type='submit')#account-form-btn2.btn
+							| Submit
