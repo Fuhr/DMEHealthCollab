@@ -38,4 +38,13 @@ block scripts
     script(type='text/javascript', src='/js/utils/canvasUtils.js')
     script(type='text/javascript', src='/js/views/canvas.js')
     script
-        $('#fileupload').fileupload({ dataType: 'json' })
+        $(function () {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                done: function (e, data) {
+                    $.each(data.result, function (index, file) {
+                        $('<p/>').text(file.name).appendTo(document.body);
+                    });
+                }
+            });
+        });
