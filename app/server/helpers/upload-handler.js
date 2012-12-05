@@ -33,11 +33,21 @@ upload.on('error', function (e) {
 });
 
 //Functions which use the upload module, or are related to handling of uploads
-UH.fileHandler = function(upDir, upUrl){
+UH.fileHandler = function(req, res, next){
 	return upload.fileHandler({
-		uploadDir: __dirname + upDir,
-		uploadUrl: upUrl
-	})
+		uploadDir: function() { 
+			return __dirname + 'public/uploads/' + req.user.username;
+		},
+		uploadUrl: function() {
+			return '/uploads/' + req.user.username;
+		},
+		imageVersions: {
+			thumbnail: {
+				width: 80,
+				height: 80
+			}
+		}
+	})(req, res, next);
 };
 
 UH.helloWorld = function(){console.log("Hi world");}

@@ -19,7 +19,7 @@ module.exports = function(app, express, flash, passport, uploadhandler) {
 		app.use(passport.session());
 		app.use(app.router);
 		//Configuration for upload handling
-		app.use('/upload', uploadhandler.fileHandler('public/uploads', '/uploads'));
+		
     });
 	
 	app.configure('development', function(){

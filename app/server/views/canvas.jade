@@ -24,6 +24,7 @@ block content
                     ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
                         li
                             #picker
+                input#fileupload(type='file', name='files[]', data-url='/upload', multiple='multiple')
             include chat
 
                 
@@ -36,3 +37,5 @@ block scripts
     script(type='text/javascript', src='/js/controllers/chatController.js')
     script(type='text/javascript', src='/js/utils/canvasUtils.js')
     script(type='text/javascript', src='/js/views/canvas.js')
+    script
+        $('#fileupload').fileupload({ dataType: 'json' })

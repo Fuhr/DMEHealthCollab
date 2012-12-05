@@ -51,6 +51,11 @@ module.exports = function (app, io, passport, uploadhandler) {
         , function (req, res) {
             res.redirect('/');
         });
+		
+	app.post('/upload', function(req, res, next) {
+		uploadhandler.fileHandler(req, res, next)
+	});
+		
 
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!
