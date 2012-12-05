@@ -42,26 +42,3 @@ block scripts
     script(type='text/javascript', src='/js/controllers/chatController.js')
     script(type='text/javascript', src='/js/utils/canvasUtils.js')
     script(type='text/javascript', src='/js/views/canvas.js')
-    script
-        $(function () {
-            $('#fileupload').fileupload({
-                dataType: 'json',
-                add: function (e, data) {
-                    console.log(data);
-                    console.log("test");
-                    data.submit();
-                },
-                done: function (e, data) {
-                    console.log("DONE");
-                    data.context.text('Upload finished.')
-                },
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    console.log(progress);
-                    $('#progress .bar').css(
-                        'width',
-                        progress + '%'
-                    );
-                }
-            });
-        });
