@@ -147,7 +147,7 @@ function canvasController(parentDiv, socket) {
     this.toggleDraggable = function () {
         if (!_draggable) {
             _draggable = true;
-            setDraggable(_draggable); 
+            setDraggable(_draggable);
         } 
         else {
             _draggable = false;
