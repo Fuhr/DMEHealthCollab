@@ -1,6 +1,7 @@
 function chatController(outputSelector, inputSelector, socket){
+    var self = this;
     var _clientId = "";
-    var _username = "";
+    this.username = "";
     /* Socket handlers */
     socket.on('connect', function () {
 
@@ -12,7 +13,7 @@ function chatController(outputSelector, inputSelector, socket){
                 type: 'POST',
                 data: postData,
                 success: function (response) {
-                    _username = response.username;
+                    self.username = response.username;
                     console.log(JSON.stringify(response));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
