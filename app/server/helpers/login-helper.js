@@ -24,18 +24,11 @@ LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
 	done = function(user){
-		console.log('user');
-	    console.log(user);
-	    console.log(LH.socketsByName);
 	    if (!LH.socketsByName[username]) {
-	    	console.log("Add new user");
 	        LH.socketsByName[username] = user;
 	        LH.clientsByID[socketid] = user;
 	        LH.users.push(user);
-	        console.log(LH.socketsByName);
-	        console.log(LH.users);
 	    } else {
-	    	console.log("Change user");
 	        var oldUser = LH.getUserByName(username);
 	        delete LH.socketsByName[oldUser.username];
 	        delete LH.clientsByID[oldUser.socketid];
@@ -50,8 +43,6 @@ LH.addUserToSocketID = function (username, socketid) {
 	    }
 	}
 	var user = LH.findByUsername(username, function(err,foundUser){
-		console.log('foundUser');
-		console.log(foundUser);
 		if (err) {
 			return 'Error';
 		} else if (!foundUser) {
@@ -66,7 +57,6 @@ LH.addUserToSocketID = function (username, socketid) {
 
 LH.deleteUserBySocketID = function (socketid){
 	var oldUser = LH.clientsByID[socketid];
-	console.log('DELETE!!!')
 	if (!oldUser) {
         return "NOUSER";
     } else {
@@ -78,7 +68,6 @@ LH.deleteUserBySocketID = function (socketid){
             	LH.users.splice(i,1);
             }
         }
-        console.log(LH.users)
         return oldUser;
     }
 };
