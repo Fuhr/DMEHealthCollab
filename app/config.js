@@ -1,5 +1,5 @@
 
-module.exports = function(app, express, flash, passport, upload) {
+module.exports = function(app, express, flash, passport, uploadhandler) {
 
 	app.configure(function(){
 		app.set('port', process.env.PORT || 3000);
@@ -19,10 +19,7 @@ module.exports = function(app, express, flash, passport, upload) {
 		app.use(passport.session());
 		app.use(app.router);
 		//Configuration for upload handling
-		app.use('/upload', upload.fileHandler({
-			uploadDir: __dirname + 'public/uploads',
-			uploadUrl: '/uploads'
-		}));
+		app.use('/upload', uploadhandler.fileHandler('public/uploads', '/uploads'));
     });
 	
 	app.configure('development', function(){

@@ -25,7 +25,7 @@ app.root = __dirname;
 console.log(upload.UploadHandler);
 
 require('./app/server/helpers/login-helper');
-require('./app/config')(app, express, flash, passport, upload);
+require('./app/config')(app, express, flash, passport, uploadhandler);
 require('./app/server/router')(app, io, passport, uploadhandler);
 io.set('log level', 1);
 server.listen(app.get('port'), function(){

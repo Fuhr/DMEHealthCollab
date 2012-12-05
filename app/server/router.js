@@ -1,6 +1,6 @@
 LH = require('./helpers/login-helper');
 
-module.exports = function (app, io, passport) {
+module.exports = function (app, io, passport, uploadhandler) {
     var shapeList = [];
 
     /* Page routing*/
