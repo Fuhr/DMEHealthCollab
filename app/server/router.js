@@ -45,7 +45,7 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login', { user: req.user, message: req.flash('error') });
+        res.render('login', { user: req.user, message: req.flash('error'), newUser: '' });
     });
 
     app.post('/userpost', function (req, res) {
@@ -68,9 +68,6 @@ module.exports = function (app, io, passport) {
 	});
 	
 	app.post('/signup', function(req, res){
-		if (req.body.c == 'c') {
-			return res.redirect('/');
-			}
 		console.log('############# CREATE USER ################');
 		console.log(req.body.country);
 		var currentDate = new Date();
@@ -86,7 +83,8 @@ module.exports = function (app, io, passport) {
 			user_since	: currentDate.toDateString()  
 			}	
 		);
-		res.redirect('/');
+		// res.redirect('/');
+		res.render('login', { user: '', message: ' New user created: ', newUser: req.body.user });
 	});
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!

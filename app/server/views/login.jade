@@ -9,7 +9,9 @@ html(lang='en')
 		link(href='/css/bootstrap-responsive.css', rel='stylesheet')
 		link(href='/css/login.css', rel='stylesheet')
 	body
-		if message
+		if newUser
+			p !{message} !{newUser}
+		else if message
 			p !{message}
 
 		#login-container
@@ -17,7 +19,7 @@ html(lang='en')
 				h1 DME Health
 				p.subheading Please Login To Your Account
 				label Username 
-				input(type="text", name="username", id='user-tf').span4.required
+				input(type="text", name="username", id='user-tf', value=newUser).span4.required
 				label Password
 				input(type="password", name="password", id='pass-tf').span4.required
 				button(type="submit")#btn-login.btn.btn-primary

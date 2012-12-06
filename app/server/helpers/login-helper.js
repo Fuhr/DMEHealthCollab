@@ -124,6 +124,7 @@ LH.addNewUser = function(newData, callback)
 					});
 					stream.on("end", function() {});
 					db.close();
+					
 				});
 			});
 		}
@@ -149,17 +150,8 @@ LH.createDb = function(){
 	LH.db.open(function(err, db) {
 		if(!err) {
 			db.collection('users', function(err, collection) {
-				// var users = [{mykey:1}, {mykey:2}, {mykey:3}];
-
 				collection.insert(users, {safe:true}, function(err, result) {
-
 					collection.find().toArray(function(err, items) {});
-
-					// var stream = collection.find({mykey:2}).stream();
-					// stream.on("data", function(item) {
-						// console.log(item);
-					// });
-					// stream.on("end", function() {});
 
 					// log all users in the db
 					var stream = collection.find({}).stream();
@@ -178,11 +170,9 @@ LH.findByUsername = function(username, fn){
 	LH.db.open(function(err,db){
 		if(!err){
 			db.collection('users', function(err, collection) {
-				console.log(username);
 				collection.findOne({username:username},function(userErr,item){
 					db.close();
 					if(!userErr){
-						console.log(item);
 						return fn(null,item);
 					}
 					return fn(userErr,null);
@@ -203,7 +193,6 @@ LH.findById = function(id, fn) {
 				collection.findOne({_id:obj_id},function(userErr,item){
 					db.close();
 					if(!userErr){
-						console.log(item);
 						return fn(null,item);
 					}
 					return fn(userErr,null);
