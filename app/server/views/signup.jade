@@ -26,24 +26,29 @@ html(lang='en')
 						label.control-label(for='email-tf') Email
 						.controls
 							input#email-tf.input-xlarge(type='text', name='email', value= user.email)
-					#email-cg.control-group
-						label.control-label(for='email-tf') Phone
+					#phone-cg.control-group
+						label.control-label(for='phone-tf') Phone
 						.controls
-							input#email-tf.input-xlarge(type='text', name='phone', value= user.phone)
-					#clist-cg.control-group
+							input#phone-tf.input-xlarge(type='text', name='phone', value= user.phone)
+					#agelist-cg.control-group
 						label.control-label(for='age-list') Age
 						.controls
-							select#age-list(name='age')
+							select.span1#age-list(name='age')
 								each item in ages
 									option(selected=item.name == user.age)= item.name
-					#clist-cg.control-group
+					#sexlist-cg.control-group
 						label.control-label Sex
 						.controls
-							label
-							label Male
-							input(type='radio', name = "sex", checked=true)
-							label Female
-							input(type='radio', name = "sex", checked=false)
+							.row-fluid
+								label
+								.span2
+									label Male
+								.span1
+									input(type='radio', name = "sex", checked=true, value= "male")
+								.span2
+									label Female
+								.span1
+									input(type='radio', name = "sex", checked=false, value= "female")
 					#clist-cg.control-group
 						label.control-label(for='country-list') Location
 						.controls

@@ -73,6 +73,7 @@ module.exports = function (app, io, passport) {
 			}
 		console.log('############# CREATE USER ################');
 		console.log(req.body.country);
+		var currentDate = new Date();
 		LH.addNewUser({
 			username	: req.body.user,
 			password	: req.body.pass,
@@ -82,7 +83,7 @@ module.exports = function (app, io, passport) {
 			email		: req.body.email,		
 			phone		: req.body.phone,
 			country		: req.body.country,
-			user_since	: 'nov-10 2012'  
+			user_since	: currentDate.toDateString()  
 			}	
 		);
 		res.redirect('/');
