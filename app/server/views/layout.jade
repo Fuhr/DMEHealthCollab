@@ -2,7 +2,7 @@
 html(lang='en')
     head
         meta(charset='utf-8')
-        title DME Health
+        title MedKit
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
         meta(name='apple-mobile-web-app-capable', content='yes')
         meta(name='description', content='')
@@ -13,9 +13,11 @@ html(lang='en')
         style(type='text/css')
             body {
                 padding-top: 60px;
-                //- padding-bottom: 40px;
+                padding-bottom: 40px;
             }
         link(href='/css/bootstrap-responsive.css', rel='stylesheet')
+        link(href='/css/canvas.css', rel='stylesheet')
+        link(href='/css/farbtastic.css', rel='stylesheet')
         block styles
         
         //
@@ -36,31 +38,24 @@ html(lang='en')
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
-                    a.brand(href='/') DME Health
+                    a.brand(href='/') MedKit
                     .nav-collapse.collapse
                         ul.nav
-                            li.active
+                        
+                            li(class=(menu === 'Home' ? 'active' : ''))
                                 a(href='/')
                                     i.icon-home.icon-white 
                                     | Home
-                            li
+                            li(class=(menu === 'Canvas' ? 'active' : ''))
                                 a(href='/canvas') Canvas
+                            //- li.active
+                            //-     a(href='/')
+                            //-         i.icon-home.icon-white 
+                            //-         | Home
+                            //- li
+                            //-     a(href='/canvas') Canvas
                             li
-                                a(href='#about') About
-                            li
-                                a(href='#contact') Contact
-                            li.dropdown
-                                a.dropdown-toggle(href='#', data-toggle='dropdown')
-                                    | User
-                                    b.caret
-                                ul.dropdown-menu
-                                    li
-                                        a(href='/onlineusers') Online Users
-                                    li
-                                        a(href='/account') Account
-                                    li.divider
-                                    li
-                                        a(href='/logout') Log out
+                                a(href='/logout') Log out
                         p.navbar-text.pull-right
                             | Logged in as 
                             a.navbar-link(href='/account') !{username}
@@ -99,3 +94,4 @@ html(lang='en')
         // script(src='../assets/js/bootstrap-collapse.js')
         // script(src='../assets/js/bootstrap-carousel.js')
         // script(src='../assets/js/bootstrap-typeahead.js')
+

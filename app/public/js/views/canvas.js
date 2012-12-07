@@ -2,7 +2,7 @@ $(document).ready(function() {
     
     /* Init socket connection and view controller */
     // var HOST_URL = 'http://10.0.0.27:3000'
-    var HOST_URL = 'http://localhost:3000'
+    var HOST_URL = location.hostname;
     var socket = io.connect(HOST_URL);
     
     var cc = new canvasController('testContainer', socket);
@@ -53,4 +53,4 @@ $(document).ready(function() {
         });
     });
 
- });
+});

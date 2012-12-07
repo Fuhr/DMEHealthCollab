@@ -1,5 +1,6 @@
+
 ﻿$(document).ready(function () {
-    var HOST_URL = 'http://192.168.0.14:3000'
+    var HOST_URL = location.hostname;
 
     var socket = io.connect(HOST_URL);
     var _clientId = "";
@@ -21,11 +22,6 @@
                     console.log('Problem fetching username');
                 }
             });
-        });
-
-        socket.on('chatToClient', function (data) {
-            var temp = '&nbsp;' + '<b>' + data.username + '</b>' + ': ' + data.msg + '<br>';
-            $(outputSelector).append(temp);
         });
     });
 });

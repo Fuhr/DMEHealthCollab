@@ -23,27 +23,70 @@ LH.clientsByID = {};
 LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
-    var user = {
-        username: username,
-        socketid: socketid,
-        color: rndColor()
-    };
-    if (!LH.socketsByName[username]) {
-        LH.socketsByName[username] = user;
-        LH.clientsByID[socketid] = user;
-        LH.users.push(user);
+	done = function(user){
+	    if (!LH.socketsByName[username]) {
+	        LH.socketsByName[username] = user;
+	        LH.clientsByID[socketid] = user;
+	        LH.users.push(user);
+	    } else {
+	        var oldUser = LH.getUserByName(username);
+	        delete LH.socketsByName[oldUser.username];
+	        delete LH.clientsByID[oldUser.socketid];
+	        LH.socketsByName[username] = user;
+	        LH.clientsByID[socketid] = user;
+	        for (var i = 0; i < LH.users.length; i++) {
+	            var tempUser = LH.users[i];
+	            if (tempUser.username == username) {
+	                tempUser.socketid = socketid;
+	            }
+	        }
+	    }
+	}
+	var user = LH.findByUsername(username, function(err,foundUser){
+		if (err) {
+			return 'Error';
+		} else if (!foundUser) {
+			return 'Invalid username';
+		}else{
+			var tempUser = foundUser;
+			tempUser['color'] = rndColor();
+			done(tempUser);
+		}
+	});
+};
+
+LH.deleteUserBySocketID = function (socketid){
+	var oldUser = LH.clientsByID[socketid];
+	if (!oldUser) {
+        return "NOUSER";
     } else {
-        var oldUser = LH.getUserByName(username);
-        delete LH.socketsByName[oldUser.username];
-        delete LH.clientsByID[oldUser.socketid];
-        LH.socketsByName[username] = user;
-        LH.clientsByID[socketid] = user;
-        for (var i = 0; i < LH.users.length; i++) {
+    	delete LH.socketsByName[oldUser.username];
+    	delete LH.clientsByID[oldUser.socketid];
+    	for (var i = 0; i < LH.users.length; i++) {
             var tempUser = LH.users[i];
-            if (user.username == username) {
-                user.socketid = socketid;
+            if (oldUser.username == tempUser.username) {
+            	LH.users.splice(i,1);
             }
         }
+        return oldUser;
+    }
+};
+
+LH.deleteUserByUserName = function (username){
+	var oldUser = LH.socketsByName[username];
+	if (!oldUser) {
+        return "NOUSER";
+    } else {
+    	delete LH.socketsByName[oldUser.username];
+    	delete LH.clientsByID[oldUser.socketid];
+    	for (var i = 0; i < LH.users.length; i++) {
+            var tempUser = LH.users[i];
+            if (oldUser.username == tempUser.username) {
+            	LH.users.splice(i,1);
+
+            }
+        }
+        return oldUser;
     }
 };
 
@@ -64,38 +107,51 @@ LH.getUserByName = function (username) {
         return user;
     }
 };
+LH.addNewUser = function(newData, callback)
+{
+	console.log('###############addNewUser########');
+	console.log(newData);
+	LH.db.open(function(err, db) {
+		if(!err) {
+			db.collection('users', function(err, collection) {
+				collection.insert(newData, {safe:true}, function(err, result) {
+					collection.find().toArray(function(err, items) {});
+
+					// log all users in the db
+					var stream = collection.find({}).stream();
+					stream.on("data", function(item) {
+						console.log(item);
+					});
+					stream.on("end", function() {});
+					db.close();
+					
+				});
+			});
+		}
+	});
+}
 
 LH.createDb = function(){
 	var users = [
-		{ _id: 1, username: 'Oliver', password: '1234', nickname: 'Fjolliver', 
+		{ username: 'Oliver', password: '1234', nickname: 'Fjolliver', 
 		sex: 'male', age: '26', email: 'oliver@example.com', phone: '70121416',
 		country: 'Denmark', user_since: 'nov-10 2012'  },
-				{ _id: 2, username: 'Emil', password: '1234', nickname: 'Yaagi', 
+				{ username: 'Emil', password: '1234', nickname: 'Yaagi', 
 		sex: 'male', age: '23', email: 'emil@example.com', phone: '70131415',
 		country: 'Denmark', user_since: 'nov-11 2012'  },
-				{ _id: 3, username: 'Nicolai', password: '1234', nickname: 'Myrton', 
+				{ username: 'Nicolai', password: '1234', nickname: 'Myrton', 
 		sex: 'male', age: '23', email: 'nicolai@example.com', phone: '90115116',
 		country: 'Denmark', user_since: 'nov-12 2012'  },
-				{ _id: 4, username: 'Søren', password: '1234', nickname: 'Führ', 
+				{ username: 'Søren', password: '1234', nickname: 'Führ', 
 		sex: 'male', age: '23', email: 'soren@example.com', phone: '90321321',
 		country: 'Germany', user_since: 'nov-13 2012'  }
 	];
 	
 	LH.db.open(function(err, db) {
 		if(!err) {
-			console.log("We are connected");
 			db.collection('users', function(err, collection) {
-				// var users = [{mykey:1}, {mykey:2}, {mykey:3}];
-
 				collection.insert(users, {safe:true}, function(err, result) {
-
 					collection.find().toArray(function(err, items) {});
-
-					// var stream = collection.find({mykey:2}).stream();
-					// stream.on("data", function(item) {
-						// console.log(item);
-					// });
-					// stream.on("end", function() {});
 
 					// log all users in the db
 					var stream = collection.find({}).stream();
@@ -116,7 +172,6 @@ LH.findByUsername = function(username, fn){
 			db.collection('users', function(err, collection) {
 				collection.findOne({username:username},function(userErr,item){
 					db.close();
-					console.log(item);
 					if(!userErr){
 						return fn(null,item);
 					}
@@ -134,9 +189,9 @@ LH.findById = function(id, fn) {
 	LH.db.open(function(err,db){
 		if(!err){
 			db.collection('users', function(err, collection) {
-				collection.findOne({_id:id},function(userErr,item){
+				var obj_id = mongo.ObjectID.createFromHexString(id);
+				collection.findOne({_id:obj_id},function(userErr,item){
 					db.close();
-					console.log(item);
 					if(!userErr){
 						return fn(null,item);
 					}
