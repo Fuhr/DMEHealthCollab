@@ -7,19 +7,19 @@ module.exports = function (app, io, passport) {
 
     /* Page routing*/
     app.get('/canvas', ensureAuthenticated, function (req, res) {
-        res.render('canvas', { username: req.user.username });
+        res.render('canvas', { menu: 'Canvas', username: req.user.username });
     });
 
-    app.get('/account', ensureAuthenticated, function (req, res) {
-        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
-            capitalize: function(string){
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
-        });
-    });
+    // app.get('/account', ensureAuthenticated, function (req, res) {
+    //     res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
+    //         capitalize: function(string){
+    //             return string.charAt(0).toUpperCase() + string.slice(1);
+    //         }
+    //     });
+    // });
     
     app.get('/', ensureAuthenticated, function (req, res) {
-        res.render('account', { username: req.user.username, user: req.user, onlineusers: LH.users,
+        res.render('account', { menu: 'Home', username: req.user.username, user: req.user, onlineusers: LH.users,
             capitalize: function(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
@@ -83,8 +83,8 @@ module.exports = function (app, io, passport) {
 			user_since	: currentDate.toDateString()  
 			}	
 		);
-		// res.redirect('/');
-		res.render('login', { user: '', message: ' New user created: ', newUser: req.body.user });
+        // res.redirect('/');
+        // res.render('login', { user: '', message: ' New user created: ', newUser: req.body.user });
 	});
     /* Socket handlers
     * Any functions related to socket handlers should have its own modules!

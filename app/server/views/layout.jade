@@ -2,7 +2,7 @@
 html(lang='en')
     head
         meta(charset='utf-8')
-        title DME Health
+        title MedKit
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
         meta(name='apple-mobile-web-app-capable', content='yes')
         meta(name='description', content='')
@@ -38,19 +38,22 @@ html(lang='en')
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
-                    a.brand(href='/') DME Health
+                    a.brand(href='/') MedKit
                     .nav-collapse.collapse
                         ul.nav
-                            li.active
+                        
+                            li(class=(menu === 'Home' ? 'active' : ''))
                                 a(href='/')
                                     i.icon-home.icon-white 
                                     | Home
-                            li
+                            li(class=(menu === 'Canvas' ? 'active' : ''))
                                 a(href='/canvas') Canvas
-                            li
-                                a(href='#about') About
-                            li
-                                a(href='#contact') Contact
+                            //- li.active
+                            //-     a(href='/')
+                            //-         i.icon-home.icon-white 
+                            //-         | Home
+                            //- li
+                            //-     a(href='/canvas') Canvas
                             li
                                 a(href='/logout') Log out
                         p.navbar-text.pull-right

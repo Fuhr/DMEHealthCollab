@@ -109,6 +109,12 @@ label {
   -webkit-text-shadow: -1px 1px 0 #fff;
   margin-top: 3px;
 }
+
+#account-form-btn1 {
+    margin-right: 5px;
+}
+
+
 button i {
   padding-left: 8px;
 }
