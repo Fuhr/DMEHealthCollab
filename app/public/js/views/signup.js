@@ -2,9 +2,10 @@ $(document).ready(function(){
 	
 	var sc = new SignupController();
 	
-	$('#account-form-btn2').click(function() {
-	    console.log("her");
-        $('.modal-alert').modal('show');
+	$('#account-form-btn2').click(function(evt) {
+        if($('#account-form').valid()){
+            $('.modal-alert').modal('show');
+        }
     }); 
 	
 // setup the alert that displays when an account is successfully created //
