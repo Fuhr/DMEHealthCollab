@@ -24,7 +24,9 @@ block content
                     ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
                         li
                             #picker
-                input#fileupload(type='file', name='files[]', data-url='/upload', multiple='multiple')
+                form#fileupload(action='/upload')
+                    input(type='file', name='files[]', multiple='multiple')
+                    input(type='hidden', name='username', value='#{username}')
                 #progress
                     .bar(style='width: 0%;')
             include chat
