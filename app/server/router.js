@@ -54,6 +54,7 @@ module.exports = function (app, io, passport) {
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
+        uploadhandler.setUserName(username);
         res.send(sendData);
     });
 
@@ -62,7 +63,18 @@ module.exports = function (app, io, passport) {
         , function (req, res) {
             
             res.redirect('/');            
-        });
+    });
+    
+    // app.get('/upload',function(req, res) {
+        // console.log("SUCCESS"); 
+        // res.send("HI");
+        // res.redirect('/');
+    // });
+    
+
+	
+
+		
 
 	// creating new accounts
 	app.get('/signup', function(req, res) {

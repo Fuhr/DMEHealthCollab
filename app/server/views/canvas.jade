@@ -24,12 +24,20 @@ block content
                     ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
                         li
                             #picker
+                form#fileupload(action='/upload')
+                    input(type='file', name='files[]', multiple='multiple')
+                    input(type='hidden', name='username', value='#{username}')
+                #progress
+                    .bar(style='width: 0%;')
             include chat
 
                 
 block scripts
     script(type='text/javascript', src='/vendor/kinetic-v4.0.5.min.js')
     script(type='text/javascript', src='/vendor/farbtastic.js')
+    script(type='text/javascript', src='/vendor/jquery.ui.widget.js')
+    script(type='text/javascript', src='/vendor/jquery.iframe-transport.js')
+    script(type='text/javascript', src='/vendor/jquery.fileupload.js')
     script(type='text/javascript', src='/js/model/ShapeObject.js')
     script(type='text/javascript', src='/js/model/shapeIndicatorObject.js')
     script(type='text/javascript', src='/js/controllers/canvasController.js')

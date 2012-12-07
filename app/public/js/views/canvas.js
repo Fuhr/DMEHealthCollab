@@ -26,6 +26,31 @@ $(document).ready(function() {
     });
     $('#picker').farbtastic(function(data){
            cc.updateColor(data);
-       });
+    });
+    
+    $(function () {
+        $('#fileupload').fileupload({
+            dataType: 'json',
+            add: function (e, data) {
+                $.each(data.files, function(index, file){
+                    file.username = chat.username;
+                });
+                console.log(data);
+
+                data.submit();
+            },
+            done: function (e, data) {
+                console.log("DONE");
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                console.log(progress);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }
+        });
+    });
 
 });
