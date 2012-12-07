@@ -147,13 +147,43 @@ button i {
     text-align: center;
 }
 
-.alert-error {
-    width: 286px ! important;
+/*#message-field {
+    width: 96%;
     padding: 5px 0px 5px 0px ! important;
+    margin-bottom: 10px ! important;
     overflow-x: hidden;
     
-    
+}*/
+
+#message-field {
+    width: 284px;
+    padding: 5px 0px 5px 0px ! important;
+    margin-bottom: 10px ! important;
+    overflow-x: hidden;
+
 }
+
+
+@media (min-width: 1200px) {
+    #message-field {
+        width: 354px;
+        padding: 5px 0px 5px 0px ! important;
+        margin-bottom: 10px ! important;
+        overflow-x: hidden;
+
+    }
+}
+
+@media (max-width: 979px) {
+    #message-field {
+        width: 99%;
+        padding: 5px 0px 5px 0px ! important;
+        margin-bottom: 10px ! important;
+        overflow-x: hidden;
+
+    }
+}
+
 
 input {
     height: 25px ! important;
