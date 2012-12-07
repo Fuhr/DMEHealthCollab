@@ -147,6 +147,13 @@ button i {
     text-align: center;
 }
 
+.alert-error {
+    width: 286px ! important;
+    padding: 5px 0px 5px 0px ! important;
+    overflow-x: hidden;
+    
+    
+}
 
 input {
     height: 25px ! important;
