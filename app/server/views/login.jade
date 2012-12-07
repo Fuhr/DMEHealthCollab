@@ -14,9 +14,8 @@ html(lang='en')
             form(action='/login', method="post")#login-form.well.span4
                 h1 MedKit
                 p.subheading Please Login To Your Account
+
                 label Username 
-                
-                
                 input(type="text", name="username", id='user-tf', value=newUser).span4.required
                 label Password
                 input(type="password", name="password", id='pass-tf').span4.required
@@ -24,6 +23,7 @@ html(lang='en')
                 if (message != '')
                     #message-container
                         span.label.label-important !{message}
+               
                 button(type="submit")#btn-login.btn.btn-primary
                     i.icon-lock.icon-white
                     | Sign in

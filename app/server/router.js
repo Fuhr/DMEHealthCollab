@@ -46,7 +46,6 @@ module.exports = function (app, io, passport) {
 
     app.get('/login', function (req, res) {
        
-        console.log(req.flash('error'));
         res.render('login', { user: req.user, message: req.flash('error'), newUser: '' });
     });
 
