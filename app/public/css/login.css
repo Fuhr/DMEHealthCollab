@@ -136,3 +136,7 @@ label {
 button i {
   padding-left: 8px;
 }
+
+input {
+    height: 25px ! important;
+}

@@ -9,17 +9,21 @@ html(lang='en')
         link(href='/css/bootstrap-responsive.css', rel='stylesheet')
         link(href='/css/login.css', rel='stylesheet')
     body
-        if message
-            p !{message}
-
+                
         #login-container
             form(action='/login', method="post")#login-form.well.span4
-                h1 DME Health
+                h1 MedKit
                 p.subheading Please Login To Your Account
                 label Username 
+                
+                
                 input(type="text", name="username", id='user-tf', value=newUser).span4.required
                 label Password
                 input(type="password", name="password", id='pass-tf').span4.required
+                
+                if (message != '')
+                    #message-container
+                        span.label.label-important !{message}
                 button(type="submit")#btn-login.btn.btn-primary
                     i.icon-lock.icon-white
                     | Sign in

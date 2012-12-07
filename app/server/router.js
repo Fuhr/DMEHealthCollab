@@ -45,6 +45,8 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/login', function (req, res) {
+       
+        console.log(req.flash('error'));
         res.render('login', { user: req.user, message: req.flash('error'), newUser: '' });
     });
 
@@ -57,9 +59,10 @@ module.exports = function (app, io, passport) {
     });
 
     app.post('/login',
-        passport.authenticate('local', { failureRedirect: '/login', failureFlash: true })
+        passport.authenticate('local', { failureRedirect: '/login', failureFlash: true, })
         , function (req, res) {
-            res.redirect('/');
+            
+            res.redirect('/');            
         });
 
 	// creating new accounts
