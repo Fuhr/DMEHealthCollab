@@ -43,6 +43,7 @@ UH.fileHandler = function(root){
     root = root + "/app"
     console.log("Saving to: " + root);
 	return upload.fileHandler({
+		tmpDir: root + '/public/temp',
 		uploadDir: root + '/public/uploads',
 		uploadUrl: '/uploads'
 	});
