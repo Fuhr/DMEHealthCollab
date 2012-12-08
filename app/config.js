@@ -1,5 +1,5 @@
 
-module.exports = function(app, express, flash, passport, uploadhandler) {
+module.exports = function(app, express, flash, passport) {
 
 	app.configure(function(){
 		app.set('port', process.env.PORT || 3000);
@@ -8,7 +8,7 @@ module.exports = function(app, express, flash, passport, uploadhandler) {
 		app.use(express.favicon());
 		app.use(express.logger('dev'));
         //Configuration for upload handling
-        app.use('/upload', uploadhandler.fileHandler(app.root));
+        // app.use('/upload', uploadhandler.fileHandler(app.root));
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		app.use(express.cookieParser('your secret here'));

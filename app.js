@@ -16,17 +16,17 @@ var app = express()
 	, mongo = require('mongodb')
 	, Server = mongo.Server
 	, Db = mongo.Db
-	, upload = require('jquery-file-upload-middleware')
-	, uploadhandler = require('./app/server/helpers/upload-handler');
+	, upload = require('jquery-file-upload-middleware');
+	// , uploadhandler = require('./app/server/helpers/upload-handler');
 
 
 app.root = __dirname;
 
-console.log(upload.UploadHandler);
+// console.log(upload.UploadHandler);
 
 require('./app/server/helpers/login-helper');
-require('./app/config')(app, express, flash, passport, uploadhandler);
-require('./app/server/router')(app, io, passport, uploadhandler);
+require('./app/config')(app, express, flash, passport);
+require('./app/server/router')(app, io, passport);
 io.set('log level', 1);
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

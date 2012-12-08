@@ -3,8 +3,8 @@ var flash = require('connect-flash')
 	, util = require('util')
 	, LocalStrategy = require('passport-local').Strategy
 	, mongo = require('mongodb')
-	, Server = mongo.Server
-	, Db = mongo.Db;
+	, Server = mongo.Server;
+	// , Db = mongo.Db;
 var LH = {};
 
 function rndColor() {
@@ -16,15 +16,29 @@ function rndColor() {
 
 module.exports = LH;
 
-LH.server = new Server('localhost', 27017, {auto_reconnect: true});
-LH.db = new Db('userDb', LH.server);
+// LH.server = new Server('localhost', 27017, {auto_reconnect: true});
+// LH.db = new Db('userDb', LH.server);
+
+// LH.db = new Db('nodejitsu_fjolliver_nodejitsudb769554085', new mongo.Server('ds043927.mongolab.com', 43927, {}));
+// LH.db.auth("nodejitsu_fjolliver", "vhcjo0j0joffl6q62jagg11ar3");
+
+
+LH.db = new mongo.Db('nodejitsu_fjolliver_nodejitsudb769554085',
+  new mongo.Server('ds043927.mongolab.com', 43927, {})
+);
+
+
+
+
 LH.socketsByName = {};
 LH.clientsByID = {};
 LH.users = [];
 
 LH.addUserToSocketID = function (username, socketid) {
 	done = function(user){
+		console.log('Entered Done');
 	    if (!LH.socketsByName[username]) {
+			console.log('Add to socketsByName list');
 	        LH.socketsByName[username] = user;
 	        LH.clientsByID[socketid] = user;
 	        LH.users.push(user);
@@ -111,23 +125,26 @@ LH.addNewUser = function(newData, callback)
 {
 	console.log('###############addNewUser########');
 	console.log(newData);
-	LH.db.open(function(err, db) {
-		if(!err) {
-			db.collection('users', function(err, collection) {
+	
+LH.db.open(function (err, db_p) {
+  if (err) { throw err; }
+  LH.db.authenticate('nodejitsu_fjolliver', 'vhcjo0j0joffl6q62jagg11ar3', function (err, replies) {
+			LH.db.collection('userDb', function(err, collection) {
 				collection.insert(newData, {safe:true}, function(err, result) {
 					collection.find().toArray(function(err, items) {});
+					console.log('###### DB ######');
+					console.log(replies);
 
-					// log all users in the db
-					var stream = collection.find({}).stream();
-					stream.on("data", function(item) {
-						console.log(item);
+					// // log all users in the db
+					// var stream = collection.find({}).stream();
+					// stream.on("data", function(item) {
+						// console.log(item);
+					// });
+					// stream.on("end", function() {});
+					LH.db.close();
 					});
-					stream.on("end", function() {});
-					db.close();
-					
-				});
 			});
-		}
+		});
 	});
 }
 
@@ -167,28 +184,30 @@ LH.createDb = function(){
 };
 
 LH.findByUsername = function(username, fn){
-	LH.db.open(function(err,db){
-		if(!err){
-			db.collection('users', function(err, collection) {
+	console.log('Trying to auth for '+username);
+	LH.db.open(function(err, db) {
+		if(err) { throw err; }
+		LH.db.authenticate('nodejitsu_fjolliver', 'vhcjo0j0joffl6q62jagg11ar3', function (err, replies) {
+			console.log('Auth OK');
+			LH.db.collection('userDb', function(err, collection) {
+				console.log('Looking for '+username);
 				collection.findOne({username:username},function(userErr,item){
-					db.close();
+					LH.db.close();
 					if(!userErr){
+						console.log('Just found '+item.username);
 						return fn(null,item);
 					}
 					return fn(userErr,null);
 				});
 			});
-		}else{
-			console.log('Error!!!!!');
-			return fn(err,null);
-		}
+		});
+		
 	});
 };
 
 LH.findById = function(id, fn) {
-	LH.db.open(function(err,db){
-		if(!err){
-			db.collection('users', function(err, collection) {
+LH.db.authenticate('nodejitsu_fjolliver', 'vhcjo0j0joffl6q62jagg11ar3', function (err, replies) {
+			LH.db.collection('userDb', function(err, collection) {
 				var obj_id = mongo.ObjectID.createFromHexString(id);
 				collection.findOne({_id:obj_id},function(userErr,item){
 					db.close();
@@ -198,10 +217,7 @@ LH.findById = function(id, fn) {
 					return fn(userErr,null);
 				});
 			});
-		}else{
-			console.log('Error!!!!!');
-			return fn(err,null);
-		}
+		
 	});
 };
 
@@ -224,10 +240,12 @@ passport.use(new LocalStrategy(
 			// username, or the password is not correct, set the user to `false` to
 			// indicate failure and set a flash message.  Otherwise, return the
 			// authenticated `user`.
+			console.log('##### Logging in.... ######');
 			LH.findByUsername(username, function(err, user) {
 				if (err) { return done(err); }
 				if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
 				if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+				console.log('Now returning '+user.username);
 				return done(null, user);
 			})
 		});
