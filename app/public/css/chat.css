@@ -3,7 +3,7 @@
 }
 
 #chat-output {
-	height: 380px;
+	height: 320px;  /*380*/
     overflow-y:scroll;
     overflow-x:hidden;  
     background-color: white;

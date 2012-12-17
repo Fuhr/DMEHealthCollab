@@ -8,8 +8,9 @@
 }
 
 .right-column {
-    height: 430px;
+    height: 370px; /* 430 */
     width: 220px;
+    margin-top: 80px; /* 0 */
     background-color: #f5f5f5;
 	border: 1px solid #e5e5e5;
 }
