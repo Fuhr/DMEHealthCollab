@@ -19,6 +19,7 @@ module.exports = function (app, io, passport) {
     // });
     
     app.get('/', ensureAuthenticated, function (req, res) {
+        console.log(LH.users);
         res.render('account', { menu: 'Home', username: req.user.username, user: req.user, onlineusers: LH.users,
             capitalize: function(string){
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -29,7 +30,8 @@ module.exports = function (app, io, passport) {
     app.get('/onlineusers', ensureAuthenticated, function (req, res) {
     	console.log('###################USERS##################');
     	console.log(LH.users);
-        res.render('onlineusers', { username: req.user.username, onlineusers: LH.users });
+    	sendData = {users: LH.users};
+    	res.json(sendData)
     });
 
     app.get('/logout', function (req, res) {
@@ -48,13 +50,13 @@ module.exports = function (app, io, passport) {
        
         res.render('login', { user: req.user, message: req.flash('error'), newUser: '' });
     });
+    
 
-    app.post('/userpost', function (req, res) {
+    app.post('/userpost', function (req, res) {        
         var socketid = req.body.userid;
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
-        var sendData = { username: username };
-        uploadhandler.setUserName(username);
+        var sendData = { username: username};
         res.send(sendData);
     });
 
