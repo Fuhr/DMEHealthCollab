@@ -33,14 +33,16 @@ $(document).ready(function () {
                 $('#usersTable').html('');              
                 var users = response.users;
                 for (var i = 0; i < users.length; i++) {
-                  $('#usersTable').append('<tr><td><span style="color:' +
-                  users[i].color + ';">' +
-                  users[i].username + '</span></td><td><a href="mailto:' +
-                  users[i].email + '">' +
-                  users[i].email +'</a></td><td>' +
-                  users[i].nickname + '</td><td>' +
-                  users[i].sex +'</td><td>' +
-                  users[i].age +'</td></tr>');                  
+                    
+                    //HOLY CRAP THIS IS SO UGLY! OMG :/ 
+                    $('#usersTable').append('<tr><td><span style="color:' +
+                        users[i].color + ';">' +
+                        users[i].username + '</span></td><td><a href="mailto:' +
+                        users[i].email + '">' +
+                        users[i].email +'</a></td><td>' +
+                        users[i].nickname + '</td><td>' +
+                        users[i].sex +'</td><td>' +
+                        users[i].age +'</td></tr>');                  
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
