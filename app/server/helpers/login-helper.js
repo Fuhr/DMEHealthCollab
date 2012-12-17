@@ -212,6 +212,7 @@ LH.findByUsername = function(username, fn){
 };
 
 LH.findById = function(id, fn) {
+	LH.db.close();
 	LH.db.open(function(err,db){
 		if(!err){
 			db.collection('users', function(err, collection) {
