@@ -110,8 +110,7 @@ function canvasController(parentDiv, socket) {
             // }catch(error) {
             //                console.log(error);
             //            }
-            var element = canvas.firstChild.firstChild;
-            element.style['background-image'] = "url('" + data.background + "')";
+            setBackground(data.background);
             if (_draggable) {
                 setDraggable(_draggable);
             }
@@ -131,9 +130,16 @@ function canvasController(parentDiv, socket) {
         });
 
         socket.on('changeBackground', function (data) {
-            var element = canvas.firstChild.firstChild;
-            element.style['background-image'] = "url('" + data + "')";
+            setBackground(data);
         });
+		
+		socket.on('canvasCleared', function(){
+			stage.clear();
+			setBackground("");
+			shapeNumber = 0;
+			layer = cu.createLayer(stage);
+			layer.draw();
+		});
     });
 
 
@@ -270,4 +276,17 @@ function canvasController(parentDiv, socket) {
     this.addImageToBackground = function (url) {
         socket.emit('backgroundImage', url);
     };
+	
+	this.clearCanvas = function() {
+		socket.emit('clearCanvas');
+	};
+	
+	setBackground = function(url) {
+		var element = canvas.firstChild.firstChild;
+		if(url){
+        element.style['background-image'] = "url('" + url + "')";
+		}else{
+			 element.style['background-image'] = "none";
+		}
+	};
 };

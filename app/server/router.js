@@ -151,6 +151,12 @@ module.exports = function (app, io, passport) {
             _background = data;
             io.sockets.emit('changeBackground', data);
         });
+		
+		socket.on('clearCanvas', function() {
+			shapeList = [];
+			_background = "";
+			io.sockets.emit('canvasCleared');
+		});
     });
     
     function ensureAuthenticated(req, res, next) {

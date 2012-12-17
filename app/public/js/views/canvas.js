@@ -27,6 +27,9 @@ $(document).ready(function () {
     $('#picker').farbtastic(function (data) {
         cc.updateColor(data);
     });
+	$('#clear-button').click(function () {
+        cc.clearCanvas();
+    });
 
     $(function () {
         $('#fileupload').fileupload({
