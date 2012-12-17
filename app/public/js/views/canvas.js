@@ -27,7 +27,7 @@ $(document).ready(function () {
     $('#picker').farbtastic(function (data) {
         cc.updateColor(data);
     });
-	$('#clear-button').click(function () {
+    $('#clear-button').click(function () {
         cc.clearCanvas();
     });
 
@@ -46,10 +46,10 @@ $(document).ready(function () {
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 console.log(progress);
-                $('#progress .bar').css(
-                    'width',
-                    progress + '%'
-                );
+                $('#progress .bar').width(progress + '%');
+                if (progress == 100) {
+                    $('#progress').width(0);
+                }
             }
         });
     });

@@ -18,7 +18,7 @@
 #right-column-controls {
     height: 75px;
     margin-bottom: 20px;
-  
+    width: 222px;
 }
 
 
@@ -26,10 +26,6 @@
 #toggle-button{
     padding-left: 13px;
     padding-right: 13px;
-}
-
-#clear-button {
-    width: 196px;
 }
 
 .btn {
@@ -84,4 +80,24 @@ canvas {
 #add-button
 {
     position: relative;
+    display: inline;
+}
+
+#fileupload
+{
+    width: 40%;
+    margin: 0;
+    display: inline-block;
+}
+
+#clear-button
+{
+    width: 59%;
+    display:inline;
+    margin-left: 24px;
+}
+
+#filebuttons
+{
+    margin-bottom:10px;
 }
