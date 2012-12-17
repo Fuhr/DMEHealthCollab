@@ -25,7 +25,9 @@ block content
                         li
                             #picker
                 form#fileupload(action='/upload')
-                    input(type='file', name='files[]', multiple='multiple')
+                    span.btn.btn-success#add-button
+                        input(type='file', name='files[]', multiple='multiple')#fileinput
+                        | Add a file
                     input(type='hidden', name='username', value='#{username}')
                 #progress
                     .bar(style='width: 0%;')
