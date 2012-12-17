@@ -46,7 +46,7 @@ $(document).ready(function () {
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log('Error on GET ');
+                console.log('Could not retrieve list of online users ');
             }
         });
     };
