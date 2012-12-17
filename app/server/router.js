@@ -5,6 +5,7 @@ var fs = require('fs');
 
 module.exports = function (app, io, passport) {
     var shapeList = [];
+    var _background = "";
 
     /* Page routing*/
     app.get('/canvas', ensureAuthenticated, function (req, res) {
@@ -66,27 +67,13 @@ module.exports = function (app, io, passport) {
     });
 
     app.get('/public/uploads/:username/:filename', function(req, res){
-        console.log(req.params.username);
-        console.log(req.params.filename);
         fs.readFile(app.root + '/app/public/uploads/'+req.params.username+'/'+req.params.filename, function(err, data){
-            console.log(data);
             res.writeHead('200', {
                 'Content-type': data.type
             });
             res.end(data,'binary');
         });
     });
-    
-    // app.get('/upload',function(req, res) {
-        // console.log("SUCCESS"); 
-        // res.send("HI");
-        // res.redirect('/');
-    // });
-    
-
-	
-
-		
 
 	// creating new accounts
 	app.get('/signup', function(req, res) {
@@ -120,7 +107,10 @@ module.exports = function (app, io, passport) {
     io.sockets.on('connection', function (socket) {
 
         socket.emit('clientId', socket.id);
-        socket.emit('getShapesOnConnect', shapeList);
+        socket.emit('getShapesOnConnect', {
+            shapes: shapeList,
+            background: _background
+        });
         socket.on('shapeDrawn', function (data) {
             var serverShape = JSON.parse(data.serverShape);
             serverShape.attrs.id = data.clientShape.id;
@@ -156,6 +146,9 @@ module.exports = function (app, io, passport) {
 		});
 
         socket.on('backgroundImage', function(data){
+            console.log('####################BACKGROUND##########################');
+            console.log(data);
+            _background = data;
             io.sockets.emit('changeBackground', data);
         });
     });

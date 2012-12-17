@@ -91,13 +91,15 @@ function canvasController(parentDiv, socket) {
         });
 
         socket.on('getShapesOnConnect', function (data) {
+            console.log(data);
             // try{
-            for (var i = 0; i < data.length; i++) {
+            var shapesList = data.shapes;
+            for (var i = 0; i < shapesList.length; i++) {
 
                 var node = Kinetic.Node.create(JSON.stringify(data[i]));
 
                 if (node.shapeType === 'Circle' || 'Ellipse') {
-                    node.attrs.radius = data[i].attrs.radius;
+                    node.attrs.radius = shapesList[i].attrs.radius;
                 }
                 cu.addNode(node);
                 layer.add(node);
@@ -108,6 +110,8 @@ function canvasController(parentDiv, socket) {
             // }catch(error) {
             //                console.log(error);
             //            }
+            var element = canvas.firstChild.firstChild;
+            element.style['background-image'] = "url('" + data.background + "')";
             if (_draggable) {
                 setDraggable(_draggable);
             }
