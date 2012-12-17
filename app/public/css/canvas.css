@@ -62,3 +62,7 @@
     height: 18px;
     background: green;
 }
+
+canvas {
+    background-size: 100%;
+}

@@ -1,6 +1,7 @@
 LH = require('./helpers/login-helper');
 var CT = require('./helpers/country-list');
 var AGE = require('./helpers/age-list');
+var fs = require('fs');
 
 module.exports = function (app, io, passport) {
     var shapeList = [];
@@ -54,7 +55,6 @@ module.exports = function (app, io, passport) {
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
-        uploadhandler.setUserName(username);
         res.send(sendData);
     });
 
@@ -63,6 +63,18 @@ module.exports = function (app, io, passport) {
         , function (req, res) {
             
             res.redirect('/');            
+    });
+
+    app.get('/public/uploads/:username/:filename', function(req, res){
+        console.log(req.params.username);
+        console.log(req.params.filename);
+        fs.readFile(app.root + '/app/public/uploads/'+req.params.username+'/'+req.params.filename, function(err, data){
+            console.log(data);
+            res.writeHead('200', {
+                'Content-type': data.type
+            });
+            res.end(data,'binary');
+        });
     });
     
     // app.get('/upload',function(req, res) {
@@ -142,6 +154,10 @@ module.exports = function (app, io, passport) {
 			var deletedUser = LH.deleteUserBySocketID(socket.id);
 			io.sockets.emit('userDisconnect', deletedUser.username);
 		});
+
+        socket.on('backgroundImage', function(data){
+            io.sockets.emit('changeBackground', data);
+        });
     });
     
     function ensureAuthenticated(req, res, next) {

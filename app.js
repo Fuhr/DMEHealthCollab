@@ -26,7 +26,7 @@ console.log(upload.UploadHandler);
 
 require('./app/server/helpers/login-helper');
 require('./app/config')(app, express, flash, passport, uploadhandler);
-require('./app/server/router')(app, io, passport, uploadhandler);
+require('./app/server/router')(app, io, passport);
 io.set('log level', 1);
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

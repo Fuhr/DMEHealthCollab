@@ -85,45 +85,50 @@ function canvasController(parentDiv, socket) {
     
     /* Socket handlers */
     socket.on('connect', function () {
-        
-        socket.on('clientId', function(data) {
+
+        socket.on('clientId', function (data) {
             _clientId = data;
         });
-        
-        socket.on('getShapesOnConnect', function(data) {
+
+        socket.on('getShapesOnConnect', function (data) {
             // try{
-                for( var i=0; i<data.length; i++){
-                    
-                    var node = Kinetic.Node.create(JSON.stringify(data[i]));
-                    
-                    if (node.shapeType === 'Circle' || 'Ellipse') {
-                        node.attrs.radius = data[i].attrs.radius;
-                    }
-                    cu.addNode(node);
-                    layer.add(node);
-                    layer.draw();
-            
-                    setUpNodeHandlers(node,socket);
+            for (var i = 0; i < data.length; i++) {
+
+                var node = Kinetic.Node.create(JSON.stringify(data[i]));
+
+                if (node.shapeType === 'Circle' || 'Ellipse') {
+                    node.attrs.radius = data[i].attrs.radius;
                 }
+                cu.addNode(node);
+                layer.add(node);
+                layer.draw();
+
+                setUpNodeHandlers(node, socket);
+            }
             // }catch(error) {
             //                console.log(error);
             //            }
             if (_draggable) {
                 setDraggable(_draggable);
             }
-        
+
         });
-        
-        socket.on('drawShape', function(data) {
-            
-            var node = drawFunctions[data.form](layer, data);            
+
+        socket.on('drawShape', function (data) {
+
+            var node = drawFunctions[data.form](layer, data);
             if (_draggable) {
                 setDraggable(_draggable);
             }
-            setUpNodeHandlers(node,socket);
+            setUpNodeHandlers(node, socket);
         });
-        socket.on('shapeMoved', function(data) {
+        socket.on('shapeMoved', function (data) {
             cu.moveNode(layer, data);
+        });
+
+        socket.on('changeBackground', function (data) {
+            var element = canvas.firstChild.firstChild;
+            element.style['background-image'] = "url('" + data + "')";
         });
     });
 
@@ -255,6 +260,10 @@ function canvasController(parentDiv, socket) {
             return;
         }
 
-        socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});  
+        socket.emit('shapeDrawn', {'clientShape':shape,'serverShape':serverShape});
+    };
+
+    this.addImageToBackground = function (url) {
+        socket.emit('backgroundImage', url);
     };
 };
