@@ -45,7 +45,7 @@ UH.fileHandler = function(root){
 	return upload.fileHandler({
 		tmpDir: root + '/public/temp',
 		uploadDir: root + '/public/uploads',
-		uploadUrl: '/uploads'
+		uploadUrl: '/public/uploads'
 	});
 };
 

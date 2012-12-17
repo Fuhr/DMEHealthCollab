@@ -10,7 +10,7 @@ block content
         .span3
 
             #right-column-controls
-                .btn-group(data-toggle='buttons-radio')
+                .btn-group(data-toggle='buttons-radio', style = 'margin-bottom: 10px;')
                     #toggle-button.button.btn.btn-inverse.btn.active(type='button')
                         i.icon-hand-up.icon-white 
                     #rect-button.button.btn.btn-inverse(type='button', value='rect')
@@ -24,10 +24,15 @@ block content
                     ul.dropdown-menu(role='menu', aria-labelledby='dLabel')
                         li
                             #picker
-                form#fileupload(action='/upload')
-                    input(type='file', name='files[]', multiple='multiple')
-                    input(type='hidden', name='username', value='#{username}')
-                #progress
+                div#filebuttons
+                    form#fileupload(action='/upload')
+                        #add-button.btn.btn-success
+                            input(type='file', name='files[]', multiple='multiple')#fileinput
+                            | Add a file
+                        input(type='hidden', name='username', value='#{username}')
+                    #clear-button.button.btn.btn-danger
+                       | Clear canvas
+                #progress.progress.progress-striped.active
                     .bar(style='width: 0%;')
             include chat
 

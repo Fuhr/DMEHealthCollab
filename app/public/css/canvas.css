@@ -8,8 +8,9 @@
 }
 
 .right-column {
-    height: 430px;
+    height: 370px; /* 430 */
     width: 220px;
+    margin-top: 80px; /* 0 */
     background-color: #f5f5f5;
 	border: 1px solid #e5e5e5;
 }
@@ -17,7 +18,7 @@
 #right-column-controls {
     height: 75px;
     margin-bottom: 20px;
-  
+    width: 222px;
 }
 
 
@@ -61,4 +62,42 @@
 .bar {
     height: 18px;
     background: green;
+}
+
+canvas {
+    background-size: 100%;
+}
+
+#fileinput
+{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+#add-button
+{
+    position: relative;
+    display: inline;
+}
+
+#fileupload
+{
+    width: 40%;
+    margin: 0;
+    display: inline-block;
+}
+
+#clear-button
+{
+    width: 59%;
+    display:inline;
+    margin-left: 24px;
+}
+
+#filebuttons
+{
+    margin-bottom:10px;
 }

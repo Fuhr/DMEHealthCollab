@@ -1,9 +1,11 @@
 LH = require('./helpers/login-helper');
 var CT = require('./helpers/country-list');
 var AGE = require('./helpers/age-list');
+var fs = require('fs');
 
 module.exports = function (app, io, passport) {
     var shapeList = [];
+    var _background = "";
 
     /* Page routing*/
     app.get('/canvas', ensureAuthenticated, function (req, res) {
@@ -66,7 +68,8 @@ module.exports = function (app, io, passport) {
         var socketid = req.body.userid;
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
-        var sendData = { username: username};
+        var sendData = { username: username };
+
         res.send(sendData);
     });
 
@@ -76,17 +79,15 @@ module.exports = function (app, io, passport) {
             
             res.redirect('/');            
     });
-    
-    // app.get('/upload',function(req, res) {
-        // console.log("SUCCESS"); 
-        // res.send("HI");
-        // res.redirect('/');
-    // });
-    
 
-	
-
-		
+    app.get('/public/uploads/:username/:filename', function(req, res){
+        fs.readFile(app.root + '/app/public/uploads/'+req.params.username+'/'+req.params.filename, function(err, data){
+            res.writeHead('200', {
+                'Content-type': data.type
+            });
+            res.end(data,'binary');
+        });
+    });
 
 	// creating new accounts
 	app.get('/signup', function(req, res) {
@@ -121,7 +122,10 @@ module.exports = function (app, io, passport) {
     io.sockets.on('connection', function (socket) {
 
         socket.emit('clientId', socket.id);
-        socket.emit('getShapesOnConnect', shapeList);
+        socket.emit('getShapesOnConnect', {
+            shapes: shapeList,
+            background: _background
+        });
         socket.on('shapeDrawn', function (data) {
             var serverShape = JSON.parse(data.serverShape);
             serverShape.attrs.id = data.clientShape.id;
@@ -154,6 +158,19 @@ module.exports = function (app, io, passport) {
         socket.on('disconnect', function () {
 			var deletedUser = LH.deleteUserBySocketID(socket.id);
 			io.sockets.emit('userDisconnect', deletedUser.username);
+		});
+
+        socket.on('backgroundImage', function(data){
+            console.log('####################BACKGROUND##########################');
+            console.log(data);
+            _background = data;
+            io.sockets.emit('changeBackground', data);
+        });
+		
+		socket.on('clearCanvas', function() {
+			shapeList = [];
+			_background = "";
+			io.sockets.emit('canvasCleared');
 		});
     });
     
