@@ -96,7 +96,7 @@ function canvasController(parentDiv, socket) {
             var shapesList = data.shapes;
             for (var i = 0; i < shapesList.length; i++) {
 
-                var node = Kinetic.Node.create(JSON.stringify(data[i]));
+                var node = Kinetic.Node.create(JSON.stringify(shapesList[i]));
 
                 if (node.shapeType === 'Circle' || 'Ellipse') {
                     node.attrs.radius = shapesList[i].attrs.radius;
