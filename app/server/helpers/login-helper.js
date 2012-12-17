@@ -7,7 +7,7 @@ var flash = require('connect-flash')
 	, Db = mongo.Db;
 var LH = {};
 
-function rndColor() {
+LH.rndColor = function rndColor() {
     function c() {
         return ('0' + Math.floor(Math.random() * 256).toString(16)).substr(-2);
     }
@@ -49,7 +49,7 @@ LH.addUserToSocketID = function (username, socketid) {
 			return 'Invalid username';
 		}else{
 			var tempUser = foundUser;
-			tempUser['color'] = rndColor();
+			// tempUser['color'] = rndColor();
 			done(tempUser);
 		}
 	});
@@ -123,10 +123,36 @@ LH.addNewUser = function(newData, callback)
 						console.log(item);
 					});
 					stream.on("end", function() {});
-					db.close();
+					LH.db.close();
 					
 				});
 			});
+		}
+	});
+}
+
+LH.changeColor = function(userData, callback)
+{
+	console.log('###############changeColor########');
+	console.log(userData);
+	console.log(userData.id);
+	console.log(userData.color);
+	LH.db.open(function(err, db) {
+		if(!err) {
+			console.log('#####1#####');
+			db.collection('users', function(err, collection) {
+				console.log('#####2#####');
+				collection.update(
+				 { _id : userData.id },
+				{
+					$set: { 'color': userData.color}
+				}
+				);
+				console.log('#####3#####');
+				LH.db.close();
+				console.log('#####Closed#####');
+				});
+			
 		}
 	});
 }
@@ -159,7 +185,7 @@ LH.createDb = function(){
 						console.log(item);
 					});
 					stream.on("end", function() {});
-					db.close();
+					LH.db.close();
 				});
 			});
 		}
@@ -171,7 +197,7 @@ LH.findByUsername = function(username, fn){
 		if(!err){
 			db.collection('users', function(err, collection) {
 				collection.findOne({username:username},function(userErr,item){
-					db.close();
+					LH.db.close();
 					if(!userErr){
 						return fn(null,item);
 					}
@@ -191,7 +217,7 @@ LH.findById = function(id, fn) {
 			db.collection('users', function(err, collection) {
 				var obj_id = mongo.ObjectID.createFromHexString(id);
 				collection.findOne({_id:obj_id},function(userErr,item){
-					db.close();
+					LH.db.close();
 					if(!userErr){
 						return fn(null,item);
 					}

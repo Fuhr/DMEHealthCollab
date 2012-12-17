@@ -39,6 +39,16 @@ module.exports = function (app, io, passport) {
         res.redirect('/');
     });
 
+	app.get('/color', function (req, res) {
+		console.log(req.user);
+		userData = ({
+			id		: req.user._id,
+			color	: LH.rndColor()
+		});
+		LH.changeColor(userData);
+        res.redirect('/');
+    });
+	
     app.get('/createDb', function (req, res) {
         LH.createDb();
         res.redirect('/');
@@ -54,7 +64,7 @@ module.exports = function (app, io, passport) {
         var username = req.user.username;
         LH.addUserToSocketID(username, socketid);
         var sendData = { username: username };
-        uploadhandler.setUserName(username);
+        // uploadhandler.setUserName(username);
         res.send(sendData);
     });
 
@@ -94,8 +104,9 @@ module.exports = function (app, io, passport) {
 			email		: req.body.email,		
 			phone		: req.body.phone,
 			country		: req.body.country,
-			user_since	: currentDate.toDateString()  
-			}	
+			user_since	: currentDate.toDateString(),
+			color		: LH.rndColor()
+			}
 		);
         // res.redirect('/');
         // res.render('login', { user: '', message: ' New user created: ', newUser: req.body.user });
