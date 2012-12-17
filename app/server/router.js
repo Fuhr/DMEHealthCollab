@@ -90,7 +90,7 @@ module.exports = function (app, io, passport) {
 
 	// creating new accounts
 	app.get('/signup', function(req, res) {
-		res.render('signup', { title: 'Signup', ages : AGE, countries : CT });
+		res.render('signup', { title: 'Signup', ages : AGE, countries : CT});
 	});
 	
 	app.post('/signup', function(req, res){
@@ -106,7 +106,8 @@ module.exports = function (app, io, passport) {
 			email		: req.body.email,		
 			phone		: req.body.phone,
 			country		: req.body.country,
-			user_since	: currentDate.toDateString()  
+			user_since	: currentDate.toDateString(),
+			color: LH.rndColor()
 			}	
 		);
         // res.redirect('/');

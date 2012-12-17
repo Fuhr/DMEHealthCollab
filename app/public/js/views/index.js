@@ -4,6 +4,7 @@ $(document).ready(function () {
     var socket = io.connect(HOST_URL);
     var _clientId = "";
     var _username = "";
+    
     socket.on('connect', function () {
         socket.on('clientId', function (data) {
             _clientId = data;
@@ -22,8 +23,8 @@ $(document).ready(function () {
             });
         });
     });
-        
-    getUsers = function() {
+            
+   function getUsers() {
         $.ajax({
             url: '/onlineusers',
             type: 'GET',
@@ -33,7 +34,6 @@ $(document).ready(function () {
                 $('#usersTable').html('');              
                 var users = response.users;
                 for (var i = 0; i < users.length; i++) {
-                    
                     //HOLY CRAP THIS IS SO UGLY! OMG :/ 
                     $('#usersTable').append('<tr><td><span style="color:' +
                         users[i].color + ';">' +

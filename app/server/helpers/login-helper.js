@@ -137,24 +137,31 @@ LH.changeColor = function(userData, callback)
 	console.log(userData);
 	console.log(userData.id);
 	console.log(userData.color);
-	LH.db.open(function(err, db) {
-		if(!err) {
-			console.log('#####1#####');
-			db.collection('users', function(err, collection) {
-				console.log('#####2#####');
-				collection.update(
-				 { _id : userData.id },
-				{
-					$set: { 'color': userData.color}
-				}
-				);
-				console.log('#####3#####');
-				LH.db.close();
-				console.log('#####Closed#####');
-				});
-			
-		}
-	});
+	
+	try {
+	    LH.db.close();
+        LH.db.open(function(err, db) {
+            if(!err) {
+            	console.log('#####1#####');
+            	db.collection('users', function(err, collection) {
+            		console.log('#####2#####');
+            		collection.update(
+            		 { _id : userData.id },
+            		{
+            			$set: { 'color': userData.color}
+            		}
+            		);
+            		console.log('#####3#####');
+            		LH.db.close();
+            		console.log('#####Closed#####');
+            		});
+                
+	        }
+	    });
+	}
+	catch(error) {
+    	    console.log(error);
+    }
 }
 
 LH.createDb = function(){
