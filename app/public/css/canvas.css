@@ -28,6 +28,10 @@
     padding-right: 13px;
 }
 
+#clear-button {
+    width: 196px;
+}
+
 .btn {
     padding: 10px 12px;
 }
